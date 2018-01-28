@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Evolution Project" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Evolution Project" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../Evolution Project" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-march=corei7-avx" />
+					<Add directory="include/Graphics" />
+					<Add directory="include/Math" />
+					<Add directory="include/Simulation" />
+					<Add directory="libraries/SOIL/src" />
+					<Add directory="include/Logger" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-lopengl32" />
+					<Add library="libraries/SOIL/lib/libSOIL.a" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="winmm" />
+					<Add library="gdi32" />
+					<Add directory="C:/Users/nisma/Desktop/Evolution Project/include/freeglut/bin" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Evolution Project" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="C:/Program Files (x86)/CodeBlocks/MinGW/bin" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include/Graphics" />
+					<Add directory="include/Math" />
+					<Add directory="include/Simulation" />
+					<Add directory="include/Logger" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Iinclude" />
+			<Add option="-Wno-inline" />
+			<Add option="-isystemlibraries/reactphysics3d/src" />
+			<Add option="-MD" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW - older/include" />
+			<Add directory="libraries/reactphysics3d/src" />
+		</Compiler>
+		<Linker>
+			<Add option="-lopengl32" />
+			<Add library="opengl32" />
+			<Add library="glu32" />
+			<Add library="winmm" />
+			<Add library="gdi32" />
+			<Add library="freeglut" />
+			<Add library="libraries/reactphysics3d/libreactphysics3d.a" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW - older/lib" />
+			<Add directory="libraries/reactphysics3d" />
+		</Linker>
+		<Unit filename="assets/errors.txt" />
+		<Unit filename="assets/log.txt" />
+		<Unit filename="include/Graphics/Drawing/Draw.h" />
+		<Unit filename="include/Graphics/Drawing/Shapes.h" />
+		<Unit filename="include/Graphics/GlutCallBacks.h" />
+		<Unit filename="include/Graphics/Graphics.h" />
+		<Unit filename="include/Logger/Logger.h" />
+		<Unit filename="include/Math/MyMath.h" />
+		<Unit filename="include/Simulation/Simulation.h" />
+		<Unit filename="include/expected.h" />
+		<Unit filename="include/myGlut.h" />
+		<Unit filename="include/version.h" />
+		<Unit filename="resources/Colors.pdf" />
+		<Unit filename="src/Graphics/Drawing/Draw.cpp" />
+		<Unit filename="src/Graphics/Drawing/Shapes.cpp" />
+		<Unit filename="src/Graphics/GlutCallBacks.cpp" />
+		<Unit filename="src/Graphics/Graphics.cpp" />
+		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
+		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
+		<Unit filename="src/Graphics/MyGlut.cpp" />
+		<Unit filename="src/Logger/Logger.cpp" />
+		<Unit filename="src/Math/MyMath.cpp" />
+		<Unit filename="src/Simulation/Simulation.cpp" />
+		<Unit filename="src/expected.cpp" />
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<AutoVersioning>
+				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="1" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
+				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
+			</AutoVersioning>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

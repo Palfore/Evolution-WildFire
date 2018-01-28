@@ -1,0 +1,131 @@
+#include "glutCallBacks.h"
+#include "Graphics.h" // Glut functions
+
+namespace glutCB {
+    void changeSize(int w, int h) {
+        int drawDistance = 1000.0;
+        double ratio =  ((double) w) / ((double) h); // window aspect ratio
+        glMatrixMode(GL_PROJECTION); // projection matrix is active
+        glLoadIdentity(); // reset the projection
+        gluPerspective(45.0, ratio, 0.1, drawDistance); // perspective transformation
+        glMatrixMode(GL_MODELVIEW); // return to modelview mode
+        glViewport(0, 0, w, h); // set viewport (drawing area) to entire window
+    }
+
+    void renderScene() {
+        if (!Graphics::get().display) { // Run asap
+            Graphics::get().simulation.run();
+        } else {
+            const int msPerFrame = 1000.0 / Graphics::get().FPS;
+            int init = glutGet(GLUT_ELAPSED_TIME);
+
+            Graphics::get().simulation.run();
+
+            int total = glutGet(GLUT_ELAPSED_TIME);
+            while (total - init < msPerFrame) {
+                Graphics::get().simulation.run();
+                total = glutGet(GLUT_ELAPSED_TIME);
+            }
+            // this last call resets init to the current number of elapsed miliseconds.
+    //        init = glutGet(GLUT_ELAPSED_TIME); // doesnt seem needed
+        }
+    }
+
+    void update() {
+        glutPostRedisplay(); // redisplay everything
+        Graphics::get().windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+
+        for (auto const& func : Graphics::get().userFunctions) {
+            if (Graphics::get().keyStates[static_cast<int>(func.key)]) func.action(); // key holds
+        }
+
+        double eps = 1e-10;
+        if (!Graphics::get().display) return;
+
+        /* Update Position */// Note: Not in orthogonal directions
+        Camera *camera = &Graphics::get().camera;
+
+        // Move 'Forward / Backwards'
+        if (camera->mov.x > eps || camera->mov.x < -eps) {
+            camera->pos.x += camera->mov.x * camera->dir.x;
+            camera->pos.y += camera->mov.x * camera->dir.y;
+            //if (camera->pos.z + camera->mov.x * camera->dir.z > 0) { // prevent going under z=0
+                camera->pos.z +=  camera->pos.z + camera->mov.x * camera->dir.z > 0 ? camera->mov.x * camera->dir.z : 0;
+            //}
+        }
+        // Move 'Left / Right'
+        if (camera->mov.y > eps || camera->mov.y < -eps) { // Cross product with Up vector
+            camera->pos.x += camera->mov.y * camera->dir.y;
+            camera->pos.y -= camera->mov.y * camera->dir.x;
+        }
+
+        // Move 'Up / Down'
+        if (camera->mov.z > eps || camera->mov.z < -eps) { // Simply move Up
+            //camera->pos.z += camera->pos.z + camera->mov.z > ground(camera->pos) ? camera->mov.z : 0;
+            camera->pos.z += camera->pos.z + camera->mov.z > 0.0 ? camera->mov.z : 0; // ground->0
+        }
+
+        /* Update Viewing Angle */
+        if (camera->del.x > eps || camera->del.x < -eps) {// Should rename to phi and theta
+            camera->ang.x += camera->del.x;
+            camera->dir.x = -sin(camera->ang.x);
+            camera->dir.y = cos(camera->ang.x);
+        }
+
+        if (camera->del.z > eps || camera->del.z < -eps) {
+            // Restrict angle to PI / 2
+            if ((camera->ang.z + camera->del.z <  0.5*PI) && (camera->del.z > 0)) camera->ang.z += camera->del.z;
+            if ((camera->ang.z - camera->del.z > -0.5*PI) && (camera->del.z < 0)) camera->ang.z += camera->del.z;
+            camera->dir.z = sin(camera->ang.z);
+        }
+
+        // Reset speed
+        camera->mov = Vec::zero();
+    }
+
+    void callMouse(int button, int state, int mx, int my) { // not yet implemented
+        if (button && state) return;
+        if (mx && my) return;
+    }
+
+    void mouseMove(int mx, int my) { // not yet implemented
+        if (mx && my) return;
+    }
+
+    void passiveMouse(int x, int y) { // not fully implemented
+        Graphics::get().mouse.x = x;
+        Graphics::get().mouse.y = y;
+        Graphics::get().camera.del.setToZero(); // Prevent motion after mouse release
+    }
+
+    void keyPressed(unsigned char key, int x, int y) {
+        if (key & x * y){}
+        Graphics::get().keyStates[tolower(key)] = true; // Set the state of the current key to pressed for holding
+        for (auto const& func : Graphics::get().userFunctions) {
+            if (func.key == key) func.action(); // single press
+        }
+    }
+
+    void keyUp(unsigned char key, int x, int y) {
+        Graphics::get().keyStates[tolower(key)] = false; // Release the state of the current key to pressed for holding
+        for (auto const& func : Graphics::get().userFunctions) {
+            if (func.key == key) func.release();
+        }
+        if (key && x && y) return;
+    }
+
+    void pressSpecialKey(int key, int kxx, int kyy) { // not yet implemented
+        for (auto const& func : Graphics::get().userFunctions) {
+            if (func.specialKey == key) func.action();
+        }
+        if (key && kxx && kyy) return;
+    }
+
+    void releaseSpecialKey(int key, int kx, int ky) { // not yet implemented
+        for (auto const& func : Graphics::get().userFunctions) {
+            if (func.specialKey == key) func.release();
+        }
+        if (key && kx && ky) return;
+    }
+}
+
