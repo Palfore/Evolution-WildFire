@@ -22,14 +22,15 @@ void Logger::log(int line, std::string file, std::string func, LogDegree d, LogT
             logMessage(errorString, false, true);
             break;
         case LogDegree::WARNING:
-            if (logs.find(logLookup)  == logs.end()) { // not in set
+            if (logs.find(logLookup) == logs.end()) { // not in set
                 logs.insert(logLookup);
                 logMessage(errorString);
             }
             break;
         case LogDegree::FATAL:
             logMessage(errorString);
-            Graphics::get().simulation.changeGameMode(GameMode::FATAL_MESSAGE);
+            Graphics::get().simulation.setInputType(InputType::FATAL_MESSAGE);
+            break;
         default:
             logMessage("Invalid Log Degree Specified.", false, true);
             logMessage(errorString, false, true);
@@ -66,7 +67,8 @@ void Logger::logMessage(std::string msg, bool showToUser, bool writeToConsole) {
     if (showToUser) {
         DrawRectangle<Appearance::BLUE>(10, 10, 500, 500);
 
-        Graphics::get().simulation.changeGameMode(GameMode::BLOCKING_MESSAGE);
+        Graphics::get().simulation.setInputType(InputType::BLOCKING_MESSAGE);
+        Graphics::get().simulation.setInputType(InputType::BLOCKING_MESSAGE);
         /* Log to Screen (Lock user input until they press okay, or enter) */
         // to implement later
     }
@@ -87,6 +89,8 @@ std::string Logger::toString(LogType e) {
         case LogType::GENERAL:  return "GENERAL";
         case LogType::GRAPHICS: return "GRAPHICS";
         case LogType::DISPLAY:  return "DISPLAY";
+        case LogType::INPUT:    return "INPUT";
+        case LogType::AUDIO:    return "AUDIO";
         default:        return "UNKNOWN";
     }
 }

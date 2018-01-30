@@ -13,21 +13,16 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-march=corei7-avx" />
 					<Add directory="include/Graphics" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation" />
-					<Add directory="libraries/SOIL/src" />
 					<Add directory="include/Logger" />
 					<Add directory="include" />
+					<Add directory="libraries/SOIL/src" />
+					<Add directory="include/Graphics/Drawing" />
+					<Add directory="include/Graphics/UserInput" />
 				</Compiler>
 				<Linker>
-					<Add option="-lopengl32" />
-					<Add library="libraries/SOIL/lib/libSOIL.a" />
-					<Add library="opengl32" />
-					<Add library="glu32" />
-					<Add library="winmm" />
-					<Add library="gdi32" />
 					<Add directory="C:/Users/nisma/Desktop/Evolution Project/include/freeglut/bin" />
 				</Linker>
 			</Target>
@@ -44,6 +39,8 @@
 					<Add directory="include/Simulation" />
 					<Add directory="include/Logger" />
 					<Add directory="include" />
+					<Add directory="include/Graphics/Drawing" />
+					<Add directory="include/Graphics/UserInput" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -51,31 +48,59 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wnon-virtual-dtor" />
+			<Add option="-Wshadow" />
+			<Add option="-Winit-self" />
+			<Add option="-Wredundant-decls" />
+			<Add option="-Wcast-align" />
+			<Add option="-Wundef" />
+			<Add option="-Wfloat-equal" />
+			<Add option="-Winline" />
+			<Add option="-Wunreachable-code" />
+			<Add option="-Wmissing-declarations" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-Wswitch-enum" />
+			<Add option="-Wswitch-default" />
+			<Add option="-Weffc++" />
+			<Add option="-Wzero-as-null-pointer-constant" />
+			<Add option="-Wmain" />
+			<Add option="-pedantic-errors" />
+			<Add option="-pedantic" />
+			<Add option="-Wfatal-errors" />
+			<Add option="-Wextra" />
+			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-Iinclude" />
-			<Add option="-Wno-inline" />
 			<Add option="-isystemlibraries/reactphysics3d/src" />
+			<Add option="-isystemlibraries\SFML-2.4.2\include" />
 			<Add option="-MD" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW - older/include" />
 			<Add directory="libraries/reactphysics3d/src" />
 		</Compiler>
 		<Linker>
 			<Add option="-lopengl32" />
+			<Add library="libraries/SOIL/lib/libSOIL.a" />
 			<Add library="opengl32" />
 			<Add library="glu32" />
 			<Add library="winmm" />
 			<Add library="gdi32" />
 			<Add library="freeglut" />
 			<Add library="libraries/reactphysics3d/libreactphysics3d.a" />
+			<Add library="libraries/SFML-2.4.2/lib/libsfml-audio.a" />
+			<Add library="libraries/SFML-2.4.2/lib/libsfml-system.a" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW - older/lib" />
 			<Add directory="libraries/reactphysics3d" />
+			<Add directory="libraries/SFML-2.4.2/lib" />
 		</Linker>
 		<Unit filename="assets/errors.txt" />
 		<Unit filename="assets/log.txt" />
 		<Unit filename="include/Graphics/Drawing/Draw.h" />
+		<Unit filename="include/Graphics/Drawing/Objects.h" />
 		<Unit filename="include/Graphics/Drawing/Shapes.h" />
+		<Unit filename="include/Graphics/Drawing/Text.h" />
 		<Unit filename="include/Graphics/GlutCallBacks.h" />
 		<Unit filename="include/Graphics/Graphics.h" />
+		<Unit filename="include/Graphics/UserInput/UserInput.h" />
 		<Unit filename="include/Logger/Logger.h" />
 		<Unit filename="include/Math/MyMath.h" />
 		<Unit filename="include/Simulation/Simulation.h" />
@@ -84,12 +109,15 @@
 		<Unit filename="include/version.h" />
 		<Unit filename="resources/Colors.pdf" />
 		<Unit filename="src/Graphics/Drawing/Draw.cpp" />
+		<Unit filename="src/Graphics/Drawing/Objects.cpp" />
 		<Unit filename="src/Graphics/Drawing/Shapes.cpp" />
+		<Unit filename="src/Graphics/Drawing/Text.cpp" />
 		<Unit filename="src/Graphics/GlutCallBacks.cpp" />
 		<Unit filename="src/Graphics/Graphics.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
 		<Unit filename="src/Graphics/MyGlut.cpp" />
+		<Unit filename="src/Graphics/UserInput/UserInput.cpp" />
 		<Unit filename="src/Logger/Logger.cpp" />
 		<Unit filename="src/Math/MyMath.cpp" />
 		<Unit filename="src/Simulation/Simulation.cpp" />
@@ -97,8 +125,8 @@
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<AutoVersioning>
-				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
-				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="1" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Scheme minor_max="100" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="1" do_auto_increment="1" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
 			</AutoVersioning>

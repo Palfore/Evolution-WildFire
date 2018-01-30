@@ -5,12 +5,12 @@ namespace expected{
          std::vector<std::string> splittedString;
          int startIndex = 0;
          int endIndex   = 0;
-         while(((unsigned) (endIndex = stringToBeSplitted.find(delimeter, startIndex))) < stringToBeSplitted.size()) {
+         while (static_cast<unsigned>(endIndex = stringToBeSplitted.find(delimeter, startIndex)) < stringToBeSplitted.size()) {
            std::string val = stringToBeSplitted.substr(startIndex, endIndex - startIndex);
            splittedString.push_back(val);
            startIndex = endIndex + delimeter.size();
          }
-         if((unsigned) startIndex < stringToBeSplitted.size()) {
+         if (static_cast<unsigned>(startIndex) < stringToBeSplitted.size()) {
            std::string val = stringToBeSplitted.substr(startIndex);
            splittedString.push_back(val);
          }

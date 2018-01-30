@@ -4,14 +4,9 @@
 #include "Drawing/Draw.h"
 #include "Logger.h"
 
-// move to dedicated file
-UserFunction::UserFunction() : specialKey(-1), key('\0'), action([](){}), release([](){}) {}
-UserFunction::UserFunction(char key_t, Action action_t) : specialKey(-1), key(key_t), action(action_t), release([](){}) {}
-UserFunction::UserFunction(int specialKey_t, Action action_t) : specialKey(specialKey_t), key('\0'), action(action_t), release([](){}) {}
-UserFunction::UserFunction(int specialKey_t, Action action_t, Action release_t) : specialKey(specialKey_t), key('\0'), action(action_t), release(release_t) {}
-
 Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Dimension::NONE),
-                    camera(), mouse(), simulation(), userFunctions({}) {
+                    camera(), mouse(), userInput(), audio(),
+                    simulation()  {
     /* Init GLUT with title */
     int myargc = 1;
     char *s2 = new char[strlen(WINDOW_TITLE) + 1];
@@ -30,19 +25,19 @@ Graphics::~Graphics() {
 }
 
 void Graphics::run() {
-    Graphics::get().setDefaultUserFunctions();
+    Graphics::get().userInput.setToDefault();
     simulation.init();
     glutMainLoop();
 }
 
-void Graphics::setDefaultUserFunctions() { // Functions that all gamemodes should have
-    Graphics::get().userFunctions.push_back(UserFunction((char) 27, [](){NORMAL_EXIT();}));
-    Graphics::get().userFunctions.push_back(UserFunction('f', [](){
-        if (Graphics::get().fullscreen) glutReshapeWindow(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT); else glutFullScreen();
-        Graphics::get().fullscreen ^= true;
-        Graphics::get().keyStates['f'] = false; // stop multiple toggle per key press
-        Graphics::get().windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-    }));
+void Graphics::toggleFullScreen() {
+    if (Graphics::get().fullscreen) {
+        glutReshapeWindow(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT);
+    } else {
+        glutFullScreen();
+    }
+    Graphics::get().fullscreen ^= true;
+    Graphics::get().windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
 void Graphics::initializeGlut() {
@@ -82,21 +77,22 @@ void Graphics::initializeGlut() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     /* Register Callbacks */
-	glutReshapeFunc(glutCB::changeSize);  // window reshape callback
-	glutDisplayFunc(glutCB::renderScene); // (re)display callback
-	glutIdleFunc(glutCB::update);         // incremental update
-	glutIgnoreKeyRepeat(true);       // ignore key repeat when holding key down
-	glutMouseFunc(glutCB::callMouse);   // process mouse button push/release
-	glutMotionFunc(glutCB::mouseMove);    // process mouse dragging motion
+    glutReshapeFunc(glutCB::changeSize);  // window reshape callback
+    glutDisplayFunc(glutCB::renderScene); // (re)display callback
+    glutIdleFunc(glutCB::update);         // incremental update
+    glutIgnoreKeyRepeat(true);       // ignore key repeat when holding key down
+    glutMouseFunc(glutCB::callMouse);   // process mouse button push/release
+    glutMotionFunc(glutCB::mouseMove);    // process mouse dragging motion
     glutPassiveMotionFunc(glutCB::passiveMouse);
-	//glutKeyboardFunc(processNormalKeys); // process standard key clicks // Better to manually implement
-	glutKeyboardFunc(glutCB::keyPressed); // Tell GLUT to use the method "keyPressed" for key presses
+    //glutKeyboardFunc(processNormalKeys); // process standard key clicks // Better to manually implement
+    glutKeyboardFunc(glutCB::keyPressed); // Tell GLUT to use the method "keyPressed" for key presses
     glutKeyboardUpFunc(glutCB::keyUp);    // Tell GLUT to use the method "keyUp" for key up events
-	glutSpecialFunc(glutCB::pressSpecialKey);     // process special key pressed
-	glutSpecialUpFunc(glutCB::releaseSpecialKey); // process special key release
+    glutSpecialFunc(glutCB::pressSpecialKey);     // process special key pressed
+    glutSpecialUpFunc(glutCB::releaseSpecialKey); // process special key release
 }
 
 void Graphics::showScene() {
+    /* Display */
     drawingState = Dimension::NONE;
     Drawing::enable3D(); // Corrects viewing for camera movement & (helps) prevent drawing 3d over 2d
     glutSwapBuffers();

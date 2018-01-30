@@ -5,13 +5,13 @@
 
 bool Drawing::isColor(Appearance A) {
     if (A < 0) return false;
-    if (A >= Appearance::LAST__) return false;
+    if (A >= Appearance::LAST_COLOR__) return false;
     return true;
 }
 
 bool Drawing::isTexture(Appearance A) {
-    if (A < Appearance::LAST__) return false;
-    if (A >= Appearance::ENDING__) return false;
+    if (A < Appearance::LAST_COLOR__) return false;
+    if (A >= Appearance::LAST_TEXTURE__) return false;
     return true;
 }
 
@@ -21,7 +21,11 @@ void Drawing::changeColor(Vec c) {
 
 void Drawing::changeColor(Appearance C) {
     if (!Drawing::isColor(C)) LOG(LogDegree::WARNING, LogType::GRAPHICS, "Color is not valid.");
-    Drawing::changeColor(Graphics::get().colorMap.at(C)); // this is not safe if C not in colormap
+    try {
+        Drawing::changeColor(Graphics::get().colorMap.at(C));
+    } catch (std::out_of_range) {
+        LOG(LogDegree::WARNING, LogType::GRAPHICS, "Approved color not found.");
+    }
 }
 
 void Drawing::changeTexture(Tex textureID) {
@@ -30,7 +34,11 @@ void Drawing::changeTexture(Tex textureID) {
 
 void Drawing::changeTexture(Appearance T) {
     if (!Drawing::isTexture(T)) LOG(LogDegree::WARNING, LogType::GRAPHICS, "Texture is not valid.");
-    Drawing::changeTexture(Graphics::get().textureMap.at(T)); // this is not safe if C is no in textures
+    try {
+        Drawing::changeTexture(Graphics::get().textureMap.at(T));
+    } catch (std::out_of_range) {
+        LOG(LogDegree::WARNING, LogType::GRAPHICS, "Approved texture not found.");
+    }
 }
 
 void Drawing::enable2D() {

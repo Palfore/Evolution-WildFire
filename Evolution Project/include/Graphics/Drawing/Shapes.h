@@ -3,31 +3,16 @@
 
 #include "Drawing/Draw.h"
 #include "Logger.h"
+#include "Graphics.h"
 
-template <Appearance A> class DrawShape { protected:
-    DrawShape(Dimension dim) {
-        Drawing::enableND(dim);
-
-        /* Apply Appearance */
-        if (Drawing::isTexture(A)) {
-            Drawing::changeColor(Appearance::WHITE);
-            glEnable(GL_TEXTURE_2D);
-            Drawing::changeTexture(A);
-        }
-        else if (Drawing::isColor(A)) {
-            glDisable(GL_TEXTURE_2D);
-            Drawing::changeColor(A);
-        } else {
-            LOG(LogDegree::FATAL, LogType::GRAPHICS, "Appearance is not valid.");
-        }
-    }
-};
-
-template <Appearance A> class DrawRectangle : DrawShape<A> { public:
+template <Appearance A>
+struct DrawRectangle : DrawItem<A> {
     static Dimension constexpr dimension = static_cast<Dimension>(2);
 
-    DrawRectangle(double x, double y, double X, double Y) : DrawShape<A>(dimension) {
-        draw(x, y, X, Y);
+    DrawRectangle(double x, double y, double X, double Y) : DrawItem<A>(dimension) {
+        double w = Graphics::get().windowSize.x;
+        double h = Graphics::get().windowSize.y;
+        draw(x*w, y*h, X*w, Y*h);
     }
     private:void draw(double x, double y, double X, double Y) {
         glBegin(GL_QUADS);
@@ -39,12 +24,15 @@ template <Appearance A> class DrawRectangle : DrawShape<A> { public:
     }
 };
 
-template <Appearance A> class DrawCircle : DrawShape<A> { public:
+template <Appearance A>
+struct DrawCircle : DrawItem<A> {
     static Dimension constexpr dimension = static_cast<Dimension>(2);
 
     DrawCircle(double x, double y, double r) : DrawCircle(x, y, r, 20) {}
-    DrawCircle(double x, double y, double r, int numSegments) : DrawShape<A>(dimension) {
-        draw(x, y, r, numSegments);
+    DrawCircle(double x, double y, double r, int numSegments) : DrawItem<A>(dimension) {
+        double w = Graphics::get().windowSize.x;
+        double h = Graphics::get().windowSize.y;
+        draw(x*w, y*h, 0.5*(w+h)*r, numSegments); // how should r be scaled? this seems wrong
     }
     private:void draw(double x, double y, double r, int numSegments) {
         glBegin(GL_POLYGON);
@@ -59,7 +47,8 @@ template <Appearance A> class DrawCircle : DrawShape<A> { public:
     }
 };
 
-template <Appearance A> class DrawPlane : DrawShape<A> { public:
+template <Appearance A>
+struct DrawPlane : DrawItem<A> {
     static Dimension constexpr dimension = static_cast<Dimension>(3);
 
     DrawPlane(double length) : DrawPlane(0,0,0, length, 0) {}
@@ -67,7 +56,7 @@ template <Appearance A> class DrawPlane : DrawShape<A> { public:
     DrawPlane(Vec pos, double length) : DrawPlane(pos, length, 0) {}
     DrawPlane(double x, double y, double z, double length) : DrawPlane(Vec(x,y,z), length, 0) {}
     DrawPlane(double x, double y, double z, double length, double xAngle) : DrawPlane(Vec(x,y,z), length, xAngle) {}
-    DrawPlane(Vec pos, double length, double xAngle) : DrawShape<A>(dimension) {
+    DrawPlane(Vec pos, double length, double xAngle) : DrawItem<A>(dimension) {
         draw(pos, length, xAngle);
     }
     private:void draw(Vec pos, double length, double xAngle) {

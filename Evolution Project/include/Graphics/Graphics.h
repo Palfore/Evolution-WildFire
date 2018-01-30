@@ -9,8 +9,9 @@
 #include "Math/MyMath.h" // Vec2
 #include "Simulation.h"
 #include "Drawing/Draw.h" // enum Appearance
+#include "UserInput.h" // UserInput
+#include "Graphics/Audio/Audio.h"
 
-typedef std::function<void()> Action;
 struct Camera {
     static double constexpr INIT_T_SPEED = 1.0;
     static double constexpr INIT_R_SPEED = 0.04;
@@ -36,37 +37,27 @@ struct Mouse {
     Mouse() : x(0), y(0), clicked(false) {};
 };
 
-struct UserFunction { // Add Button Functionality -> specify button & move to GUI Folder
-    int specialKey;
-    char key;
-    Action action;
-    Action release;
-
-    UserFunction();
-    UserFunction(char key_t, Action action_t);
-    UserFunction(int specialKey_t, Action action_t);
-    UserFunction(int specialKey_t, Action action_t, Action release_t);
-};
-
-
 class Graphics {
     public:
         Vec2 windowSize;
         Dimension drawingState;
         Camera camera;
         Mouse mouse;
+        UserInput userInput;
+        Audio audio;
+
         Simulation simulation;
 
-        std::vector<UserFunction> userFunctions;
-
         static double constexpr FPS = 60;
+        static int constexpr RENDERING_DISTANCE = 1000;
+
         bool fullscreen = false;
         bool display = true;
 
+        void toggleFullScreen();
+
         void run();
         void showScene();
-
-        void setDefaultUserFunctions();
 
         std::map<enum Appearance, Tex> textureMap = {};
         std::map<enum Appearance, Vec> colorMap = {};
@@ -86,14 +77,10 @@ class Graphics {
         static int constexpr INIT_WINDOW_WIDTH = 800;
         static int constexpr INIT_WINDOW_HEIGHT = 400;
 
-        static int constexpr NUM_KEYS = 256;
-
         Graphics();
         void initializeGlut();
         void loadTextures();
         void loadColors();
-    public:
-        bool keyStates[NUM_KEYS] = {false}; // keypresses
 };
 
 

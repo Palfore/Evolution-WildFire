@@ -3,11 +3,10 @@
 
 namespace glutCB {
     void changeSize(int w, int h) {
-        int drawDistance = 1000.0;
-        double ratio =  ((double) w) / ((double) h); // window aspect ratio
+        double windowRatio = w / static_cast<double>(h); // window aspect ratio
         glMatrixMode(GL_PROJECTION); // projection matrix is active
         glLoadIdentity(); // reset the projection
-        gluPerspective(45.0, ratio, 0.1, drawDistance); // perspective transformation
+        gluPerspective(45.0, windowRatio, 0.1, Graphics::get().RENDERING_DISTANCE); // perspective transformation
         glMatrixMode(GL_MODELVIEW); // return to modelview mode
         glViewport(0, 0, w, h); // set viewport (drawing area) to entire window
     }
@@ -27,7 +26,7 @@ namespace glutCB {
                 total = glutGet(GLUT_ELAPSED_TIME);
             }
             // this last call resets init to the current number of elapsed miliseconds.
-    //        init = glutGet(GLUT_ELAPSED_TIME); // doesnt seem needed
+            // init = glutGet(GLUT_ELAPSED_TIME); // doesnt seem needed
         }
     }
 
@@ -35,8 +34,8 @@ namespace glutCB {
         glutPostRedisplay(); // redisplay everything
         Graphics::get().windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
-        for (auto const& func : Graphics::get().userFunctions) {
-            if (Graphics::get().keyStates[static_cast<int>(func.key)]) func.action(); // key holds
+        for (auto const& func : Graphics::get().userInput.functions) {
+            if (Graphics::get().userInput.keyStates[static_cast<int>(func.key)]) func.action(); // key holds
         }
 
         double eps = 1e-10;
@@ -100,29 +99,31 @@ namespace glutCB {
 
     void keyPressed(unsigned char key, int x, int y) {
         if (key & x * y){}
-        Graphics::get().keyStates[tolower(key)] = true; // Set the state of the current key to pressed for holding
-        for (auto const& func : Graphics::get().userFunctions) {
+        if (Graphics::get().userInput.keyInputIsHeld) {
+            Graphics::get().userInput.keyStates[tolower(key)] = true; // Set the state of the current key to pressed for holding
+        }
+        for (auto const& func : Graphics::get().userInput.functions) {
             if (func.key == key) func.action(); // single press
         }
     }
 
     void keyUp(unsigned char key, int x, int y) {
-        Graphics::get().keyStates[tolower(key)] = false; // Release the state of the current key to pressed for holding
-        for (auto const& func : Graphics::get().userFunctions) {
+        Graphics::get().userInput.keyStates[tolower(key)] = false; // Release the state of the current key to pressed for holding
+        for (auto const& func : Graphics::get().userInput.functions) {
             if (func.key == key) func.release();
         }
         if (key && x && y) return;
     }
 
     void pressSpecialKey(int key, int kxx, int kyy) { // not yet implemented
-        for (auto const& func : Graphics::get().userFunctions) {
+        for (auto const& func : Graphics::get().userInput.functions) {
             if (func.specialKey == key) func.action();
         }
         if (key && kxx && kyy) return;
     }
 
     void releaseSpecialKey(int key, int kx, int ky) { // not yet implemented
-        for (auto const& func : Graphics::get().userFunctions) {
+        for (auto const& func : Graphics::get().userInput.functions) {
             if (func.specialKey == key) func.release();
         }
         if (key && kx && ky) return;

@@ -2,4 +2,5 @@
 
 int main() {
     Graphics::get().run();
+    return 0;
 }

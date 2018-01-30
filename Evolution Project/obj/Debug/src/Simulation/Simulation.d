@@ -41,25 +41,14 @@ obj\Debug\src\Simulation\Simulation.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/hash_bytes.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/range_access.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/vector.tcc \
- include\Graphics/Graphics.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/time.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/_mingw.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/stddef.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/functional \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_function.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/backward/binders.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/typeinfo \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/tuple \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/utility \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_relops.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/array \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/stdexcept \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/string \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stringfwd.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/char_traits.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/postypes.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cwchar \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/wchar.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/_mingw.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/stddef.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/stdarg.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/wctype.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cstdint \
@@ -74,6 +63,8 @@ obj\Debug\src\Simulation\Simulation.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/ctype.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ostream_insert.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/cxxabi_forced.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_function.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/backward/binders.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_string.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/atomicity.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/gthr.h \
@@ -89,6 +80,15 @@ obj\Debug\src\Simulation\Simulation.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/pthread_unistd.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/atomic_word.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_string.tcc \
+ include\Graphics/Graphics.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/time.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/functional \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/typeinfo \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/tuple \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/utility \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_relops.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/array \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/stdexcept \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/uses_allocator.h \
  include/myGlut.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/glut.h \
@@ -291,9 +291,8 @@ obj\Debug\src\Simulation\Simulation.o: \
  libraries/reactphysics3d/src/constraint/HingeJoint.h \
  libraries/reactphysics3d/src/constraint/FixedJoint.h \
  libraries\SOIL\src/SOIL.h include/Math/MyMath.h \
- include\Graphics/Drawing/Draw.h include/MyGlut.h \
- include\Graphics/Drawing/Shapes.h include\Graphics/Drawing/Draw.h \
- include\Logger/Logger.h include/Expected.h \
+ include\Graphics/Drawing/Draw.h include/MyGlut.h include\Logger/Logger.h \
+ include/Expected.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ctime \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/sstream \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/istream \
@@ -322,4 +321,58 @@ obj\Debug\src\Simulation\Simulation.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++io.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/fstream.tcc \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/unordered_set \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/unordered_set.h
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/unordered_set.h \
+ include\Graphics\UserInput/UserInput.h \
+ include\Graphics\UserInput/UserFunction.h include/Graphics/Audio/Audio.h \
+ libraries\SFML-2.4.2\include/SFML/Audio.hpp \
+ libraries\SFML-2.4.2\include/SFML/System.hpp \
+ libraries\SFML-2.4.2\include/SFML/Config.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Clock.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Export.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Time.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Err.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/FileInputStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/InputStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/NonCopyable.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Lock.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/MemoryInputStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Mutex.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Sleep.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/String.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Utf.hpp \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/locale \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets_nonio.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/time_members.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/messages_members.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets_nonio.tcc \
+ libraries\SFML-2.4.2\include/SFML/System/Utf.inl \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/iterator \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stream_iterator.h \
+ libraries\SFML-2.4.2\include/SFML/System/String.inl \
+ libraries\SFML-2.4.2\include/SFML/System/Thread.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Thread.inl \
+ libraries\SFML-2.4.2\include/SFML/System/ThreadLocal.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/ThreadLocalPtr.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/ThreadLocalPtr.inl \
+ libraries\SFML-2.4.2\include/SFML/System/Vector2.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Vector2.inl \
+ libraries\SFML-2.4.2\include/SFML/System/Vector3.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Vector3.inl \
+ libraries\SFML-2.4.2\include/SFML/Audio/InputSoundFile.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Export.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Listener.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Music.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundSource.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/AlResource.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/OutputSoundFile.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Sound.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundBuffer.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundBufferRecorder.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundRecorder.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileFactory.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileFactory.inl \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileReader.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileWriter.hpp \
+ include\Graphics/Drawing/Shapes.h include\Graphics/Drawing/Draw.h \
+ include\Graphics/Drawing/Text.h include\Graphics\Drawing/Objects.h

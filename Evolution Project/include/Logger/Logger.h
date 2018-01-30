@@ -1,6 +1,13 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+/**
+ * Logs all debugging messages, only logs unique warnings. (Note: Only 1 fatal message is ever possible).
+ *
+ * Debug: Show to console, log to file
+ * Warning: Show to console, log to file, display to user (blocks input until user dismisses message (enter)
+ * Fatal: Show to console, log to file, display to user (EXIT_FAILURE on dismissal)
+ */
 
 #include "Expected.h"
 #include <iostream> // cout
@@ -14,15 +21,8 @@
 #define LOG(...) Logger::get().log(__LINE__, __FILE__, __FUNCTION__, __VA_ARGS__) //if __FUNCTION__ -> "operator()" means lambda expression
 #define NORMAL_EXIT() Logger::get().normalExit(__LINE__, __FILE__, __FUNCTION__)
 
-/**
- * Logs all debugging messages, only logs unique warnings. (Note: Only 1 fatal message is ever possible).\
- *
- * Debug: Show to console, log to file
- * Warning: Show to console, log to file, display to user (blocks input until user dismisses message (enter)
- * Fatal: Show to console, log to file, display to user (EXIT_FAILURE on dismissal)
- */
 enum class LogDegree : int {DEBUG, WARNING, FATAL};
-enum class LogType : int {GENERAL, GRAPHICS, DISPLAY};
+enum class LogType : int {GENERAL, GRAPHICS, DISPLAY, INPUT, AUDIO};
 
 class Logger {
     public:
@@ -36,6 +36,8 @@ class Logger {
 
         void normalExit(int line, std::string file, std::string func);
         ~Logger();
+        Logger(Logger const&)        = delete;
+        void operator=(Logger const&)  = delete;
     protected:
 
     private:

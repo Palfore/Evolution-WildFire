@@ -291,4 +291,85 @@ obj\Debug\src\Graphics\LoadingResources\LoadColors.o: \
  libraries/reactphysics3d/src/constraint/FixedJoint.h \
  libraries\SOIL\src/SOIL.h include/Math/MyMath.h \
  include\Simulation/Simulation.h include\Graphics/Drawing/Draw.h \
- include/MyGlut.h
+ include/MyGlut.h include\Logger/Logger.h include/Expected.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ctime \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/sstream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/istream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ios \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ios_base.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_classes.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_classes.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/streambuf \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/streambuf.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_ios.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cwctype \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/ctype_base.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/streambuf_iterator.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/ctype_inline.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_ios.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ostream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ostream.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/istream.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/sstream.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/iostream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/fstream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/codecvt.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/basic_file.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++io.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/fstream.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/unordered_set \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/unordered_set.h \
+ include\Graphics\UserInput/UserInput.h \
+ include\Graphics\UserInput/UserFunction.h include/Graphics/Audio/Audio.h \
+ libraries\SFML-2.4.2\include/SFML/Audio.hpp \
+ libraries\SFML-2.4.2\include/SFML/System.hpp \
+ libraries\SFML-2.4.2\include/SFML/Config.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Clock.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Export.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Time.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Err.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/FileInputStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/InputStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/NonCopyable.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Lock.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/MemoryInputStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Mutex.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Sleep.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/String.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Utf.hpp \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/locale \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets_nonio.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/time_members.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/messages_members.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets_nonio.tcc \
+ libraries\SFML-2.4.2\include/SFML/System/Utf.inl \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/iterator \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stream_iterator.h \
+ libraries\SFML-2.4.2\include/SFML/System/String.inl \
+ libraries\SFML-2.4.2\include/SFML/System/Thread.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Thread.inl \
+ libraries\SFML-2.4.2\include/SFML/System/ThreadLocal.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/ThreadLocalPtr.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/ThreadLocalPtr.inl \
+ libraries\SFML-2.4.2\include/SFML/System/Vector2.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Vector2.inl \
+ libraries\SFML-2.4.2\include/SFML/System/Vector3.hpp \
+ libraries\SFML-2.4.2\include/SFML/System/Vector3.inl \
+ libraries\SFML-2.4.2\include/SFML/Audio/InputSoundFile.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Export.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Listener.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Music.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundStream.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundSource.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/AlResource.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/OutputSoundFile.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/Sound.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundBuffer.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundBufferRecorder.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundRecorder.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileFactory.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileFactory.inl \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileReader.hpp \
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileWriter.hpp

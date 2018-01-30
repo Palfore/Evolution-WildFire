@@ -1412,7 +1412,7 @@
 1517104692 source:c:\users\nisma\desktop\evolution project\src\expected.cpp
 	"Expected.h"
 
-1517104692 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\expected.cpp
+1517176386 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\expected.cpp
 	"Expected.h"
 
 1517104507 c:\users\nisma\documents\github\evolution-project\evolution project\include\expected.h
@@ -1421,15 +1421,16 @@
 	<vector>
 	<sstream>
 
-1517103285 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\draw.cpp
+1517177365 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\draw.cpp
 	"Drawing/Draw.h"
 	"MyGlut.h"
 	"Graphics.h"
 	"Logger.h"
 
-1517084622 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\draw.h
+1517269311 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\draw.h
 	"MyMath.h"
 	"MyGlut.h"
+	"Logger.h"
 
 1517092197 c:\users\nisma\documents\github\evolution-project\evolution project\include\math\mymath.h
 	<math.h>
@@ -1850,7 +1851,7 @@
 
 1508595184 c:\users\nisma\documents\github\evolution-project\evolution project\libraries\soil\src\soil.h
 
-1517104865 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\graphics.h
+1517284213 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\graphics.h
 	<time.h>
 	<functional>
 	<vector>
@@ -1858,11 +1859,14 @@
 	"Math/MyMath.h"
 	"Simulation.h"
 	"Drawing/Draw.h"
+	"UserInput.h"
+	"Graphics/Audio/Audio.h"
 
-1517154345 c:\users\nisma\documents\github\evolution-project\evolution project\include\simulation\simulation.h
+1517283794 c:\users\nisma\documents\github\evolution-project\evolution project\include\simulation\simulation.h
 	<vector>
+	<string>
 
-1517154252 c:\users\nisma\documents\github\evolution-project\evolution project\include\logger\logger.h
+1517284663 c:\users\nisma\documents\github\evolution-project\evolution project\include\logger\logger.h
 	"Expected.h"
 	<iostream>
 	<fstream>
@@ -1873,13 +1877,13 @@
 
 1517007828 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\shapes.cpp
 
-1517004234 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\glutcallbacks.cpp
+1517279212 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\glutcallbacks.cpp
 	"glutCallBacks.h"
 	"Graphics.h"
 
 1516892202 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\glutcallbacks.h
 
-1517154381 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\graphics.cpp
+1517284540 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\graphics.cpp
 	"Graphics.h"
 	"Simulation/Simulation.h"
 	"GlutCallBacks.h"
@@ -1896,24 +1900,286 @@
 1517004068 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\myglut.cpp
 	"myGlut.h"
 
-1517153969 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\logger\logger.cpp
+1517284673 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\logger\logger.cpp
 	"Logger.h"
 	"Drawing/Shapes.h"
 	"Graphics.h"
 
-1517076366 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\shapes.h
+1517270893 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\shapes.h
 	"Drawing/Draw.h"
 	"Logger.h"
+	"Graphics.h"
 
-1516917837 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\main.cpp
+1517284130 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\main.cpp
 	"Graphics.h"
 
 1517007754 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\math\mymath.cpp
 	"Math/MyMath.h"
 
-1517154471 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\simulation\simulation.cpp
+1517284793 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\simulation\simulation.cpp
 	"Simulation.h"
 	"Graphics.h"
 	"Drawing/Shapes.h"
+	"Drawing/Text.h"
+	"Logger.h"
+	<iostream>
+	"Objects.h"
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio.hpp
+	<SFML/System.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/Audio/Listener.hpp>
+	<SFML/Audio/Music.hpp>
+	<SFML/Audio/OutputSoundFile.hpp>
+	<SFML/Audio/Sound.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundBufferRecorder.hpp>
+	<SFML/Audio/SoundFileFactory.hpp>
+	<SFML/Audio/SoundFileReader.hpp>
+	<SFML/Audio/SoundFileWriter.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/Audio/SoundStream.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Clock.hpp>
+	<SFML/System/Err.hpp>
+	<SFML/System/FileInputStream.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Lock.hpp>
+	<SFML/System/MemoryInputStream.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Sleep.hpp>
+	<SFML/System/String.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Utf.hpp>
+	<SFML/System/Vector2.hpp>
+	<SFML/System/Vector3.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\config.hpp
+	"TargetConditionals.h"
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\clock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\export.hpp
+	<SFML/Config.hpp>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\time.hpp
+	<SFML/System/Export.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\err.hpp
+	<SFML/System/Export.hpp>
+	<ostream>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\fileinputstream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdio>
+	<string>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\inputstream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/Export.hpp>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\noncopyable.hpp
+	<SFML/System/Export.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\lock.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\memoryinputstream.hpp
+	<SFML/Config.hpp>
+	<SFML/System/InputStream.hpp>
+	<SFML/System/Export.hpp>
+	<cstdlib>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\mutex.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\sleep.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Time.hpp>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\string.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/Utf.hpp>
+	<iterator>
+	<locale>
+	<string>
+	<SFML/System/String.inl>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\utf.hpp
+	<SFML/Config.hpp>
+	<algorithm>
+	<locale>
+	<string>
+	<cstdlib>
+	<SFML/System/Utf.inl>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\utf.inl
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\string.inl
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\thread.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+	<SFML/System/Thread.inl>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\thread.inl
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\threadlocal.hpp
+	<SFML/System/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<cstdlib>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\threadlocalptr.hpp
+	<SFML/System/ThreadLocal.hpp>
+	<SFML/System/ThreadLocalPtr.inl>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\threadlocalptr.inl
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\vector2.hpp
+	<SFML/System/Vector2.inl>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\vector2.inl
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\vector3.hpp
+	<SFML/System/Vector3.inl>
+
+1517184733 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\system\vector3.inl
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\inputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\export.hpp
+	<SFML/Config.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\listener.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Vector3.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\music.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundStream.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundstream.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Mutex.hpp>
+	<cstdlib>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundsource.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Vector3.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\alresource.hpp
+	<SFML/Audio/Export.hpp>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\outputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<string>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\sound.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Time.hpp>
+	<cstdlib>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundbuffer.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+	<set>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundbufferrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<vector>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<vector>
+	<string>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundfilefactory.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+	<vector>
+	<SFML/Audio/SoundFileFactory.inl>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundfilefactory.inl
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundfilereader.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio\soundfilewriter.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1517269271 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\text.cpp
+
+1517281173 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\text.h
+	"Drawing/Draw.h"
+	"Graphics.h"
+
+1517271358 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\objects.cpp
+	"Objects.h"
+
+1517271412 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\objects.h
+	"Drawing/Draw.h"
+	"Graphics.h"
+
+1517281422 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\userinput\userinput.h
+	"UserFunction.h"
+	"Logger.h"
+	<vector>
+
+1517281578 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\userinput\userfunction.h
+	<functional>
+
+1517278885 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\userinput\userfunction.cpp
+	"UserFunction.h"
+
+1517281426 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\userinput\userinput.cpp
+	"UserInput.h"
+	"Graphics.h"
+	"Drawing/text.h"
+
+1517284882 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\audio\audio.cpp
+	"Audio/Audio.h"
+
+1517284713 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\audio\audio.h
+	<SFML/Audio.hpp>
 	"Logger.h"
 
