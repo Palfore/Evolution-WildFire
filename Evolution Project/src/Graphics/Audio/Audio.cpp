@@ -1,22 +1,14 @@
 #include "Audio/Audio.h"
-//Sound::Sound(std::string file) : Sound(file, 0, 0, 0) {}
-//Sound::Sound(std::string file, double x, double y, double z) : Sound(file, Vec(x, y, z)) {}
-//Sound::Sound(std::string file, Vec position) : buffer(), sound(), loc(position), played(false) {
-//
-//}
-//Sound::~Sound() {
-//    sound.stop();
-//}
 
 Audio::Audio() : music(), soundBuffers(), sounds()  {
     sf::Listener::setUpVector(0, 0, 1);
-    if (!music.openFromFile(std::string(AUDIO_DIRECTORY) + "Sunday_Spirit.wav")) LOG(LogDegree::WARNING, LogType::AUDIO, "Failed to open music.");
+    if (!music.openFromFile(std::string(AUDIO_DIRECTORY) + "Sunday_Spirit.wav")) LOG(COULD_NOT_LOAD_MUSIC_MESSAGE + std::string("Sunday_Spirit.wav") + '.', LogDegree::WARNING, LogType::AUDIO);
 
     std::array<std::string, 1> soundFiles = {"gunShot.wav"};
     for (unsigned int i = 0; i < soundFiles.size(); i++) {
         soundBuffers.insert({soundFiles.at(i), sf::SoundBuffer()});
         if (!soundBuffers.at(soundFiles.at(i)).loadFromFile(std::string(AUDIO_DIRECTORY) + soundFiles[i])) {
-            LOG(LogDegree::WARNING, LogType::AUDIO, "Failed to open sound.");
+            LOG(COULD_NOT_LOAD_MUSIC_MESSAGE + soundFiles[i] + '.', LogDegree::WARNING, LogType::AUDIO);
         }
     }
     music.play();

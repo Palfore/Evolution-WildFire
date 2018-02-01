@@ -8,8 +8,6 @@
 Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {}
 Simulation::~Simulation() {}
 
-#include <iostream>
-
 void Simulation::run() {
     if (inputType != InputType::DEFAULT) {/* Stop Data Processing */}
 
@@ -45,11 +43,6 @@ void Simulation::run() {
         }
     }
 
-//    static int i = 0;
-//    if (i++ % 1000 == 0) {
-//        Graphics::get().audio.playSound("gunShot.wav");
-//        puts("her");
-//    }
     Graphics::get().showScene();
 }
 
@@ -96,7 +89,7 @@ void Simulation::setInputTypeKeyboard() {
                 }
             }));
             userFunctions->push_back(UserFunction(ENTER, [](){
-                Graphics::get().userInput.inputString += '#';
+                Graphics::get().userInput.submitInputString();
                 Graphics::get().userInput.keyInputIsHeld = true;
             }));
             break;
@@ -119,12 +112,12 @@ void Simulation::setInputTypeKeyboard() {
                 }
             }));
             userFunctions->push_back(UserFunction(ENTER, [](){
-                Graphics::get().userInput.inputString += '#';
+                Graphics::get().userInput.submitInputString();
                 Graphics::get().userInput.keyInputIsHeld = true;
             }));
             break;
         default:
-            LOG(LogDegree::WARNING, LogType::INPUT, "UNKNOWN INPUT TYPE KEYBOARD SELECTED.");
+            LOG(UNKNOWN_INPUT_TYPE_MESSAGE, LogDegree::WARNING, LogType::INPUT);
             break;
     }
 }
@@ -135,7 +128,7 @@ void Simulation::loadGameModeKeyboard() {
     switch(gameMode) {
         case GameMode::MAIN_MENU:
             break;
-        case GameMode::SIMULATION: { // Add changing playbackspeed
+        case GameMode::SIMULATION: {
             Camera *camera = &Graphics::get().camera;
 
             /* Setting Controls */
@@ -165,7 +158,7 @@ void Simulation::loadGameModeKeyboard() {
             break;
         }
         default:
-            LOG(LogDegree::WARNING, LogType::INPUT, "UNKNOWN GAMEMODE SELECTED.");
+            LOG(UNKNOWN_GAME_MODE_MESSAGE, LogDegree::WARNING, LogType::INPUT);
             break;
     }
 }

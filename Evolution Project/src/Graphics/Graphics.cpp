@@ -46,16 +46,16 @@ void Graphics::initializeGlut() {
     srand(time(nullptr));
 
     /* General Initializations */
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(INIT_WINDOW_X, INIT_WINDOW_Y);
-	glutInitWindowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT);
-	glutCreateWindow(WINDOW_TITLE);
-	if (fullscreen) {
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowPosition(INIT_WINDOW_X, INIT_WINDOW_Y);
+    glutInitWindowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT);
+    glutCreateWindow(WINDOW_TITLE);
+    if (fullscreen) {
         glutFullScreen();
-	}
+    }
 
-	/* Lighting */
-	GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
+    /* Lighting */
+    GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glShadeModel(GL_SMOOTH);
 
@@ -96,7 +96,7 @@ void Graphics::initializeGlut() {
 void Graphics::showScene() {
     /* Display */
     drawingState = Dimension::NONE;
-    Drawing::enable3D(); // Corrects viewing for camera movement & (helps) prevent drawing 3d over 2d
+    Drawing::enable3D(); // Corrects viewing for camera movement & warns about drawing 3d over 2d
     glutSwapBuffers();
 
     /* Clear, reset, camera */

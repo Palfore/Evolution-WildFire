@@ -13,10 +13,8 @@ Logger::~Logger() {
     }
 }
 
-void Logger::log(int line, std::string file, std::string func, std::string msg) {log(line, file, func, DEFAULT_DEGREE, msg);}
-void Logger::log(int line, std::string file, std::string func, LogDegree d, std::string msg) {log(line, file, func, d, DEFAULT_TYPE, msg);}
-void Logger::log(int line, std::string file, std::string func, LogDegree d, LogType e, std::string msg) {
-    std::string logType = toString(d) + " " + toString(e);
+void Logger::log(int line, std::string file, std::string func, std::string msg, LogDegree d, LogType t) {
+    std::string logType = toString(d) + " " + toString(t);
     std::string uniqueMessage = expected::numToStr<int>(line) + " in " + expected::split(file, "src\\")[1] + ":" + func + " > " + msg;
     std::string logLookup = logType + uniqueMessage;
 
@@ -36,7 +34,7 @@ void Logger::log(int line, std::string file, std::string func, LogDegree d, LogT
             Graphics::get().simulation.setInputType(InputType::FATAL_MESSAGE);
             break;
         default:
-            logMessage("Invalid Log Degree Specified.", false, true);
+            logMessage(UNKNOWN_LOG_DEGREE_MESSAGE, false, true);
             logMessage(errorString, false, true);
     }
 }
@@ -56,11 +54,13 @@ void Logger::logMessage(std::string msg, bool showToUser, bool writeToConsole) {
     if (logFile.is_open()) {
         logFile << msg << '\n';
     } else {
-        std::cout << "Unable to open logging file.\n";
-        /* Every log after failure, should try to reopent the file */
+        /* Every log after failure, should try to reopen the file */
         logFile.open(LOG_FILE_TITLE, std::ios::out | std::ios::trunc);
         if (logFile.is_open()) {
-            logFile << msg << '\n';
+            std::cout << OPENED_LOG_AFTER_FAILURE_MESSAGE;
+            logFile << msg + '\n';
+        } else {
+            std::cout << FAILED_TO_OPEN_AFTER_FAILURE_MESSAGE;
         }
     }
 
@@ -72,12 +72,10 @@ void Logger::logMessage(std::string msg, bool showToUser, bool writeToConsole) {
         DrawRectangle<Appearance::BLUE>(10, 10, 500, 500);
 
         Graphics::get().simulation.setInputType(InputType::BLOCKING_MESSAGE);
-        Graphics::get().simulation.setInputType(InputType::BLOCKING_MESSAGE);
         /* Log to Screen (Lock user input until they press okay, or enter) */
         // to implement later
     }
 }
-
 
 std::string Logger::toString(LogDegree s) {
     switch (s) {
@@ -88,8 +86,8 @@ std::string Logger::toString(LogDegree s) {
     }
 }
 
-std::string Logger::toString(LogType e) {
-    switch (e) {
+std::string Logger::toString(LogType t) {
+    switch (t) {
         case LogType::GENERAL:  return "GENERAL";
         case LogType::GRAPHICS: return "GRAPHICS";
         case LogType::DISPLAY:  return "DISPLAY";

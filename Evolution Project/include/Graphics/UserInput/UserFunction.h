@@ -9,7 +9,7 @@
 #define ENTER     (char) 13
 
 typedef std::function<void()> Action;
-struct UserFunction { // Add Button Functionality -> specify button & move to GUI Folder
+struct UserFunction {
     int specialKey;
     char key;
     Action action;

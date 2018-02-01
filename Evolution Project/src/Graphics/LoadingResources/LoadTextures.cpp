@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "Logger.h"
+#include "expected.h"
 
 void Graphics::loadTextures() {
     std::string dir = "assets/Images/";
@@ -8,6 +9,6 @@ void Graphics::loadTextures() {
         {Appearance::BUTTON, glLoadTexture(dir + "button.png")},
     };
     for (auto const& t : textureMap) {
-        if (!t.second) LOG(LogDegree::FATAL, LogType::GRAPHICS, "Could not load texture.");
+        if (!t.second) LOG("Could not load texture #" + expected::numToStr<int>(t.first) + ".", LogDegree::FATAL, LogType::GRAPHICS);
     }
 }

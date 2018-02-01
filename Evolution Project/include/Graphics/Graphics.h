@@ -44,7 +44,7 @@ class Graphics {
 
         Simulation simulation;
 
-        static double constexpr FPS = 120;
+        static double constexpr FPS = 60;
         static int constexpr RENDERING_DISTANCE = 1000;
 
         bool fullscreen = false;
@@ -67,13 +67,14 @@ class Graphics {
         void operator=(Graphics const&)  = delete;
 
     private:
-        static char constexpr* WINDOW_TITLE = (char*) "Evolution WildFire";
+        static char constexpr const * WINDOW_TITLE = "Evolution WildFire";
         static int constexpr INIT_WINDOW_X = 600;
         static int constexpr INIT_WINDOW_Y = 100;
-        static int constexpr INIT_WINDOW_WIDTH = 800;
-        static int constexpr INIT_WINDOW_HEIGHT = 400;
+        static int constexpr INIT_WINDOW_WIDTH = 1920 / 2.0;
+        static int constexpr INIT_WINDOW_HEIGHT = 1080 / 2.0;
 
         Graphics();
+
         void initializeGlut();
         void loadTextures();
         void loadColors();

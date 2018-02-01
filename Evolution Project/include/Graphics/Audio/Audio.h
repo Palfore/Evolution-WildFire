@@ -5,23 +5,12 @@
 #include "Logger.h"
 #include "MyMath.h"
 
-//class Sound {
-//    public:
-//        Sound(std::string file);
-//        Sound(std::string file, double x, double y, double z);
-//        Sound(std::string file, Vec position);
-//        ~Sound();
-//
-//        sf::SoundBuffer buffer;
-//        sf::Sound sound;
-//        Vec loc;
-//        bool played;
-//};
-
 /* Needs more options! Mono vs Stereo, disable spatialization, loop, attenuation, min distance, clear when done */
 class Audio {
     private:
-        static char constexpr* AUDIO_DIRECTORY = (char*) "assets/Audio/";
+        static char constexpr const * AUDIO_DIRECTORY = "assets/Audio/";
+        static char constexpr const * COULD_NOT_LOAD_MUSIC_MESSAGE = "Failed to open music file: ";
+        static char constexpr const * COULD_NOT_LOAD_SOUND_MESSAGE = "Failed to open sound file: ";
     public:
         sf::Music music;
         std::map<std::string, sf::SoundBuffer> soundBuffers; // Loaded at init

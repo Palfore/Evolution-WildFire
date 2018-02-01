@@ -20,11 +20,11 @@ void Drawing::changeColor(Vec c) {
 }
 
 void Drawing::changeColor(Appearance C) {
-    if (!Drawing::isColor(C)) LOG(LogDegree::WARNING, LogType::GRAPHICS, "Color is not valid.");
+    if (!Drawing::isColor(C)) LOG(INVALID_COLOR_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     try {
         Drawing::changeColor(Graphics::get().colorMap.at(C));
     } catch (std::out_of_range) {
-        LOG(LogDegree::WARNING, LogType::GRAPHICS, "Approved color not found.");
+        LOG(UNKNOWN_APPROVED_COLOR_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     }
 }
 
@@ -33,11 +33,11 @@ void Drawing::changeTexture(Tex textureID) {
 }
 
 void Drawing::changeTexture(Appearance T) {
-    if (!Drawing::isTexture(T)) LOG(LogDegree::WARNING, LogType::GRAPHICS, "Texture is not valid.");
+    if (!Drawing::isTexture(T)) LOG(INVALID_TEXTURE_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     try {
         Drawing::changeTexture(Graphics::get().textureMap.at(T));
     } catch (std::out_of_range) {
-        LOG(LogDegree::WARNING, LogType::GRAPHICS, "Approved texture not found.");
+        LOG(UNKNOWN_APPROVED_TEXTURE_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     }
 }
 
@@ -62,7 +62,7 @@ void Drawing::enable2D() {
 }
 
 void Drawing::enable3D() {
-    if (Graphics::get().drawingState == Dimension::TWO) LOG(LogDegree::FATAL, LogType::GRAPHICS, "Cannot render 2D graphics before 3D.");
+    if (Graphics::get().drawingState == Dimension::TWO) LOG(INVALID_DRAWING_ORDER_MESSAGE, LogDegree::FATAL, LogType::GRAPHICS);
     if (Graphics::get().drawingState == Dimension::THREE) return;
     Graphics::get().drawingState = Dimension::THREE;
 
@@ -83,6 +83,6 @@ void Drawing::enableND(Dimension d) {
         case Dimension::NONE:
         case Dimension::TWO:   Drawing::enable2D(); break;
         case Dimension::THREE: Drawing::enable3D(); break;
-        default: LOG(LogDegree::WARNING, LogType::GRAPHICS, "Invalid number of dimensions, defaulting to 2D"); Drawing::enable2D(); break;
+        default: LOG(UNKNOWN_DIMENSION_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS); Drawing::enable2D(); break;
     }
 }

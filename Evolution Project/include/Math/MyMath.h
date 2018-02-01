@@ -11,5 +11,4 @@ typedef reactphysics3d::Matrix2x2 Matrix2;
 typedef reactphysics3d::Vector3 Vec;
 typedef reactphysics3d::Vector2 Vec2;
 
-
 #endif // MY_MATH_H

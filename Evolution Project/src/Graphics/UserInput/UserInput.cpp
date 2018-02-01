@@ -25,7 +25,10 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
 }
 
 bool UserInput::isInputStringSubmitted() {
-    return inputString.back() == '#';
+    return inputString.back() == TERMINATING_CHAR;
+}
+void UserInput::submitInputString() {
+    inputString += TERMINATING_CHAR;
 }
 
 void UserInput::drawUserString(double x, double y, bool xCenter, bool yCenter) {

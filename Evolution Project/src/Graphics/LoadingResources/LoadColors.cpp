@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-void Graphics::loadColors() { // enum defined in Graphics.h
+void Graphics::loadColors() {
     this->colorMap = {
         {Appearance::MAROON, Vec(128,0,0)},
         {Appearance::DARK_RED, Vec(139,0,0)},
