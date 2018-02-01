@@ -8,9 +8,8 @@
 #define MYGLUT_H_INCLUDED
 
 #include "MyMath.h"
-#include "SOIL.h"
-typedef GLuint Tex;
 
+typedef GLuint Tex;
 Tex glLoadTexture(std::string fileName);
 void glTexVert2f(double tx, double ty, double vx, double vy);
 void glTexVert2f(Vec2 t, double vx, double vy);

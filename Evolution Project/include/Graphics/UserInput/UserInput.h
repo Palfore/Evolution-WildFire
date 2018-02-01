@@ -2,9 +2,7 @@
 #define USERINPUT_H
 
 #include "UserFunction.h"
-#include "Logger.h" // normal exit
 #include <vector>
-
 
 class UserInput {
     private:

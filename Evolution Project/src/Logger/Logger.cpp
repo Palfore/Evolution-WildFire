@@ -2,6 +2,10 @@
 #include "Drawing/Shapes.h" // drawing error message
 #include "Graphics.h"       // affecing game state
 
+#include <iostream> // cout
+#include <stdlib.h> // EXIT_FAILURE
+#include <sstream>  // ostringstream
+
 Logger::Logger() : logs({}), logFile(LOG_FILE_TITLE, std::ios::out | std::ios::trunc) {}
 Logger::~Logger() {
     if (logFile.is_open()) {

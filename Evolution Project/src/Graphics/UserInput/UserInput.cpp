@@ -17,6 +17,11 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
         Graphics::get().toggleFullScreen();
         keyStates[TAB] = false; // stop multiple toggle per key press
     }));
+    /* Audio Test */
+    functions.push_back(UserFunction('.', [this](){
+        Graphics::get().audio.playSound("gunShot.wav");
+        keyStates['.'] = false; // stop multiple toggle per key press
+    }));
 }
 
 bool UserInput::isInputStringSubmitted() {

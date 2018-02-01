@@ -1,8 +1,10 @@
 #include "Graphics.h"
-#include "Simulation/Simulation.h"
+
+#include <time.h> // srand(time(nullptr))
+
+#include "Simulation/Simulation.h" // init
 #include "GlutCallBacks.h"
 #include "Drawing/Draw.h"
-#include "Logger.h"
 
 Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Dimension::NONE),
                     camera(), mouse(), userInput(), audio(),

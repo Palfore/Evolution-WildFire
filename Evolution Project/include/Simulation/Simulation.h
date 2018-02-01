@@ -1,10 +1,6 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include <vector>
-#include <string>
-
-
 enum class GameMode{MAIN_MENU, SIMULATION};
 enum class InputType{DEFAULT, BLOCKING_MESSAGE, FATAL_MESSAGE, NUMERIC_INPUT, ALPHA_NUMERIC_INPUT};
 class Simulation {

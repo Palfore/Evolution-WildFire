@@ -1,16 +1,12 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <time.h> // srand(time(nullptr))
-#include <functional>
-#include <vector>
-
 #include "myGlut.h"
 #include "Math/MyMath.h" // Vec2
-#include "Simulation.h"
-#include "Drawing/Draw.h" // enum Appearance
+#include "Simulation.h" // Simulation
 #include "UserInput.h" // UserInput
-#include "Graphics/Audio/Audio.h"
+#include "Graphics/Audio/Audio.h" // Audio
+#include "Drawing/Draw.h" // enum Appearance
 
 struct Camera {
     static double constexpr INIT_T_SPEED = 1.0;
@@ -48,7 +44,7 @@ class Graphics {
 
         Simulation simulation;
 
-        static double constexpr FPS = 60;
+        static double constexpr FPS = 120;
         static int constexpr RENDERING_DISTANCE = 1000;
 
         bool fullscreen = false;

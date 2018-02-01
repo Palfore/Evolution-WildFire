@@ -1412,25 +1412,26 @@
 1517104692 source:c:\users\nisma\desktop\evolution project\src\expected.cpp
 	"Expected.h"
 
-1517176386 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\expected.cpp
+1517321916 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\expected.cpp
 	"Expected.h"
-
-1517104507 c:\users\nisma\documents\github\evolution-project\evolution project\include\expected.h
-	<string>
 	<ctime>
 	<vector>
-	<sstream>
 
-1517177365 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\draw.cpp
+1517321945 c:\users\nisma\documents\github\evolution-project\evolution project\include\expected.h
+	<string>
+	<sstream>
+	<vector>
+
+1517322765 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\draw.cpp
 	"Drawing/Draw.h"
 	"MyGlut.h"
 	"Graphics.h"
 	"Logger.h"
 
-1517269311 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\draw.h
+1517322853 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\draw.h
+	"Logger.h"
 	"MyMath.h"
 	"MyGlut.h"
-	"Logger.h"
 
 1517092197 c:\users\nisma\documents\github\evolution-project\evolution project\include\math\mymath.h
 	<math.h>
@@ -1851,44 +1852,35 @@
 
 1508595184 c:\users\nisma\documents\github\evolution-project\evolution project\libraries\soil\src\soil.h
 
-1517284213 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\graphics.h
-	<time.h>
-	<functional>
-	<vector>
+1517448622 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\graphics.h
 	"myGlut.h"
 	"Math/MyMath.h"
 	"Simulation.h"
-	"Drawing/Draw.h"
 	"UserInput.h"
 	"Graphics/Audio/Audio.h"
+	"Drawing/Draw.h"
 
-1517283794 c:\users\nisma\documents\github\evolution-project\evolution project\include\simulation\simulation.h
-	<vector>
-	<string>
+1517321744 c:\users\nisma\documents\github\evolution-project\evolution project\include\simulation\simulation.h
 
-1517284663 c:\users\nisma\documents\github\evolution-project\evolution project\include\logger\logger.h
+1517321967 c:\users\nisma\documents\github\evolution-project\evolution project\include\logger\logger.h
 	"Expected.h"
-	<iostream>
-	<fstream>
-	<stdlib.h>
-	<sstream>
-	<vector>
 	<unordered_set>
+	<fstream>
 
 1517007828 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\shapes.cpp
 
-1517279212 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\glutcallbacks.cpp
+1517446497 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\glutcallbacks.cpp
 	"glutCallBacks.h"
 	"Graphics.h"
 
 1516892202 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\glutcallbacks.h
 
-1517284540 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\graphics.cpp
+1517324854 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\graphics.cpp
 	"Graphics.h"
+	<time.h>
 	"Simulation/Simulation.h"
 	"GlutCallBacks.h"
 	"Drawing/Draw.h"
-	"Logger.h"
 
 1517002301 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\loadingresources\loadcolors.cpp
 	"Graphics.h"
@@ -1897,33 +1889,37 @@
 	"Graphics.h"
 	"Logger.h"
 
-1517004068 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\myglut.cpp
+1517322015 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\myglut.cpp
 	"myGlut.h"
+	"SOIL.h"
 
-1517284673 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\logger\logger.cpp
+1517321971 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\logger\logger.cpp
 	"Logger.h"
 	"Drawing/Shapes.h"
 	"Graphics.h"
+	<iostream>
+	<stdlib.h>
+	<sstream>
 
 1517270893 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\shapes.h
 	"Drawing/Draw.h"
 	"Logger.h"
 	"Graphics.h"
 
-1517284130 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\main.cpp
+1517325452 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\main.cpp
 	"Graphics.h"
 
 1517007754 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\math\mymath.cpp
 	"Math/MyMath.h"
 
-1517284793 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\simulation\simulation.cpp
+1517448478 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\simulation\simulation.cpp
 	"Simulation.h"
 	"Graphics.h"
 	"Drawing/Shapes.h"
 	"Drawing/Text.h"
+	"Drawing/Objects.h"
 	"Logger.h"
 	<iostream>
-	"Objects.h"
 
 1517184732 c:\users\nisma\desktop\sfml-2.4.2\include\sfml\audio.hpp
 	<SFML/System.hpp>
@@ -2153,33 +2149,37 @@
 	"Drawing/Draw.h"
 	"Graphics.h"
 
-1517271358 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\objects.cpp
-	"Objects.h"
+1517322498 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\drawing\objects.cpp
 
 1517271412 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\drawing\objects.h
 	"Drawing/Draw.h"
 	"Graphics.h"
 
-1517281422 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\userinput\userinput.h
+1517322657 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\userinput\userinput.h
 	"UserFunction.h"
-	"Logger.h"
 	<vector>
 
-1517281578 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\userinput\userfunction.h
+1517322632 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\userinput\userfunction.h
 	<functional>
 
 1517278885 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\userinput\userfunction.cpp
 	"UserFunction.h"
 
-1517281426 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\userinput\userinput.cpp
+1517448612 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\userinput\userinput.cpp
 	"UserInput.h"
 	"Graphics.h"
 	"Drawing/text.h"
 
-1517284882 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\audio\audio.cpp
+1517449518 source:c:\users\nisma\documents\github\evolution-project\evolution project\src\graphics\audio\audio.cpp
 	"Audio/Audio.h"
 
-1517284713 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\audio\audio.h
+1517450224 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\audio\audio.h
 	<SFML/Audio.hpp>
 	"Logger.h"
+	"MyMath.h"
+
+1517322845 c:\users\nisma\documents\github\evolution-project\evolution project\include\graphics\myglut.h
+	<GLUT/glut.h>
+	<GL/glut.h>
+	"MyMath.h"
 

@@ -1,6 +1,6 @@
 obj\Debug\src\Graphics\MyGlut.o: \
  C:\Users\nisma\Documents\GitHub\Evolution-Project\Evolution\ Project\src\Graphics\MyGlut.cpp \
- include/myGlut.h \
+ include\Graphics/myGlut.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/glut.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/freeglut_std.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/windows.h \

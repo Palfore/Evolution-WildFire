@@ -21,6 +21,7 @@
 					<Add directory="libraries/SOIL/src" />
 					<Add directory="include/Graphics/Drawing" />
 					<Add directory="include/Graphics/UserInput" />
+					<Add directory="include/Graphics/Audio" />
 				</Compiler>
 				<Linker>
 					<Add directory="C:/Users/nisma/Desktop/Evolution Project/include/freeglut/bin" />
@@ -41,6 +42,7 @@
 					<Add directory="include" />
 					<Add directory="include/Graphics/Drawing" />
 					<Add directory="include/Graphics/UserInput" />
+					<Add directory="include/Audio" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -73,8 +75,7 @@
 			<Add option="-Iinclude" />
 			<Add option="-isystemlibraries/reactphysics3d/src" />
 			<Add option="-isystemlibraries\SFML-2.4.2\include" />
-			<Add option="-MD" />
-			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW - older/include" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
 			<Add directory="libraries/reactphysics3d/src" />
 		</Compiler>
 		<Linker>
@@ -88,26 +89,29 @@
 			<Add library="libraries/reactphysics3d/libreactphysics3d.a" />
 			<Add library="libraries/SFML-2.4.2/lib/libsfml-audio.a" />
 			<Add library="libraries/SFML-2.4.2/lib/libsfml-system.a" />
-			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW - older/lib" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 			<Add directory="libraries/reactphysics3d" />
 			<Add directory="libraries/SFML-2.4.2/lib" />
 		</Linker>
 		<Unit filename="assets/errors.txt" />
 		<Unit filename="assets/log.txt" />
+		<Unit filename="include/Graphics/Audio/Audio.h" />
 		<Unit filename="include/Graphics/Drawing/Draw.h" />
 		<Unit filename="include/Graphics/Drawing/Objects.h" />
 		<Unit filename="include/Graphics/Drawing/Shapes.h" />
 		<Unit filename="include/Graphics/Drawing/Text.h" />
 		<Unit filename="include/Graphics/GlutCallBacks.h" />
 		<Unit filename="include/Graphics/Graphics.h" />
+		<Unit filename="include/Graphics/MyGlut.h" />
+		<Unit filename="include/Graphics/UserInput/UserFunction.h" />
 		<Unit filename="include/Graphics/UserInput/UserInput.h" />
 		<Unit filename="include/Logger/Logger.h" />
 		<Unit filename="include/Math/MyMath.h" />
 		<Unit filename="include/Simulation/Simulation.h" />
 		<Unit filename="include/expected.h" />
-		<Unit filename="include/myGlut.h" />
 		<Unit filename="include/version.h" />
 		<Unit filename="resources/Colors.pdf" />
+		<Unit filename="src/Graphics/Audio/Audio.cpp" />
 		<Unit filename="src/Graphics/Drawing/Draw.cpp" />
 		<Unit filename="src/Graphics/Drawing/Objects.cpp" />
 		<Unit filename="src/Graphics/Drawing/Shapes.cpp" />
@@ -117,6 +121,7 @@
 		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
 		<Unit filename="src/Graphics/MyGlut.cpp" />
+		<Unit filename="src/Graphics/UserInput/UserFunction.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserInput.cpp" />
 		<Unit filename="src/Logger/Logger.cpp" />
 		<Unit filename="src/Math/MyMath.cpp" />

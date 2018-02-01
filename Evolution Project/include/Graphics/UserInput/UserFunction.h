@@ -7,6 +7,7 @@
 #define TAB       (char) 9
 #define BACKSPACE (char) 8
 #define ENTER     (char) 13
+
 typedef std::function<void()> Action;
 struct UserFunction { // Add Button Functionality -> specify button & move to GUI Folder
     int specialKey;

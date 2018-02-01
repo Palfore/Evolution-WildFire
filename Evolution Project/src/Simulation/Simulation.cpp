@@ -2,24 +2,16 @@
 #include "Graphics.h"
 #include "Drawing/Shapes.h"
 #include "Drawing/Text.h"
+#include "Drawing/Objects.h"
 #include "Logger.h"
 
 Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {}
 Simulation::~Simulation() {}
 
 #include <iostream>
-#include "Objects.h"
+
 void Simulation::run() {
-    /* Updates based on user input */
-    UserInput *userInput = &Graphics::get().userInput;
-    if (inputType == InputType::ALPHA_NUMERIC_INPUT) {
-        std::cout << userInput->inputString + '\n';
-        if (userInput->isInputStringSubmitted()) {
-            std::cout << "Horray!";
-            setInputType(InputType::DEFAULT);
-        }
-    }
-    if (inputType != InputType::DEFAULT) return; // Only Continue if normal inputtype.
+    if (inputType != InputType::DEFAULT) {/* Stop Data Processing */}
 
     /* Normal Procedure */
     DrawPlane<Appearance::GRASS>(10);
@@ -34,12 +26,30 @@ void Simulation::run() {
     DrawString<Appearance::WHITE>("Type something, then hit enter", 0.5,  0.4);
 
     /* Start and stop getting user input */
-    if (userInput->inputString.empty()) {
-        setInputType(InputType::ALPHA_NUMERIC_INPUT);
-    } else if (userInput->isInputStringSubmitted()) {
-        userInput->drawUserString(0.5, 0.5);
+    UserInput *userInput = &Graphics::get().userInput;
+    if (inputType == InputType::DEFAULT) {
+        if (userInput->inputString.empty()) {
+            setInputType(InputType::ALPHA_NUMERIC_INPUT);
+        } else if (userInput->isInputStringSubmitted()) {
+            userInput->drawUserString(0.5, 0.5);
+            DrawString<Appearance::WHITE>("Now you can move around", 0.5,  0.6);
+        }
     }
 
+    /* Updates based on user input */
+    if (inputType == InputType::ALPHA_NUMERIC_INPUT) {
+        DrawString<Appearance::WHITE>(userInput->inputString, 0.5,  0.5);
+        if (userInput->isInputStringSubmitted()) {
+            setInputType(InputType::DEFAULT);
+            Graphics::get().audio.playSound("gunShot.wav");
+        }
+    }
+
+//    static int i = 0;
+//    if (i++ % 1000 == 0) {
+//        Graphics::get().audio.playSound("gunShot.wav");
+//        puts("her");
+//    }
     Graphics::get().showScene();
 }
 
@@ -60,6 +70,7 @@ void Simulation::setInputType(InputType t) {
 
 void Simulation::setInputTypeKeyboard() {
     std::vector<UserFunction> *userFunctions = &Graphics::get().userInput.functions;
+    Graphics::get().userInput.setToDefault();
     switch(inputType) {
         case InputType::DEFAULT:
             loadGameModeKeyboard();
@@ -91,6 +102,7 @@ void Simulation::setInputTypeKeyboard() {
             break;
         case InputType::ALPHA_NUMERIC_INPUT:
             Graphics::get().userInput.keyInputIsHeld = false;
+
             for (char input = '0'; input <= '9'; input++) {
                 userFunctions->push_back(UserFunction(input, [input](){Graphics::get().userInput.inputString += input;}));
             }
@@ -102,8 +114,8 @@ void Simulation::setInputTypeKeyboard() {
             }
             userFunctions->push_back(UserFunction(' ', [](){Graphics::get().userInput.inputString += ' ';}));
             userFunctions->push_back(UserFunction(BACKSPACE, [](){
-                if (Graphics::get().userInput.inputString .size() > 0) {
-                    Graphics::get().userInput.inputString .pop_back();
+                if (Graphics::get().userInput.inputString.size() > 0) {
+                    Graphics::get().userInput.inputString.pop_back();
                 }
             }));
             userFunctions->push_back(UserFunction(ENTER, [](){
@@ -125,6 +137,7 @@ void Simulation::loadGameModeKeyboard() {
             break;
         case GameMode::SIMULATION: { // Add changing playbackspeed
             Camera *camera = &Graphics::get().camera;
+
             /* Setting Controls */
             userFunctions->push_back(UserFunction(GLUT_KEY_F1, [](){Graphics::get().display ^= true;}));
 

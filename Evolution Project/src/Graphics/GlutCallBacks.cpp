@@ -41,9 +41,14 @@ namespace glutCB {
         double eps = 1e-10;
         if (!Graphics::get().display) return;
 
-        /* Update Position */// Note: Not in orthogonal directions
         Camera *camera = &Graphics::get().camera;
 
+        /* Update Audio */
+//        Graphics::get().audio.clearStoppedSounds();
+        sf::Listener::setPosition(Graphics::get().camera.pos.x, Graphics::get().camera.pos.y, Graphics::get().camera.pos.z);
+        sf::Listener::setDirection(Graphics::get().camera.dir.x, Graphics::get().camera.dir.y, Graphics::get().camera.dir.z);
+
+        /* Update Position */// Note: Not in orthogonal directions
         // Move 'Forward / Backwards'
         if (camera->mov.x > eps || camera->mov.x < -eps) {
             camera->pos.x += camera->mov.x * camera->dir.x;

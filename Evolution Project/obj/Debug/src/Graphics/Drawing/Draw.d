@@ -1,69 +1,35 @@
 obj\Debug\src\Graphics\Drawing\Draw.o: \
  C:\Users\nisma\Documents\GitHub\Evolution-Project\Evolution\ Project\src\Graphics\Drawing\Draw.cpp \
- include\Graphics/Drawing/Draw.h include\Math/MyMath.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/math.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/_mingw.h \
- libraries/reactphysics3d/src/reactphysics3d.h \
- libraries/reactphysics3d/src/configuration.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/limits \
+ include\Graphics/Drawing/Draw.h include\Logger/Logger.h \
+ include/Expected.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/string \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++config.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/os_defines.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/cpu_defines.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cfloat \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/float.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/utility \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_relops.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stringfwd.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/memoryfwd.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/char_traits.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_algobase.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/functexcept.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/exception_defines.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/cpp_type_traits.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/type_traits.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/numeric_traits.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_pair.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/move.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/concept_check.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/type_traits \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/initializer_list \
- libraries/reactphysics3d/src/decimal.h \
- libraries/reactphysics3d/src/mathematics/mathematics.h \
- libraries/reactphysics3d/src/mathematics/Matrix3x3.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cassert \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/assert.h \
- libraries/reactphysics3d/src/mathematics/Vector3.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cmath \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/cpp_type_traits.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/type_traits.h \
- libraries/reactphysics3d/src/mathematics/mathematics_functions.h \
- libraries/reactphysics3d/src/configuration.h \
- libraries/reactphysics3d/src/decimal.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/algorithm \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_algobase.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/functexcept.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/exception_defines.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/numeric_traits.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_iterator_base_types.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_iterator_base_funcs.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/debug/debug.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_iterator.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ptr_traits.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/predefined_ops.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_algo.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cstdlib \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/stdlib.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/stddef.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/algorithmfwd.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_heap.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_tempbuf.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_construct.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/new \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/exception \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/atomic_lockfree_defines.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/exception_ptr.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/nested_exception.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/alloc_traits.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/alloc_traits.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/memoryfwd.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/random \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/string \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stringfwd.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/char_traits.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/postypes.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cwchar \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/wchar.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/_mingw.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/stddef.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/stdarg.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/wctype.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cstdint \
@@ -72,6 +38,11 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/allocator.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++allocator.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/new_allocator.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/new \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/exception \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/atomic_lockfree_defines.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/exception_ptr.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/nested_exception.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/localefwd.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++locale.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/clocale \
@@ -98,15 +69,82 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/pthread_compat.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/pthread_unistd.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/atomic_word.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/initializer_list \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/functional_hash.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/hash_bytes.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_string.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/random.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/sstream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/istream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ios \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ios_base.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_classes.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_classes.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/streambuf \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/streambuf.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_ios.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cwctype \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/ctype_base.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/streambuf_iterator.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/ctype_inline.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_ios.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ostream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ostream.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/istream.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/sstream.tcc \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/vector \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_construct.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/alloc_traits.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/alloc_traits.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_uninitialized.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_vector.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_bvector.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/vector.tcc \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/unordered_set \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/utility \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_relops.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/tuple \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/array \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/stdexcept \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/uses_allocator.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/aligned_buffer.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/hashtable.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/hashtable_policy.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/unordered_set.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/fstream \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/codecvt.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cstdio \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/stdio.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/basic_file.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++io.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/fstream.tcc \
+ include\Math/MyMath.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/math.h \
+ libraries/reactphysics3d/src/reactphysics3d.h \
+ libraries/reactphysics3d/src/configuration.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/limits \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cfloat \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/float.h \
+ libraries/reactphysics3d/src/decimal.h \
+ libraries/reactphysics3d/src/mathematics/mathematics.h \
+ libraries/reactphysics3d/src/mathematics/Matrix3x3.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cassert \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/assert.h \
+ libraries/reactphysics3d/src/mathematics/Vector3.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cmath \
+ libraries/reactphysics3d/src/mathematics/mathematics_functions.h \
+ libraries/reactphysics3d/src/configuration.h \
+ libraries/reactphysics3d/src/decimal.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/algorithm \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_algo.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cstdlib \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/stdlib.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/algorithmfwd.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_heap.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_tempbuf.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/random \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/random.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/opt_random.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/x86intrin.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/ia32intrin.h \
@@ -154,10 +192,7 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  libraries/reactphysics3d/src/mathematics/Quaternion.h \
  libraries/reactphysics3d/src/mathematics/Transform.h \
  libraries/reactphysics3d/src/mathematics/Ray.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cstdio \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/stdio.h \
  libraries/reactphysics3d/src/body/CollisionBody.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/stdexcept \
  libraries/reactphysics3d/src/body/Body.h \
  libraries/reactphysics3d/src/mathematics/Transform.h \
  libraries/reactphysics3d/src/collision/shapes/AABB.h \
@@ -179,7 +214,6 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  libraries/reactphysics3d/src/engine/CollisionWorld.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/set \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_tree.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ext/aligned_buffer.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_set.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/stl_multiset.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/list \
@@ -211,11 +245,6 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  libraries/reactphysics3d/src/collision/shapes/TriangleShape.h \
  libraries/reactphysics3d/src/collision/shapes/ConvexShape.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/unordered_map \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/tuple \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/array \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/uses_allocator.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/hashtable.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/hashtable_policy.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/unordered_map.h \
  libraries/reactphysics3d/src/collision/narrowphase/SphereVsSphereAlgorithm.h \
  libraries/reactphysics3d/src/collision/narrowphase/GJK/GJKAlgorithm.h \
@@ -264,7 +293,8 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  libraries/reactphysics3d/src/constraint/SliderJoint.h \
  libraries/reactphysics3d/src/engine/ConstraintSolver.h \
  libraries/reactphysics3d/src/constraint/HingeJoint.h \
- libraries/reactphysics3d/src/constraint/FixedJoint.h include/MyGlut.h \
+ libraries/reactphysics3d/src/constraint/FixedJoint.h \
+ include\Graphics/MyGlut.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/glut.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/freeglut_std.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/windows.h \
@@ -285,42 +315,12 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/winsvc.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/gl.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/GL/glu.h \
- libraries\SOIL\src/SOIL.h include\Logger/Logger.h include/Expected.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ctime \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/time.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/sstream \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/istream \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ios \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ios_base.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_classes.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_classes.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/streambuf \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/streambuf.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_ios.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/cwctype \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/ctype_base.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/streambuf_iterator.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/ctype_inline.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/basic_ios.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ostream \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/ostream.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/istream.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/sstream.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/iostream \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/fstream \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/codecvt.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/basic_file.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/c++io.h \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/fstream.tcc \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/unordered_set \
- C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/unordered_set.h \
- include\Graphics/Graphics.h \
+ include\Graphics/Graphics.h include\Graphics/myGlut.h \
+ include/Math/MyMath.h include\Simulation/Simulation.h \
+ include\Graphics\UserInput/UserInput.h \
+ include\Graphics\UserInput/UserFunction.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/functional \
- include/myGlut.h include/Math/MyMath.h include\Simulation/Simulation.h \
- include\Graphics/Drawing/Draw.h include\Graphics\UserInput/UserInput.h \
- include\Graphics\UserInput/UserFunction.h include/Graphics/Audio/Audio.h \
+ include/Graphics/Audio/Audio.h \
  libraries\SFML-2.4.2\include/SFML/Audio.hpp \
  libraries\SFML-2.4.2\include/SFML/System.hpp \
  libraries\SFML-2.4.2\include/SFML/Config.hpp \
@@ -339,6 +339,8 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  libraries\SFML-2.4.2\include/SFML/System/Utf.hpp \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/locale \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets_nonio.h \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/ctime \
+ C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/include/time.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/time_members.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/mingw32/bits/messages_members.h \
  C:/Program\ Files\ (x86)/CodeBlocks/MinGW\ -\ older/lib/gcc/mingw32/4.9.2/include/c++/bits/locale_facets_nonio.tcc \
@@ -370,4 +372,5 @@ obj\Debug\src\Graphics\Drawing\Draw.o: \
  libraries\SFML-2.4.2\include/SFML/Audio/SoundFileFactory.hpp \
  libraries\SFML-2.4.2\include/SFML/Audio/SoundFileFactory.inl \
  libraries\SFML-2.4.2\include/SFML/Audio/SoundFileReader.hpp \
- libraries\SFML-2.4.2\include/SFML/Audio/SoundFileWriter.hpp
+ libraries\SFML-2.4.2\include/SFML/Audio/SoundFileWriter.hpp \
+ include\Graphics/Drawing/Draw.h

@@ -1,4 +1,5 @@
 #include "myGlut.h"
+#include "SOIL.h"
 
 Tex glLoadTexture(std::string fileName) {
     return SOIL_load_OGL_texture (

@@ -10,13 +10,9 @@
  */
 
 #include "Expected.h"
-#include <iostream> // cout
-#include <fstream>  // ofstream
-#include <stdlib.h> // EXIT_FAILURE
-#include <sstream>  // ostringstream
-#include <vector>   // vector
-#include <unordered_set> // unordered_set -> fastest container for unique entries
 
+#include <unordered_set> // unordered_set -> fastest container for unique entries
+#include <fstream>  // ofstream
 
 #define LOG(...) Logger::get().log(__LINE__, __FILE__, __FUNCTION__, __VA_ARGS__) //if __FUNCTION__ -> "operator()" means lambda expression
 #define NORMAL_EXIT() Logger::get().normalExit(__LINE__, __FILE__, __FUNCTION__)

@@ -1,4 +1,6 @@
 #include "Expected.h"
+#include <ctime>
+#include <vector>
 
 namespace expected{
     std::vector<std::string> split(std::string stringToBeSplitted, std::string delimeter) {

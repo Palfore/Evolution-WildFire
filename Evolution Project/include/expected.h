@@ -2,12 +2,8 @@
 #define EXPECTED_H
 
 #include <string>
-#include <ctime>
-#include <vector>
-//#include <fstream>  // ofstream
-//#include <iostream> // cout
 #include <sstream>  // ostringstream
-
+#include <vector>
 namespace expected {
     template <typename T> // fix to compiler bug > toString not a member of std
     std::string numToStr (T Number) {
@@ -16,11 +12,8 @@ namespace expected {
         return ss.str();
     }
     std::vector<std::string> split(std::string stringToBeSplitted, std::string delimeter);
-
     std::string getCurrentTime();
     std::string getCurrentDate();
-
-
 }
 
 #endif // EXPECTED_H
