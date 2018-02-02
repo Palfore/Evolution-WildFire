@@ -10,7 +10,7 @@
 #define NORMAL_EXIT() Logger::get().normalExit(__LINE__, __FILE__, __FUNCTION__)
 
 enum class LogDegree : unsigned int {DEBUG, WARNING, FATAL};
-enum class LogType   : unsigned int {GENERAL, GRAPHICS, DISPLAY, INPUT, AUDIO};
+enum class LogType   : unsigned int {GENERAL, GRAPHICS, DISPLAY, INPUT, AUDIO, CONFIG};
 
 /**
  * Logs all debugging messages, only logs unique warnings. (Note: Only 1 fatal message is ever possible).
