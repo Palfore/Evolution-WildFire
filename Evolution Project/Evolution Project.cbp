@@ -23,9 +23,6 @@
 					<Add directory="include/Graphics/UserInput" />
 					<Add directory="include/Graphics/Audio" />
 				</Compiler>
-				<Linker>
-					<Add directory="C:/Users/nisma/Desktop/Evolution Project/include/freeglut/bin" />
-				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/Evolution Project" prefix_auto="1" extension_auto="1" />
@@ -76,7 +73,6 @@
 			<Add option="-isystemlibraries/reactphysics3d/src" />
 			<Add option="-isystemlibraries\SFML-2.4.2\include" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
-			<Add directory="libraries/reactphysics3d/src" />
 		</Compiler>
 		<Linker>
 			<Add option="-lopengl32" />
