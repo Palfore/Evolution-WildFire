@@ -1,1 +1,0 @@
-The program has exited successfully. From line 15 in Graphics\UserInput\UserInput.cpp:operator() at Mar/2/2018-(10:49:19).

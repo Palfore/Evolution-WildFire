@@ -11,6 +11,7 @@
 
 typedef GLuint Tex;
 Tex glLoadTexture(std::string fileName);
+void saveScreenShot();
 void glTexVert2f(double tx, double ty, double vx, double vy);
 void glTexVert2f(Vec2 t, double vx, double vy);
 void glTexVert2f(double tx, double ty, Vec2 v);

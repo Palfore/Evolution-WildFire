@@ -38,7 +38,7 @@ class Logger {
         void operator=(Logger const&)  = delete;
 
     private:
-        static constexpr const char * LOG_FILE_TITLE = "assets/log.txt";
+        static constexpr const char * LOG_FILE_TITLE = "assets/logger.log";
         static constexpr const char * PROGRAM_EXIT_MESSAGE = "The program has exited successfully.";
         static constexpr const char * OPENED_LOG_AFTER_FAILURE_MESSAGE = "Initialization could not open logging file. Succeeded in reopening.\n";
         static constexpr const char * FAILED_TO_OPEN_AFTER_FAILURE_MESSAGE = "Initialization could not open logging file. Failed in reopening.\n";

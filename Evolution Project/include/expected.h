@@ -5,6 +5,8 @@
 #include <sstream>  // ostringstream
 #include <vector>
 namespace expected {
+    std::string replaceString(std::string subject, const std::string& search, const std::string& replace);
+    std::string replaceCharSet(std::string subject, const std::string& charSet, const std::string& replace);
     template <typename T> // fix to compiler bug > toString not a member of std
     std::string numToStr (T Number) {
         std::ostringstream ss;

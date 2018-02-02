@@ -12,6 +12,15 @@ namespace glutCB {
     }
 
     void renderScene() {
+        /* Clear, reset, camera */
+        glClearColor(0.00, 0.75, 1.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        auto camera = Graphics::get().camera;
+        gluLookAt(              camera.pos.x,                 camera.pos.y,                 camera.pos.z,
+                 camera.pos.x + camera.dir.x,  camera.pos.y + camera.dir.y,  camera.pos.z + camera.dir.z,
+                                         0.0,                          0.0,                          1.0);
+        /* Run Simulation */
         if (!Graphics::get().display) { // Run asap
             Graphics::get().simulation.run();
         } else {
