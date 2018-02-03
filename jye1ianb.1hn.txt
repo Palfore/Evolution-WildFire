@@ -1,0 +1,33 @@
+﻿squash 894012f Rename readme.md to index.md
+squash 6b620fa Rename index.md to README.md
+squash b62b58f Updated Readme
+squash 4171877 Update README.md
+squash 3b971c6 Update README.md
+squash 6745f6f Update README.md
+squash 5ebc4db Update README.md
+squash b415230 Update README.md
+squash 1e019ed Update README.md
+squash b1796ce Update README.md
+squash aae07bc Update README.md
+squash 3b9b248 Update README.md
+squash e8d4397 Update README.md
+
+# Rebase 5a674ff..e8d4397 onto 5a674ff (13 commands)
+#
+# Commands:
+# p, push = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+

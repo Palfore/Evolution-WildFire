@@ -2,6 +2,8 @@
 
 Evolution WildFire is a 3D interactive evolution simulator. Creatures are created by randomly assembling a set of mechanical components. These creatures are then run through the Genetic Algorithm, where the strong survive, and the weak... well let's not worry about them. Hopes for this project include, neural network control for the activation of creature muscles, as well as creating a populated 3D world in which a user can control and manipulate their creature, evolving it as it collects resources and fights off other hungry creatures.  
 
+![3D Terrain with creature in center shot](https://github.com/Palfore/Evolution-Project/blob/master/docs/3D%20Terrain%20w%20Creature.jpg "Evolution WildFire")
+
 ## Getting Started
 
 A semi-major priority in this project is to keep dependencies managed. As in, you should be able to simply copy the project onto a local drive and run & it right away. Unfortunetly, some of these dependencies are too large to reasonably store along with the rest of the project.
