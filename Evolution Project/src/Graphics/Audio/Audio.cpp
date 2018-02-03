@@ -1,4 +1,5 @@
 #include "Audio/Audio.h"
+#include "Config.h"
 
 Audio::Audio() : music(), soundBuffers(), sounds()  {
     sf::Listener::setUpVector(0, 0, 1);
