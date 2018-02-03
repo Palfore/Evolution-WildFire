@@ -13,6 +13,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add directory="include/Graphics" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation" />
@@ -22,6 +23,7 @@
 					<Add directory="include/Graphics/Drawing" />
 					<Add directory="include/Graphics/UserInput" />
 					<Add directory="include/Graphics/Audio" />
+					<Add directory="include/Config" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -40,6 +42,7 @@
 					<Add directory="include/Graphics/Drawing" />
 					<Add directory="include/Graphics/UserInput" />
 					<Add directory="include/Audio" />
+					<Add directory="include/Config" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -89,8 +92,9 @@
 			<Add directory="libraries/reactphysics3d" />
 			<Add directory="libraries/SFML-2.4.2/lib" />
 		</Linker>
-		<Unit filename="assets/errors.txt" />
-		<Unit filename="assets/log.txt" />
+		<Unit filename="assets/config.config" />
+		<Unit filename="assets/logger.log" />
+		<Unit filename="include/Config/Config.h" />
 		<Unit filename="include/Graphics/Audio/Audio.h" />
 		<Unit filename="include/Graphics/Drawing/Draw.h" />
 		<Unit filename="include/Graphics/Drawing/Objects.h" />
@@ -107,6 +111,7 @@
 		<Unit filename="include/expected.h" />
 		<Unit filename="include/version.h" />
 		<Unit filename="resources/Colors.pdf" />
+		<Unit filename="src/Config/Config.cpp" />
 		<Unit filename="src/Graphics/Audio/Audio.cpp" />
 		<Unit filename="src/Graphics/Drawing/Draw.cpp" />
 		<Unit filename="src/Graphics/Drawing/Objects.cpp" />

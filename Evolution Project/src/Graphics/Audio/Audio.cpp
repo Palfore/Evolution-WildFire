@@ -11,7 +11,9 @@ Audio::Audio() : music(), soundBuffers(), sounds()  {
             LOG(COULD_NOT_LOAD_MUSIC_MESSAGE + soundFiles[i] + '.', LogDegree::WARNING, LogType::AUDIO);
         }
     }
-    music.play();
+    if (CONFIG_AUDIO()) {
+        music.play();
+    }
 }
 
 Audio::~Audio() {
@@ -21,13 +23,15 @@ Audio::~Audio() {
 void Audio::playSound(std::string soundFile) {playSound(soundFile, 0, 0, 0);}
 void Audio::playSound(std::string soundFile, double x, double y, double z) {playSound(soundFile, Vec(x, y, z));}
 void Audio::playSound(std::string soundFile, Vec position) {
-    sounds.push_back(sf::Sound());
+    if (CONFIG_AUDIO()) {
+        sounds.push_back(sf::Sound());
 
-    sounds[sounds.size() - 1].setMinDistance(10);
-    sounds[sounds.size() - 1].setAttenuation(0.5);
-    sounds[sounds.size() - 1].setPosition(position.x, position.y, position.z);
-    sounds[sounds.size() - 1].setBuffer(soundBuffers.at(soundFile));
-    sounds[sounds.size() - 1].play();
+        sounds[sounds.size() - 1].setMinDistance(10);
+        sounds[sounds.size() - 1].setAttenuation(0.5);
+        sounds[sounds.size() - 1].setPosition(position.x, position.y, position.z);
+        sounds[sounds.size() - 1].setBuffer(soundBuffers.at(soundFile));
+        sounds[sounds.size() - 1].play();
+    }
 }
 void Audio::clearStoppedSounds() {
 //    sounds.erase(std::remove_if(sounds.begin(),

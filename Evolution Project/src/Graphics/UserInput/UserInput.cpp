@@ -22,6 +22,9 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
         Graphics::get().audio.playSound("gunShot.wav");
         keyStates['.'] = false; // stop multiple toggle per key press
     }));
+    functions.push_back(UserFunction(',', [](){
+                                     saveScreenShot();
+                                     }));
 }
 
 bool UserInput::isInputStringSubmitted() {

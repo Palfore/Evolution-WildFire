@@ -47,7 +47,7 @@ class Graphics {
         static double constexpr FPS = 60;
         static int constexpr RENDERING_DISTANCE = 1000;
 
-        bool fullscreen = false;
+        bool fullscreen;
         bool display = true;
 
         void toggleFullScreen();

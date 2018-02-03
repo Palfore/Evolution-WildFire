@@ -5,10 +5,12 @@
 #include "Simulation/Simulation.h" // init
 #include "GlutCallBacks.h"
 #include "Drawing/Draw.h"
+#include "Config.h"
 
 Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Dimension::NONE),
                     camera(), mouse(), userInput(), audio(),
-                    simulation()  {
+                    simulation(),
+                    fullscreen(CONFIG_FULLSCREEN())  {
     /* Init GLUT with title */
     int myargc = 1;
     char *s2 = new char[strlen(WINDOW_TITLE) + 1];
@@ -98,14 +100,7 @@ void Graphics::showScene() {
     drawingState = Dimension::NONE;
     Drawing::enable3D(); // Corrects viewing for camera movement & warns about drawing 3d over 2d
     glutSwapBuffers();
-
-    /* Clear, reset, camera */
-    glClearColor(0.00, 0.75, 1.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    gluLookAt(              camera.pos.x,                 camera.pos.y,                 camera.pos.z,
-             camera.pos.x + camera.dir.x,  camera.pos.y + camera.dir.y,  camera.pos.z + camera.dir.z,
-                                     0.0,                          0.0,                          1.0);
 }
+
 
 

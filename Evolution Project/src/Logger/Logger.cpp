@@ -93,6 +93,7 @@ std::string Logger::toString(LogType t) {
         case LogType::DISPLAY:  return "DISPLAY";
         case LogType::INPUT:    return "INPUT";
         case LogType::AUDIO:    return "AUDIO";
+        case LogType::CONFIG:   return "CONFIG";
         default:        return "UNKNOWN";
     }
 }

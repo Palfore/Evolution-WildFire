@@ -1,5 +1,6 @@
 #include "myGlut.h"
 #include "SOIL.h"
+#include "Logger.h"
 
 Tex glLoadTexture(std::string fileName) {
     return SOIL_load_OGL_texture (
@@ -7,6 +8,23 @@ Tex glLoadTexture(std::string fileName) {
                  SOIL_LOAD_AUTO,
                  SOIL_CREATE_NEW_ID,
                  SOIL_FLAG_INVERT_Y);
+}
+
+void saveScreenShot() {
+    std::string directory = "screenshots/";
+    std::string file = "screenshot - " +
+                        expected::replaceCharSet(expected::getCurrentDate(), "/,:", "_") +
+                        " - " +
+                        expected::replaceCharSet(expected::getCurrentTime(), "/,:", "_") +
+                        ".png";
+    if (SOIL_save_screenshot(
+            (directory + file).c_str(),
+            SOIL_SAVE_TYPE_BMP,
+            0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT))) {
+        LOG("Saved screenshot", LogDegree::DEBUG, LogType::GRAPHICS);
+    } else {
+        LOG("Could not save screenshot.", LogDegree::WARNING, LogType::GRAPHICS);
+    }
 }
 
 void glTexVert2f(double tx, double ty, double vx, double vy) {glTexVert2f(Vec2(tx, ty), Vec2(vx, vy));}

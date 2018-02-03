@@ -3,6 +3,22 @@
 #include <vector>
 
 namespace expected{
+    std::string replaceString(std::string subject, const std::string& search, const std::string& replace) {
+        size_t pos = 0;
+        while ((pos = subject.find(search, pos)) != std::string::npos) {
+             subject.replace(pos, search.length(), replace);
+             pos += replace.length();
+        }
+        return subject;
+    }
+
+    std::string replaceCharSet(std::string subject, const std::string& charSet, const std::string& replace) {
+        for (char c : charSet) {
+            subject = replaceString(subject, std::string(1, c), replace);
+        }
+        return subject;
+    }
+
     std::vector<std::string> split(std::string stringToBeSplitted, std::string delimeter) {
          std::vector<std::string> splittedString;
          int startIndex = 0;
