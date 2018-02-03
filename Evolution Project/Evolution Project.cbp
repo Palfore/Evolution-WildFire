@@ -93,6 +93,7 @@
 			<Add directory="libraries/SFML-2.4.2/lib" />
 		</Linker>
 		<Unit filename="assets/config.config" />
+		<Unit filename="assets/logger.log" />
 		<Unit filename="include/Config/Config.h" />
 		<Unit filename="include/Graphics/Audio/Audio.h" />
 		<Unit filename="include/Graphics/Drawing/Draw.h" />

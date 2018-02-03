@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 #define CONFIG_FULLSCREEN() Config::loadFromFile_bool("CONFIG_FULLSCREEN")
+#define CONFIG_AUDIO() Config::loadFromFile_bool("CONFIG_AUDIO")
 
 #include <iostream>
 class Config final {
