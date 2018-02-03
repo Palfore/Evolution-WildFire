@@ -9,8 +9,7 @@
 
 Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Dimension::NONE),
                     camera(), mouse(), userInput(), audio(),
-                    simulation(),
-                    fullscreen(CONFIG_FULLSCREEN())  {
+                    simulation()  {
     /* Init GLUT with title */
     int myargc = 1;
     char *s2 = new char[strlen(WINDOW_TITLE) + 1];
@@ -22,26 +21,18 @@ Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawin
     initializeGlut();
     loadColors();
     loadTextures();
+    if (CONFIG_FULLSCREEN()) glutFullScreen();
 }
 
 
 Graphics::~Graphics() {
 }
 
+
 void Graphics::run() {
     Graphics::get().userInput.setToDefault();
     simulation.init();
     glutMainLoop();
-}
-
-void Graphics::toggleFullScreen() {
-    if (Graphics::get().fullscreen) {
-        glutReshapeWindow(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT);
-    } else {
-        glutFullScreen();
-    }
-    Graphics::get().fullscreen ^= true;
-    Graphics::get().windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 
 void Graphics::initializeGlut() {
@@ -52,9 +43,6 @@ void Graphics::initializeGlut() {
     glutInitWindowPosition(INIT_WINDOW_X, INIT_WINDOW_Y);
     glutInitWindowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT);
     glutCreateWindow(WINDOW_TITLE);
-    if (fullscreen) {
-        glutFullScreen();
-    }
 
     /* Lighting */
     GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};

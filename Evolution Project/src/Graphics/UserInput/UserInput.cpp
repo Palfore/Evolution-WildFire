@@ -14,7 +14,7 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
     functions = {};
     functions.push_back(UserFunction(ESC, [](){NORMAL_EXIT();}));
     functions.push_back(UserFunction(TAB, [this](){
-        Graphics::get().toggleFullScreen();
+        glutFullScreenToggle();
         keyStates[TAB] = false; // stop multiple toggle per key press
     }));
     /* Audio Test */
