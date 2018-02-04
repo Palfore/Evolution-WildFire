@@ -54,3 +54,4 @@ Temporary Items
 *.depend
 *.layout
 *.log
+"Evolution Project/screenshots/*.png"
