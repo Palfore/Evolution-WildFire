@@ -9,8 +9,7 @@
 
 Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Dimension::NONE),
                     camera(), mouse(), userInput(), audio(),
-                    simulation(),
-                    fullscreen(CONFIG_FULLSCREEN())  {
+                    simulation() {
     /* Init GLUT with title */
     int myargc = 1;
     char *s2 = new char[strlen(WINDOW_TITLE) + 1];
