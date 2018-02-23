@@ -1,12 +1,14 @@
 #include "glutCallBacks.h"
-#include "Graphics.h" // Glut functions
+#include "GFramework.h" // Glut functions
+#include <SFML/Audio.hpp> //sf::Listener::setPosition, sf::Listener::setDirection
+#include "Simulation.h"
 
 namespace glutCB {
     void changeSize(int w, int h) {
         double windowRatio = w / static_cast<double>(h); // window aspect ratio
         glMatrixMode(GL_PROJECTION); // projection matrix is active
         glLoadIdentity(); // reset the projection
-        gluPerspective(45.0, windowRatio, 0.1, Graphics::get().RENDERING_DISTANCE); // perspective transformation
+        gluPerspective(45.0, windowRatio, 0.1, GFramework::RENDERING_DISTANCE); // perspective transformation
         glMatrixMode(GL_MODELVIEW); // return to modelview mode
         glViewport(0, 0, w, h); // set viewport (drawing area) to entire window
     }
@@ -16,23 +18,23 @@ namespace glutCB {
         glClearColor(0.00, 0.75, 1.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
-        auto camera = Graphics::get().camera;
+        auto camera = GFramework::get->camera;
         gluLookAt(              camera.pos.x,                 camera.pos.y,                 camera.pos.z,
                  camera.pos.x + camera.dir.x,  camera.pos.y + camera.dir.y,  camera.pos.z + camera.dir.z,
                                          0.0,                          0.0,                          1.0);
         /* Run Simulation */
-        if (!Graphics::get().display) { // Run asap
-            Graphics::get().simulation.run();
+        if (!GFramework::get->display) { // Run asap
+            GFramework::get->simulation->run();
         } else {
             /* Keep FPS Constant */
-            const int msPerFrame = 1000.0 / Graphics::get().FPS;
+            const int msPerFrame = 1000.0 / GFramework::FPS;
             int init = glutGet(GLUT_ELAPSED_TIME);
 
-            Graphics::get().simulation.run();
+            GFramework::get->simulation->run();
 
             int total = glutGet(GLUT_ELAPSED_TIME);
             while (total - init < msPerFrame) {
-                Graphics::get().simulation.run();
+                GFramework::get->simulation->run();
                 total = glutGet(GLUT_ELAPSED_TIME);
             }
             init = glutGet(GLUT_ELAPSED_TIME);
@@ -40,22 +42,22 @@ namespace glutCB {
     }
 
     void update() {
-        glutPostRedisplay(); // redisplay everything
-        Graphics::get().windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+        glutPostRedisplay(); // redisplay everything, maybe this should be moved
+        GFramework::get->windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)); // maybe move to redisplay
 
-        for (auto const& func : Graphics::get().userInput.functions) {
-            if (Graphics::get().userInput.keyStates[static_cast<int>(func.key)]) func.action(); // key holds
+        for (auto const& func : GFramework::get->userInput.functions) {
+            if (GFramework::get->userInput.keyStates[static_cast<int>(func.key)]) func.action(); // key holds
         }
 
         double eps = 1e-10;
-        if (!Graphics::get().display) return;
+        if (!GFramework::get->display) return;
 
-        Camera *camera = &Graphics::get().camera;
+        Camera *camera = &GFramework::get->camera;
 
         /* Update Audio */
-//        Graphics::get().audio.clearStoppedSounds();
-        sf::Listener::setPosition(Graphics::get().camera.pos.x, Graphics::get().camera.pos.y, Graphics::get().camera.pos.z);
-        sf::Listener::setDirection(Graphics::get().camera.dir.x, Graphics::get().camera.dir.y, Graphics::get().camera.dir.z);
+//        GFramework::get->audio.clearStoppedSounds();
+        sf::Listener::setPosition(GFramework::get->camera.pos.x, GFramework::get->camera.pos.y, GFramework::get->camera.pos.z);
+        sf::Listener::setDirection(GFramework::get->camera.dir.x, GFramework::get->camera.dir.y, GFramework::get->camera.dir.z);
 
         /* Update Position */// Note: Not in orthogonal directions
         // Move 'Forward / Backwards'
@@ -93,48 +95,48 @@ namespace glutCB {
         camera->mov.setToZero();
     }
 
-    void callMouse(int button, int state, int mx, int my) { // not yet implemented
+    void callMouse(int button, int state, int mx, int my) {
         if (button && state) return;
         if (mx && my) return;
     }
 
-    void mouseMove(int mx, int my) { // not yet implemented
+    void mouseMove(int mx, int my) {
         if (mx && my) return;
     }
 
     void passiveMouse(int x, int y) {
-        Graphics::get().mouse.x = x;
-        Graphics::get().mouse.y = y;
-        Graphics::get().camera.del.setToZero(); // Prevent motion after mouse release (if used to move camera)
+        GFramework::get->mouse.x = x;
+        GFramework::get->mouse.y = y;
+        GFramework::get->camera.del.setToZero(); // Prevent motion after mouse release (if used to move camera)
     }
 
     void keyPressed(unsigned char key, int x, int y) {
         if (key & x * y){}
-        if (Graphics::get().userInput.keyInputIsHeld) {
-            Graphics::get().userInput.keyStates[tolower(key)] = true; // Set the state of the current key to pressed for holding
+        if (GFramework::get->userInput.keyInputIsHeld) {
+            GFramework::get->userInput.keyStates[tolower(key)] = true; // Set the state of the current key to pressed for holding
         }
-        for (auto const& func : Graphics::get().userInput.functions) {
+        for (auto const& func : GFramework::get->userInput.functions) {
             if (func.key == key) func.action(); // single press
         }
     }
 
     void keyUp(unsigned char key, int x, int y) {
-        Graphics::get().userInput.keyStates[tolower(key)] = false; // Release the state of the current key to pressed for holding
-        for (auto const& func : Graphics::get().userInput.functions) {
+        GFramework::get->userInput.keyStates[tolower(key)] = false; // Release the state of the current key to pressed for holding
+        for (auto const& func : GFramework::get->userInput.functions) {
             if (func.key == key) func.release();
         }
         if (key && x && y) return;
     }
 
     void pressSpecialKey(int key, int kxx, int kyy) { // not yet implemented
-        for (auto const& func : Graphics::get().userInput.functions) {
+        for (auto const& func : GFramework::get->userInput.functions) {
             if (func.specialKey == key) func.action();
         }
         if (key && kxx && kyy) return;
     }
 
     void releaseSpecialKey(int key, int kx, int ky) { // not yet implemented
-        for (auto const& func : Graphics::get().userInput.functions) {
+        for (auto const& func : GFramework::get->userInput.functions) {
             if (func.specialKey == key) func.release();
         }
         if (key && kx && ky) return;

@@ -54,4 +54,6 @@ Temporary Items
 *.depend
 *.layout
 *.log
+Evolution Project/doxygen/html
+Evolution Project/doxygen/latex
 "Evolution Project/screenshots/*.png"

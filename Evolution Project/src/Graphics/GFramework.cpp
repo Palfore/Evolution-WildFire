@@ -1,4 +1,4 @@
-#include "Graphics.h"
+#include "GFramework.h"
 
 #include <time.h> // srand(time(nullptr))
 
@@ -6,10 +6,11 @@
 #include "GlutCallBacks.h"
 #include "Drawing/Draw.h"
 #include "Config.h"
+#include "Audio.h"
 
-Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Dimension::NONE),
-                    camera(), mouse(), userInput(), audio(),
-                    simulation() {
+GFramework::GFramework() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Drawing::Dimension::NONE),
+                    camera(), mouse(), userInput(), audio(new Audio()),
+                    simulation(new Simulation()) {
     /* Init GLUT with title */
     int myargc = 1;
     char *s2 = new char[strlen(WINDOW_TITLE) + 1];
@@ -21,21 +22,26 @@ Graphics::Graphics() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawin
     initializeGlut();
     loadColors();
     loadTextures();
-    if (CONFIG_FULLSCREEN()) glutFullScreen();
+    if (Config::getValue<bool>("Fullscreen")) glutFullScreen();
+    LOG("Initialized GFramework.");
+} std::unique_ptr<GFramework> const GFramework::get(new GFramework()); // Instantiate singleton instance
+
+
+
+GFramework::~GFramework() {
+    delete simulation;
+    delete audio;
 }
 
-
-Graphics::~Graphics() {
-}
-
-
-void Graphics::run() {
-    Graphics::get().userInput.setToDefault();
-    simulation.init();
+void GFramework::startup() {
+//    GFramework::get->userInput.setToDefault();
+    LOG("Initializing Simulation");
+    simulation->init();
+    LOG("Starting up glutmainloop.");
     glutMainLoop();
 }
 
-void Graphics::initializeGlut() {
+void GFramework::initializeGlut() {
     srand(time(nullptr));
 
     /* General Initializations */
@@ -83,9 +89,9 @@ void Graphics::initializeGlut() {
     glutSpecialUpFunc(glutCB::releaseSpecialKey); // process special key release
 }
 
-void Graphics::showScene() {
+void GFramework::showScene() {
     /* Display */
-    drawingState = Dimension::NONE;
+    drawingState = Drawing::Dimension::NONE;
     Drawing::enable3D(); // Corrects viewing for camera movement & warns about drawing 3d over 2d
     glutSwapBuffers();
 }

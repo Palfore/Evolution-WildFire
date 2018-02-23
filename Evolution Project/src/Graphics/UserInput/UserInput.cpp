@@ -1,7 +1,7 @@
 #include "UserInput.h"
-#include "Graphics.h"
+#include "GFramework.h"
 #include "Drawing/text.h"
-
+#include "Audio.h"
 UserInput::UserInput() : inputString(""), functions({}), keyInputIsHeld(true) {
     //ctor
 }
@@ -19,12 +19,21 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
     }));
     /* Audio Test */
     functions.push_back(UserFunction('.', [this](){
-        Graphics::get().audio.playSound("gunShot.wav");
+        GFramework::get->audio->playSound("gunShot.wav");
         keyStates['.'] = false; // stop multiple toggle per key press
     }));
     functions.push_back(UserFunction(',', [](){
-                                     saveScreenShot();
-                                     }));
+        saveScreenShot();
+    }));
+    functions.push_back(UserFunction('0', [](){
+        LOG("Test debug message.", LogDegree::DEBUG, LogType::GENERAL);
+    }));
+    functions.push_back(UserFunction('=', [](){
+        LOG("Test fatal message.", LogDegree::FATAL, LogType::GENERAL);
+    }));
+    functions.push_back(UserFunction('-', [](){
+        LOG("Test warning message.", LogDegree::WARNING, LogType::GENERAL);
+    }));
 }
 
 bool UserInput::isInputStringSubmitted() {
@@ -36,7 +45,7 @@ void UserInput::submitInputString() {
 
 void UserInput::drawUserString(double x, double y, bool xCenter, bool yCenter) {
     if (isInputStringSubmitted() && ((inputString.size() - 1) > 0)) {
-        DrawString<Appearance::BLACK>(inputString.substr(0, inputString.size()-1), x, y, xCenter, yCenter);
+        DrawString<Appearance::GRASS>(inputString.substr(0, inputString.size()-1), x, y, xCenter, yCenter);
     }
 }
 

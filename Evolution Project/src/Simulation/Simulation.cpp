@@ -1,11 +1,14 @@
 #include "Simulation.h"
-#include "Graphics.h"
+#include "GFramework.h"
 #include "Drawing/Shapes.h"
 #include "Drawing/Text.h"
 #include "Drawing/Objects.h"
 #include "Logger.h"
+#include "Audio.h"
 
-Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {}
+#include <iostream>
+
+Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {LOG("Initialized Simulation.");}
 Simulation::~Simulation() {}
 
 void Simulation::run() {
@@ -24,7 +27,7 @@ void Simulation::run() {
     DrawString<Appearance::WHITE>("Type something, then hit enter", 0.5,  0.4);
 
     /* Start and stop getting user input */
-    UserInput *userInput = &Graphics::get().userInput;
+    UserInput *userInput = &GFramework::get->userInput;
     if (inputType == InputType::DEFAULT) {
         if (userInput->inputString.empty()) {
             setInputType(InputType::ALPHA_NUMERIC_INPUT);
@@ -39,11 +42,20 @@ void Simulation::run() {
         DrawString<Appearance::WHITE>(userInput->inputString, 0.5,  0.5);
         if (userInput->isInputStringSubmitted()) {
             setInputType(InputType::DEFAULT);
-            Graphics::get().audio.playSound("gunShot.wav");
+            GFramework::get->audio->playSound("gunShot.wav");
         }
     }
 
-    Graphics::get().showScene();
+    if (inputType == InputType::FATAL_MESSAGE) {
+        DrawRectangle<Appearance::BUTTON>(0.2, 0.2, 0.8, 0.8);
+        DrawString<Appearance::BLACK>("A fatal error occured. Press ENTER to quit.", 0.5, 0.5);
+    }
+    if (inputType == InputType::BLOCKING_MESSAGE) {
+        DrawRectangle<Appearance::BUTTON>(0.2, 0.2, 0.8, 0.8);
+        DrawString<Appearance::BLACK>("A warning has been logged. Press ENTER to continue.", 0.5, 0.5);
+    }
+
+    GFramework::get->showScene();
 }
 
 void Simulation::init() {
@@ -51,26 +63,26 @@ void Simulation::init() {
 }
 
 void Simulation::setGameMode(GameMode g) {
-    Graphics::get().simulation.gameMode = g;
-    Graphics::get().simulation.inputType = InputType::DEFAULT;
+    gameMode = g;
+    inputType = InputType::DEFAULT;
     loadGameModeKeyboard();
 }
 
 void Simulation::setInputType(InputType t) {
-    Graphics::get().simulation.inputType = t;
+    inputType = t;
     setInputTypeKeyboard();
 }
 
 void Simulation::setInputTypeKeyboard() {
-    std::vector<UserFunction> *userFunctions = &Graphics::get().userInput.functions;
-    Graphics::get().userInput.setToDefault();
+    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
+    GFramework::get->userInput.setToDefault();
     switch(inputType) {
         case InputType::DEFAULT:
             loadGameModeKeyboard();
             break;
         case InputType::BLOCKING_MESSAGE:
-            userFunctions->push_back(UserFunction(ENTER, [](){
-                Graphics::get().simulation.setInputType(InputType::DEFAULT); // Unlock Input
+            userFunctions->push_back(UserFunction(ENTER, [this](){
+                this->setInputType(InputType::DEFAULT); // Unlock Input
             }));
             break;
         case InputType::FATAL_MESSAGE:
@@ -79,41 +91,41 @@ void Simulation::setInputTypeKeyboard() {
             }));
             break;
         case InputType::NUMERIC_INPUT:
-            Graphics::get().userInput.keyInputIsHeld = false;
+            GFramework::get->userInput.keyInputIsHeld = false;
             for (char input = '0'; input <= '9'; input++) {
-                userFunctions->push_back(UserFunction(input, [input](){Graphics::get().userInput.inputString += input;}));
+                userFunctions->push_back(UserFunction(input, [input](){GFramework::get->userInput.inputString += input;}));
             }
             userFunctions->push_back(UserFunction(BACKSPACE, [](){
-                if (!Graphics::get().userInput.inputString.empty()) {
-                    Graphics::get().userInput.inputString.pop_back();
+                if (!GFramework::get->userInput.inputString.empty()) {
+                    GFramework::get->userInput.inputString.pop_back();
                 }
             }));
             userFunctions->push_back(UserFunction(ENTER, [](){
-                Graphics::get().userInput.submitInputString();
-                Graphics::get().userInput.keyInputIsHeld = true;
+                GFramework::get->userInput.submitInputString();
+                GFramework::get->userInput.keyInputIsHeld = true;
             }));
             break;
         case InputType::ALPHA_NUMERIC_INPUT:
-            Graphics::get().userInput.keyInputIsHeld = false;
+            GFramework::get->userInput.keyInputIsHeld = false;
 
             for (char input = '0'; input <= '9'; input++) {
-                userFunctions->push_back(UserFunction(input, [input](){Graphics::get().userInput.inputString += input;}));
+                userFunctions->push_back(UserFunction(input, [input](){GFramework::get->userInput.inputString += input;}));
             }
             for (char input = 'a'; input <= 'z'; input++) {
-                userFunctions->push_back(UserFunction(input, [input](){Graphics::get().userInput.inputString += input;}));
+                userFunctions->push_back(UserFunction(input, [input](){GFramework::get->userInput.inputString += input;}));
             }
             for (char input = 'A'; input <= 'Z'; input++) {
-                userFunctions->push_back(UserFunction(input, [input](){Graphics::get().userInput.inputString += input;}));
+                userFunctions->push_back(UserFunction(input, [input](){GFramework::get->userInput.inputString += input;}));
             }
-            userFunctions->push_back(UserFunction(' ', [](){Graphics::get().userInput.inputString += ' ';}));
+            userFunctions->push_back(UserFunction(' ', [](){GFramework::get->userInput.inputString += ' ';}));
             userFunctions->push_back(UserFunction(BACKSPACE, [](){
-                if (Graphics::get().userInput.inputString.size() > 0) {
-                    Graphics::get().userInput.inputString.pop_back();
+                if (GFramework::get->userInput.inputString.size() > 0) {
+                    GFramework::get->userInput.inputString.pop_back();
                 }
             }));
             userFunctions->push_back(UserFunction(ENTER, [](){
-                Graphics::get().userInput.submitInputString();
-                Graphics::get().userInput.keyInputIsHeld = true;
+                GFramework::get->userInput.submitInputString();
+                GFramework::get->userInput.keyInputIsHeld = true;
             }));
             break;
         default:
@@ -123,16 +135,16 @@ void Simulation::setInputTypeKeyboard() {
 }
 
 void Simulation::loadGameModeKeyboard() {
-    Graphics::get().userInput.setToDefault();
-    std::vector<UserFunction> *userFunctions = &Graphics::get().userInput.functions;
+    GFramework::get->userInput.setToDefault();
+    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
     switch(gameMode) {
         case GameMode::MAIN_MENU:
             break;
         case GameMode::SIMULATION: {
-            Camera *camera = &Graphics::get().camera;
+            Camera *camera = &GFramework::get->camera;
 
             /* Setting Controls */
-            userFunctions->push_back(UserFunction(GLUT_KEY_F1, [](){Graphics::get().display ^= true;}));
+            userFunctions->push_back(UserFunction(GLUT_KEY_F1, [](){GFramework::get->display ^= true;}));
 
             /* Camera Controls */
             userFunctions->push_back(UserFunction(GLUT_KEY_LEFT,  [camera](){

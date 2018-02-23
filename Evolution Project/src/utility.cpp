@@ -1,8 +1,21 @@
-#include "Expected.h"
+#include "utility.h"
 #include <ctime>
 #include <vector>
 
-namespace expected{
+#include <iostream>
+#include <algorithm>
+namespace utility {
+    std::string toUpper(std::string str) {
+        std::transform(str.begin(), str.end(),str.begin(), ::toupper);
+        return str;
+    }
+
+    std::string toLower(std::string str) {
+        std::transform(str.begin(), str.end(),str.begin(), ::tolower);
+        return str;
+    }
+
+
     std::string replaceString(std::string subject, const std::string& search, const std::string& replace) {
         size_t pos = 0;
         while ((pos = subject.find(search, pos)) != std::string::npos) {
@@ -19,20 +32,20 @@ namespace expected{
         return subject;
     }
 
-    std::vector<std::string> split(std::string stringToBeSplitted, std::string delimeter) {
-         std::vector<std::string> splittedString;
+    std::vector<std::string> split(std::string stringToBeSplit, std::string delimeter) {
+         std::vector<std::string> splitString;
          int startIndex = 0;
          int endIndex   = 0;
-         while (static_cast<unsigned>(endIndex = stringToBeSplitted.find(delimeter, startIndex)) < stringToBeSplitted.size()) {
-           std::string val = stringToBeSplitted.substr(startIndex, endIndex - startIndex);
-           splittedString.push_back(val);
+         while (static_cast<unsigned>(endIndex = stringToBeSplit.find(delimeter, startIndex)) < stringToBeSplit.size()) {
+           std::string val = stringToBeSplit.substr(startIndex, endIndex - startIndex);
+           splitString.push_back(val);
            startIndex = endIndex + delimeter.size();
          }
-         if (static_cast<unsigned>(startIndex) < stringToBeSplitted.size()) {
-           std::string val = stringToBeSplitted.substr(startIndex);
-           splittedString.push_back(val);
+         if (static_cast<unsigned>(startIndex) < stringToBeSplit.size()) {
+           std::string val = stringToBeSplit.substr(startIndex);
+           splitString.push_back(val);
          }
-         return splittedString;
+         return splitString;
     }
 
     std::string getCurrentDate() {

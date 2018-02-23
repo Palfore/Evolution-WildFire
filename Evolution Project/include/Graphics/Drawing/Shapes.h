@@ -3,15 +3,15 @@
 
 #include "Drawing/Draw.h"
 #include "Logger.h"
-#include "Graphics.h"
+#include "GFramework.h"
 
 template <Appearance A>
 struct DrawRectangle : DrawItem<A> {
-    static Dimension constexpr dimension = static_cast<Dimension>(2);
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(2);
 
     DrawRectangle(double x, double y, double X, double Y) : DrawItem<A>(dimension) {
-        double w = Graphics::get().windowSize.x;
-        double h = Graphics::get().windowSize.y;
+        double w = GFramework::get->windowSize.x;
+        double h = GFramework::get->windowSize.y;
         draw(x*w, y*h, X*w, Y*h);
     }
     private:void draw(double x, double y, double X, double Y) {
@@ -26,22 +26,25 @@ struct DrawRectangle : DrawItem<A> {
 
 template <Appearance A>
 struct DrawCircle : DrawItem<A> {
-    static Dimension constexpr dimension = static_cast<Dimension>(2);
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(2);
 
     DrawCircle(double x, double y, double r) : DrawCircle(x, y, r, 20) {}
     DrawCircle(double x, double y, double r, int numSegments) : DrawItem<A>(dimension) {
-        double w = Graphics::get().windowSize.x;
-        double h = Graphics::get().windowSize.y;
-        draw(x*w, y*h, 0.5*(w+h)*r, numSegments); // how should r be scaled? this seems wrong
+        double w = GFramework::get->windowSize.x;
+        double h = GFramework::get->windowSize.y;
+        draw(x*w, y*h, 0.5*(w+h)*r, numSegments); // how should r be scaled? this seems wrong because asymetic scaling of window is possible.
     }
     private:void draw(double x, double y, double r, int numSegments) {
+        if (!Drawing::isColor(A)) {
+            LOG("Cicles can't be draw textured.", LogDegree::WARNING, LogType::GRAPHICS);
+        }
         glBegin(GL_POLYGON);
         for(int i = 0; i < numSegments; i++) {
-            float theta = 2.0 * PI * double(i) / double(numSegments); // Get the current angle
+            float theta = 2.0 * PI * double(i) / double(numSegments);
             float xNext = r * cosf(theta);
             float yNext = r * sinf(theta);
 
-            glVertex2f(x + xNext, y + yNext); // Output Vertex
+            glVertex2f(x + xNext, y + yNext);
         }
         glEnd();
     }
@@ -49,7 +52,7 @@ struct DrawCircle : DrawItem<A> {
 
 template <Appearance A>
 struct DrawPlane : DrawItem<A> {
-    static Dimension constexpr dimension = static_cast<Dimension>(3);
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
 
     DrawPlane(double length) : DrawPlane(0,0,0, length, 0) {}
     DrawPlane(double length, double xAngle) : DrawPlane(0,0,0, length, xAngle) {}

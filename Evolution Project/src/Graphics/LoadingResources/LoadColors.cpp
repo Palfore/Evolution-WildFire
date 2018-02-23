@@ -1,6 +1,6 @@
-#include "Graphics.h"
+#include "GFramework.h"
 
-void Graphics::loadColors() {
+void GFramework::loadColors() {
     this->colorMap = {
         {Appearance::MAROON, Vec(128,0,0)},
         {Appearance::DARK_RED, Vec(139,0,0)},

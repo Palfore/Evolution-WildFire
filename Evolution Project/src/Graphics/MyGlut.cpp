@@ -1,6 +1,7 @@
 #include "myGlut.h"
 #include "SOIL.h"
 #include "Logger.h"
+#include "utility.h"
 
 Tex glLoadTexture(std::string fileName) {
     return SOIL_load_OGL_texture (
@@ -13,9 +14,9 @@ Tex glLoadTexture(std::string fileName) {
 void saveScreenShot() {
     std::string directory = "screenshots/";
     std::string file = "screenshot - " +
-                        expected::replaceCharSet(expected::getCurrentDate(), "/,:", "_") +
+                        utility::replaceCharSet(utility::getCurrentDate(), "/,:", "_") +
                         " - " +
-                        expected::replaceCharSet(expected::getCurrentTime(), "/,:", "_") +
+                        utility::replaceCharSet(utility::getCurrentTime(), "/,:", "_") +
                         ".png";
     if (SOIL_save_screenshot(
             (directory + file).c_str(),

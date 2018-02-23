@@ -1,6 +1,6 @@
 #include "Drawing/Draw.h"
 #include "MyGlut.h" // Glut
-#include "Graphics.h" // Graphics::get().drawingState, Dimension
+#include "GFramework.h" // GFramework::get().drawingState, Dimension
 #include "Logger.h"
 
 bool Drawing::isColor(Appearance A) {
@@ -22,7 +22,7 @@ void Drawing::changeColor(Vec c) {
 void Drawing::changeColor(Appearance C) {
     if (!Drawing::isColor(C)) LOG(INVALID_COLOR_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     try {
-        Drawing::changeColor(Graphics::get().colorMap.at(C));
+        Drawing::changeColor(GFramework::get->colorMap.at(C));
     } catch (std::out_of_range) {
         LOG(UNKNOWN_APPROVED_COLOR_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     }
@@ -35,21 +35,21 @@ void Drawing::changeTexture(Tex textureID) {
 void Drawing::changeTexture(Appearance T) {
     if (!Drawing::isTexture(T)) LOG(INVALID_TEXTURE_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     try {
-        Drawing::changeTexture(Graphics::get().textureMap.at(T));
+        Drawing::changeTexture(GFramework::get->textureMap.at(T));
     } catch (std::out_of_range) {
         LOG(UNKNOWN_APPROVED_TEXTURE_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     }
 }
 
 void Drawing::enable2D() {
-    if (Graphics::get().drawingState == Dimension::TWO) return;
-    Graphics::get().drawingState = Dimension::TWO;
+    if (GFramework::get->drawingState == Dimension::TWO) return;
+    GFramework::get->drawingState = Dimension::TWO;
 
     glMatrixMode(GL_MODELVIEW);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0, Graphics::get().windowSize.x, Graphics::get().windowSize.y, 0);
-    glViewport(0, 0, Graphics::get().windowSize.x, Graphics::get().windowSize.y);
+    gluOrtho2D(0, GFramework::get->windowSize.x, GFramework::get->windowSize.y, 0);
+    glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();
@@ -62,15 +62,15 @@ void Drawing::enable2D() {
 }
 
 void Drawing::enable3D() {
-    if (Graphics::get().drawingState == Dimension::TWO) LOG(INVALID_DRAWING_ORDER_MESSAGE, LogDegree::FATAL, LogType::GRAPHICS);
-    if (Graphics::get().drawingState == Dimension::THREE) return;
-    Graphics::get().drawingState = Dimension::THREE;
+    if (GFramework::get->drawingState == Dimension::TWO) LOG(INVALID_DRAWING_ORDER_MESSAGE, LogDegree::FATAL, LogType::GRAPHICS);
+    if (GFramework::get->drawingState == Dimension::THREE) return;
+    GFramework::get->drawingState = Dimension::THREE;
 
     glPopMatrix(); //From 2D
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0, (double) Graphics::get().windowSize.x / (double) Graphics::get().windowSize.y, 0.1f, 1000);
-    glViewport(0, 0, Graphics::get().windowSize.x, Graphics::get().windowSize.y);
+    gluPerspective(45.0, (double) GFramework::get->windowSize.x / (double) GFramework::get->windowSize.y, 0.1f, 1000);
+    glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
     glMatrixMode(GL_MODELVIEW);
 
     glEnable(GL_DEPTH_TEST);

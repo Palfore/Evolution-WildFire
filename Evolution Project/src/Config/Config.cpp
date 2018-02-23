@@ -1,9 +1,53 @@
 #include "Config.h"
 #include "Logger.h"
+#include "utility.h"
 
 #include <fstream> // ifstream
-#include <algorithm> // find
+#include <algorithm> // find, transform
 #include <string> // stod
+
+namespace ConfigValueConverters {
+        template <> bool getValue_<bool>(std::string value) {
+            std::array<std::string, 6> truths = {"TRUE", "True", "true", "T", "t", "1"};
+            std::array<std::string, 6> falses = {"FALSE", "False", "false", "F", "f", "0"};
+
+            if (std::find(truths.begin(), truths.end(), value) != truths.end()) {
+                return true;
+            } else if (std::find(falses.begin(), falses.end(), value) != falses.end()) {
+                return false;
+            } else {
+                LOG("Could not determine boolean for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
+                return false;
+            }
+        }
+
+        template <> int getValue_<int>(std::string value) {
+            try {
+                return atof(value.c_str());
+            } catch(std::invalid_argument e) {
+                LOG("Could not parse int for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
+                return -1;
+            } catch (std::out_of_range e) {
+                LOG("Int overflow for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
+            }
+        }
+
+        template <> double getValue_<double>(std::string value) {
+            try {
+                return atof(value.c_str());
+            } catch(std::invalid_argument e) {
+                LOG("Could not parse double for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
+                return -1;
+            } catch (std::out_of_range e) {
+                LOG("Double overflow for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
+            }
+        }
+
+        template <> std::string getValue_<std::string>(std::string value) {
+            return value;
+        }
+}
+
 
 Config::Config() {
 
@@ -13,55 +57,44 @@ Config::~Config() {
 
 }
 
-std::string Config::loadFromFile(const std::string s) {
-    std::string a, b;
+std::string Config::getFileValue(std::string key) {
+    std::string line;
     std::ifstream infile(CONFIG_FILE);
-    while (infile >> a >> b) {
-        if (a == s) return b;
+    key = utility::toUpper(key);
+    while (std::getline(infile, line)) {
+        auto tokens = utility::split(line, " ");
+
+        int numTokens = tokens.size();
+        switch(numTokens) {
+            case 0: // Empty Line
+                continue;
+            case 1: // Unpaired key
+                LOG("Config file is improperly formatted.", LogDegree::FATAL, LogType::CONFIG);
+                break;
+            case 2: // Simple key-value pair
+                if (utility::toUpper(tokens[0]) == key) {
+                    return tokens[1]; // Key's associated value.
+                }
+                break;
+            default: // key-[set of words] > "key" "many words as valueString"
+                if (utility::toUpper(tokens[0]) == key) {
+                    std::string valueString = "";
+                    for (int i = 1; i < numTokens; i++) {
+                        valueString += tokens[i];
+                        if (i != numTokens - 1) {
+                            valueString += ' ';
+                        }
+                    }
+                    return valueString;
+                }
+                break;
+        }
     }
-    LOG("Could not find config data.", LogDegree::FATAL, LogType::CONFIG);
+    LOG("Could not find " + key + " in config file.", LogDegree::FATAL, LogType::CONFIG);
     return "";
 }
 
-bool Config::loadFromFile_bool(const std::string s) {
-    std::string value = loadFromFile(s);
-    std::array<std::string, 5> truths = {"True", "true", "T", "t", "1"};
-    std::array<std::string, 5> falses = {"False", "false", "F", "f", "0"};
 
-    if (std::find(truths.begin(), truths.end(), value) != truths.end()) {
-        return true;
-    } else if (std::find(falses.begin(), falses.end(), value) != falses.end()) {
-        return false;
-    } else {
-        LOG("Could not determine boolean.", LogDegree::FATAL, LogType::CONFIG);
-        return false;
-    }
-}
 
-double Config::loadFromFile_double(const std::string s) {
-    std::string value = loadFromFile(s);
-    try {
-        return atof(value.c_str());
-    } catch(std::invalid_argument e) {
-        LOG("Could not parse double.", LogDegree::FATAL, LogType::CONFIG);
-        return -1;
-    } catch (std::out_of_range e) {
-        LOG("Double overflow.", LogDegree::FATAL, LogType::CONFIG);
-    }
-}
 
-int Config::loadFromFile_int(const std::string s) {
-    std::string value = loadFromFile(s);
-    try {
-        return atof(value.c_str());
-    } catch(std::invalid_argument e) {
-        LOG("Could not parse int.", LogDegree::FATAL, LogType::CONFIG);
-        return -1;
-    } catch (std::out_of_range e) {
-        LOG("Int overflow.", LogDegree::FATAL, LogType::CONFIG);
-    }
-}
 
-std::string Config::loadFromFile_string(const std::string s) {
-    return loadFromFile(s);
-}

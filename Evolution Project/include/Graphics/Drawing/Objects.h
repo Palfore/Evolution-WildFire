@@ -2,15 +2,15 @@
 #define OBJECTS_H
 
 #include "Drawing/Draw.h"
-#include "Graphics.h"
+#include "GFramework.h"
 
 template <Appearance A>
 struct DrawMySpecificObject : DrawItem<A> {
-    static Dimension constexpr dimension = static_cast<Dimension>(3);
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
 
     DrawMySpecificObject(double x, double y, double X, double Y) : DrawItem<A>(dimension) {
-        double w = Graphics::get().windowSize.x;
-        double h = Graphics::get().windowSize.y;
+        double w = GFramework::get->windowSize.x;
+        double h = GFramework::get->windowSize.y;
         draw(x*w, y*h, X*w, Y*h);
     }
     private:void draw(double x, double y, double X, double Y) {

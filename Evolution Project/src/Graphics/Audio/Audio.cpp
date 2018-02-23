@@ -12,19 +12,22 @@ Audio::Audio() : music(), soundBuffers(), sounds()  {
             LOG(COULD_NOT_LOAD_MUSIC_MESSAGE + soundFiles[i] + '.', LogDegree::WARNING, LogType::AUDIO);
         }
     }
-    if (CONFIG_AUDIO()) {
+    if (Config::getValue<bool>("Audio")) {
         music.play();
     }
 }
 
 Audio::~Audio() {
     music.stop();
+    soundBuffers.clear();
+    sounds.clear();
+
 }
 
 void Audio::playSound(std::string soundFile) {playSound(soundFile, 0, 0, 0);}
 void Audio::playSound(std::string soundFile, double x, double y, double z) {playSound(soundFile, Vec(x, y, z));}
 void Audio::playSound(std::string soundFile, Vec position) {
-    if (CONFIG_AUDIO()) {
+    if (Config::getValue<bool>("Audio")) {
         sounds.push_back(sf::Sound());
 
         sounds[sounds.size() - 1].setMinDistance(10);

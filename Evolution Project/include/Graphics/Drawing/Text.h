@@ -2,15 +2,18 @@
 #define TEXT_H
 
 #include "Drawing/Draw.h"
-#include "Graphics.h"
+#include "GFramework.h"
 
 template <Appearance A>
 struct DrawString : DrawItem<A> {
-    static Dimension constexpr dimension = static_cast<Dimension>(2);
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(2);
 
     DrawString(std::string s, float x, float y, bool centerX=true, bool centerY=true) : DrawItem<A>(dimension) {
-        double w = Graphics::get().windowSize.x;
-        double h = Graphics::get().windowSize.y;
+        if (!Drawing::isColor(A)) {
+            LOG("The Appearance of strings should be a color.", LogDegree::WARNING, LogType::GRAPHICS);
+        }
+        double w = GFramework::get->windowSize.x;
+        double h = GFramework::get->windowSize.y;
         draw(s, w*x, h*y, centerX, centerY);
     }
     private: draw(std::string s, float x, float y, bool centerX=true, bool centerY=true) {

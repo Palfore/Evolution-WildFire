@@ -100,15 +100,15 @@
 		<Unit filename="include/Graphics/Drawing/Objects.h" />
 		<Unit filename="include/Graphics/Drawing/Shapes.h" />
 		<Unit filename="include/Graphics/Drawing/Text.h" />
+		<Unit filename="include/Graphics/GFramework.h" />
 		<Unit filename="include/Graphics/GlutCallBacks.h" />
-		<Unit filename="include/Graphics/Graphics.h" />
 		<Unit filename="include/Graphics/MyGlut.h" />
 		<Unit filename="include/Graphics/UserInput/UserFunction.h" />
 		<Unit filename="include/Graphics/UserInput/UserInput.h" />
 		<Unit filename="include/Logger/Logger.h" />
 		<Unit filename="include/Math/MyMath.h" />
 		<Unit filename="include/Simulation/Simulation.h" />
-		<Unit filename="include/expected.h" />
+		<Unit filename="include/utility.h" />
 		<Unit filename="include/version.h" />
 		<Unit filename="resources/Colors.pdf" />
 		<Unit filename="src/Config/Config.cpp" />
@@ -117,8 +117,8 @@
 		<Unit filename="src/Graphics/Drawing/Objects.cpp" />
 		<Unit filename="src/Graphics/Drawing/Shapes.cpp" />
 		<Unit filename="src/Graphics/Drawing/Text.cpp" />
+		<Unit filename="src/Graphics/GFramework.cpp" />
 		<Unit filename="src/Graphics/GlutCallBacks.cpp" />
-		<Unit filename="src/Graphics/Graphics.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
 		<Unit filename="src/Graphics/MyGlut.cpp" />
@@ -127,8 +127,8 @@
 		<Unit filename="src/Logger/Logger.cpp" />
 		<Unit filename="src/Math/MyMath.cpp" />
 		<Unit filename="src/Simulation/Simulation.cpp" />
-		<Unit filename="src/expected.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/utility.cpp" />
 		<Extensions>
 			<AutoVersioning>
 				<Scheme minor_max="100" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
@@ -140,6 +140,15 @@
 			<envvars />
 			<debugger />
 			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="2" />
+				<doxyfile_project project_number="1.9.953" use_auto_version="1" />
+				<doxyfile_build extract_all="1" extract_private="1" extract_static="1" />
+				<doxyfile_warnings />
+				<doxyfile_output latex="1" />
+				<doxyfile_dot class_diagrams="1" have_dot="1" />
+				<general use_at_in_tags="1" />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
