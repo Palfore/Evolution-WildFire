@@ -5,14 +5,17 @@
 #include "Drawing/Objects.h"
 #include "Logger.h"
 #include "Audio.h"
-
+#include "utility.h" // numToStr
 #include <iostream>
 
 Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {LOG("Initialized Simulation.");}
 Simulation::~Simulation() {}
 
-void Simulation::run() {
+
+void Simulation::run(const double fps) {
     if (inputType != InputType::DEFAULT) {/* Stop Data Processing */}
+
+    GFramework::get->readyDrawing();
 
     /* Normal Procedure */
     DrawPlane<Appearance::GRASS>(10);
@@ -25,6 +28,7 @@ void Simulation::run() {
     DrawRectangle<Appearance::BUTTON>(0.1, 0.2, 0, 0);
 
     DrawString<Appearance::WHITE>("Type something, then hit enter", 0.5,  0.4);
+    DrawString<Appearance::WHITE>(utility::numToStr<int>(fps), 0.1,  0.1);
 
     /* Start and stop getting user input */
     UserInput *userInput = &GFramework::get->userInput;
@@ -54,7 +58,6 @@ void Simulation::run() {
         DrawRectangle<Appearance::BUTTON>(0.2, 0.2, 0.8, 0.8);
         DrawString<Appearance::BLACK>("A warning has been logged. Press ENTER to continue.", 0.5, 0.5);
     }
-
     GFramework::get->showScene();
 }
 
@@ -141,7 +144,7 @@ void Simulation::loadGameModeKeyboard() {
         case GameMode::MAIN_MENU:
             break;
         case GameMode::SIMULATION: {
-            Camera *camera = &GFramework::get->camera;
+            Camera *camera = GFramework::get->camera;
 
             /* Setting Controls */
             userFunctions->push_back(UserFunction(GLUT_KEY_F1, [](){GFramework::get->display ^= true;}));

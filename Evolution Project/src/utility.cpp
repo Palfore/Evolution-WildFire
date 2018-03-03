@@ -15,7 +15,6 @@ namespace utility {
         return str;
     }
 
-
     std::string replaceString(std::string subject, const std::string& search, const std::string& replace) {
         size_t pos = 0;
         while ((pos = subject.find(search, pos)) != std::string::npos) {
@@ -54,10 +53,10 @@ namespace utility {
         struct tm * now = localtime( & t );
         return months[now->tm_mon + 1] + '/' + numToStr(now->tm_mday) + '/' + numToStr(now->tm_year + 1900);
     }
+
     std::string getCurrentTime() {
         time_t t = time(nullptr);   // get time now
         struct tm * now = localtime( & t );
         return numToStr(now->tm_hour) + ':' + numToStr(now->tm_min) + ':' + numToStr(now->tm_sec);
     }
-
 }

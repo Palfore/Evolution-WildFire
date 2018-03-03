@@ -3,6 +3,9 @@
 #include <SFML/Audio.hpp> //sf::Listener::setPosition, sf::Listener::setDirection
 #include "Simulation.h"
 
+#include <chrono>
+#include <iostream>
+#include <thread>
 namespace glutCB {
     void changeSize(int w, int h) {
         double windowRatio = w / static_cast<double>(h); // window aspect ratio
@@ -14,30 +17,33 @@ namespace glutCB {
     }
 
     void renderScene() {
-        /* Clear, reset, camera */
-        glClearColor(0.00, 0.75, 1.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glLoadIdentity();
-        auto camera = GFramework::get->camera;
-        gluLookAt(              camera.pos.x,                 camera.pos.y,                 camera.pos.z,
-                 camera.pos.x + camera.dir.x,  camera.pos.y + camera.dir.y,  camera.pos.z + camera.dir.z,
-                                         0.0,                          0.0,                          1.0);
         /* Run Simulation */
         if (!GFramework::get->display) { // Run asap
-            GFramework::get->simulation->run();
+            GFramework::get->simulation->run(0);
         } else {
-            /* Keep FPS Constant */
-            const int msPerFrame = 1000.0 / GFramework::FPS;
-            int init = glutGet(GLUT_ELAPSED_TIME);
+            static auto getTime = [](){
+                auto time = std::chrono::system_clock::now().time_since_epoch();
+                auto seconds = std::chrono::duration_cast<std::chrono::microseconds>(time).count();
+                return seconds / 1000000.0;
+            };
 
-            GFramework::get->simulation->run();
+            static unsigned int COLLECTED_FRAMES = 60;
+            static std::vector<double> times = {};
 
-            int total = glutGet(GLUT_ELAPSED_TIME);
-            while (total - init < msPerFrame) {
-                GFramework::get->simulation->run();
-                total = glutGet(GLUT_ELAPSED_TIME);
+            times.push_back(getTime());
+            double currentFPS = 0;
+            if (times.size() == COLLECTED_FRAMES) {
+                double delta = times[times.size() - 1] - times[0];
+                currentFPS = COLLECTED_FRAMES / delta;
+                double deviation = currentFPS - GFramework::get->FPS;
+                int milliseconds = deviation > 0 ? deviation : 0;
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
             }
-            init = glutGet(GLUT_ELAPSED_TIME);
+            while (times.size() >= COLLECTED_FRAMES) {
+                times.erase(times.begin());
+            }
+            GFramework::get->simulation->run(currentFPS);
         }
     }
 
@@ -52,12 +58,12 @@ namespace glutCB {
         double eps = 1e-10;
         if (!GFramework::get->display) return;
 
-        Camera *camera = &GFramework::get->camera;
+        Camera *camera = GFramework::get->camera;
 
         /* Update Audio */
 //        GFramework::get->audio.clearStoppedSounds();
-        sf::Listener::setPosition(GFramework::get->camera.pos.x, GFramework::get->camera.pos.y, GFramework::get->camera.pos.z);
-        sf::Listener::setDirection(GFramework::get->camera.dir.x, GFramework::get->camera.dir.y, GFramework::get->camera.dir.z);
+        sf::Listener::setPosition(GFramework::get->camera->pos.x, GFramework::get->camera->pos.y, GFramework::get->camera->pos.z);
+        sf::Listener::setDirection(GFramework::get->camera->dir.x, GFramework::get->camera->dir.y, GFramework::get->camera->dir.z);
 
         /* Update Position */// Note: Not in orthogonal directions
         // Move 'Forward / Backwards'
@@ -107,7 +113,7 @@ namespace glutCB {
     void passiveMouse(int x, int y) {
         GFramework::get->mouse.x = x;
         GFramework::get->mouse.y = y;
-        GFramework::get->camera.del.setToZero(); // Prevent motion after mouse release (if used to move camera)
+        GFramework::get->camera->del.setToZero(); // Prevent motion after mouse release (if used to move camera)
     }
 
     void keyPressed(unsigned char key, int x, int y) {

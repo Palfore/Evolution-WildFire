@@ -13,7 +13,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++11" />
 					<Add directory="include/Graphics" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation" />
@@ -50,6 +49,9 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-fomit-frame-pointer" />
+			<Add option="-fexpensive-optimizations" />
+			<Add option="-O" />
 			<Add option="-Wnon-virtual-dtor" />
 			<Add option="-Wshadow" />
 			<Add option="-Winit-self" />
@@ -78,6 +80,7 @@
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
 		</Compiler>
 		<Linker>
+			<Add option="-s" />
 			<Add option="-lopengl32" />
 			<Add library="libraries/SOIL/lib/libSOIL.a" />
 			<Add library="opengl32" />

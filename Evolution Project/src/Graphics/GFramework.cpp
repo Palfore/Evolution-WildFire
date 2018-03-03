@@ -9,7 +9,7 @@
 #include "Audio.h"
 
 GFramework::GFramework() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Drawing::Dimension::NONE),
-                    camera(), mouse(), userInput(), audio(new Audio()),
+                    camera(new Camera()), mouse(), userInput(), audio(new Audio(Config::getValue<int>("VOLUME"))),
                     simulation(new Simulation()) {
     /* Init GLUT with title */
     int myargc = 1;
@@ -31,6 +31,7 @@ GFramework::GFramework() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), dr
 GFramework::~GFramework() {
     delete simulation;
     delete audio;
+    delete camera;
 }
 
 void GFramework::startup() {
@@ -90,10 +91,22 @@ void GFramework::initializeGlut() {
 }
 
 void GFramework::showScene() {
-    /* Display */
     drawingState = Drawing::Dimension::NONE;
     Drawing::enable3D(); // Corrects viewing for camera movement & warns about drawing 3d over 2d
     glutSwapBuffers();
+}
+
+void GFramework::readyDrawing() {
+    /* Clear, reset, camera */
+    glClearColor(0.00, 0.75, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    auto c = GFramework::get->camera;
+    gluLookAt(               c->pos.x,                  c->pos.y,                  c->pos.z,
+             c->pos.x + c->dir.x,  c->pos.y + c->dir.y,  c->pos.z + c->dir.z,
+                                     0.0,                          0.0,                          1.0);
+    GFramework::get->drawingState = Drawing::Dimension::NONE;
+    Drawing::enable3D();
 }
 
 

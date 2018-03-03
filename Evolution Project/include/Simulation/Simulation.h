@@ -8,7 +8,7 @@ class Simulation {
         GameMode gameMode;
         InputType inputType;
 
-        void run();
+        void run(double fps);
         void init();
         void setGameMode(GameMode g);
         void setInputType(InputType t);

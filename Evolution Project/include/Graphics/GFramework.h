@@ -10,27 +10,7 @@
 
 class Audio;
 class Simulation;
-
-/** @brief This class describes the camera placed at the head of the user.
-    @todo In future, the camera implementation should be removed from the graphics class
-    and put here.
- */
-struct Camera {
-    static double constexpr DEFAULT_T_SPEED = 1.0;  ///< The default translation speed.
-    static double constexpr DEFAULT_R_SPEED = 0.04; ///< The default rotation speed.
-    static double constexpr DEFAULT_HEIGHT = 1.8;   ///< The default height of the camera (wrt z=0)
-
-    double translationSpeed;  ///< How fast the camera moves forward
-    double rotationSpeed;     ///< How fast the camera rotates
-    Vec pos;  ///< The global coordinates of the camera.
-    Vec mov;  ///< The next frame movement of the camera.
-    Vec dir;  ///< The direction the camera is pointing to.
-    Vec ang;  ///< The angle around the z axis, starting at +x. (I think)
-    Vec del;  ///< The next frame rotation of the camera.
-
-    Camera() : translationSpeed(DEFAULT_T_SPEED), rotationSpeed(DEFAULT_R_SPEED),
-                        pos(0, -40, DEFAULT_HEIGHT), mov(0, 0, DEFAULT_HEIGHT), dir(0, 1, 0), ang(0,0,0), del(0,0,0) {};
-};
+class Camera;
 
 
 /** @brief This class contains information about the user's mouse.
@@ -55,7 +35,7 @@ class GFramework {
     public:
         Vec2 windowSize;         ///< (width, height) dimensions of the window.
         Drawing::Dimension drawingState;  ///< What dimension the GFramework is prepared to draw in.
-        Camera camera;           ///< The camera on the users head.
+        Camera * camera;           ///< The camera on the users head.
         Mouse mouse;             ///< The mouse the user controls.
         UserInput userInput;     ///< Set of user inputs.
         Audio * audio;             ///< Audio system for the engine.
@@ -85,6 +65,13 @@ class GFramework {
          */
         void showScene();
 
+        /** @brief Prepares the scene for the next frame.
+         *
+         * @return  void
+         *
+         */
+        void readyDrawing();
+
         static std::unique_ptr<GFramework> const get;   ///< Singleton instance. Unique_ptr insures destruction.
         ~GFramework();                                  ///< Destructor deletes singleton instance
         GFramework(GFramework const&)      = delete;    ///< Copy constructor is deleted in singleton.
@@ -102,6 +89,28 @@ class GFramework {
         void initializeGlut(); ///< Intializes all the freeglut functions with callbacks.
         void loadTextures();   ///< Loads all the textures into the framework.
         void loadColors();     ///< Loads all the colors into the framework.
+};
+
+
+/** @brief This class describes the camera placed at the head of the user.
+    @todo In future, the camera implementation should be removed from the graphics class
+    and put here.
+ */
+struct Camera {
+    static double constexpr DEFAULT_T_SPEED = 60.0 / GFramework::FPS;  ///< The default translation speed.
+    static double constexpr DEFAULT_R_SPEED = 2.40 / GFramework::FPS; ///< The default rotation speed.
+    static double constexpr DEFAULT_HEIGHT = 1.8;   ///< The default height of the camera (wrt z=0)
+
+    double translationSpeed;  ///< How fast the camera moves forward
+    double rotationSpeed;     ///< How fast the camera rotates
+    Vec pos;  ///< The global coordinates of the camera.
+    Vec mov;  ///< The next frame movement of the camera.
+    Vec dir;  ///< The direction the camera is pointing to.
+    Vec ang;  ///< The angle around the z axis, starting at +x. (I think)
+    Vec del;  ///< The next frame rotation of the camera.
+
+    Camera() : translationSpeed(DEFAULT_T_SPEED), rotationSpeed(DEFAULT_R_SPEED),
+                        pos(0, -40, DEFAULT_HEIGHT), mov(0, 0, DEFAULT_HEIGHT), dir(0, 1, 0), ang(0,0,0), del(0,0,0) {};
 };
 
 #endif // GFramework_H

@@ -2,6 +2,8 @@
 #include "GFramework.h"
 #include "Drawing/text.h"
 #include "Audio.h"
+
+
 UserInput::UserInput() : inputString(""), functions({}), keyInputIsHeld(true) {
     //ctor
 }
@@ -9,7 +11,7 @@ UserInput::UserInput() : inputString(""), functions({}), keyInputIsHeld(true) {
 UserInput::~UserInput() {
     //dtor
 }
-
+#include <iostream>
 void UserInput::setToDefault() { // Functions that all gamemodes should have
     functions = {};
     functions.push_back(UserFunction(ESC, [](){NORMAL_EXIT();}));
@@ -28,11 +30,26 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
     functions.push_back(UserFunction('0', [](){
         LOG("Test debug message.", LogDegree::DEBUG, LogType::GENERAL);
     }));
-    functions.push_back(UserFunction('=', [](){
+    functions.push_back(UserFunction('9', [](){
         LOG("Test fatal message.", LogDegree::FATAL, LogType::GENERAL);
     }));
-    functions.push_back(UserFunction('-', [](){
+    functions.push_back(UserFunction('8', [](){
         LOG("Test warning message.", LogDegree::WARNING, LogType::GENERAL);
+    }));
+    functions.push_back(UserFunction('+', [this](){
+        GFramework::get->audio->volumeUp(5);
+//        std::cout << "Up\n";
+        keyStates['+'] = false; // stop multiple toggle per key press
+    }));
+    functions.push_back(UserFunction('-', [this](){
+        GFramework::get->audio->volumeDown(5);
+//        std::cout << "Down\n";
+        keyStates['-'] = false; // stop multiple toggle per key press
+    }));
+    functions.push_back(UserFunction('*', [this](){
+        GFramework::get->audio->toggleMute();
+//        std::cout << "muted\n";
+        keyStates['*'] = false; // stop multiple toggle per key press
     }));
 }
 
