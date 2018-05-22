@@ -73,4 +73,73 @@ struct DrawPlane : DrawItem<A> {
 };
 
 
+template <Appearance A>
+struct DrawSphere : DrawItem<A> {
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
+
+    DrawSphere(double r) : DrawSphere(Vec(0,0,0), r) {}
+    DrawSphere(Vec pos, double r) : DrawItem<A>(dimension) {
+        draw(pos, r);
+    }
+    private:void draw(Vec pos, double r) {
+        glPushMatrix();
+            glTranslated(pos.x, pos.y, pos.z);
+            glutSolidSphere(r, 20, 20);
+        glPopMatrix();
+    }
+};
+
+template <Appearance A>
+struct DrawCylinder : DrawItem<A> {
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
+
+//    DrawCylinder(double l, double r) : DrawCylinder(Vec(0,0,0), l, r) {} /// not yet implemented
+//    DrawCylinder(Vec pos, double l, double r) : DrawItem<A>(dimension) {
+//        draw(pos, l, r);
+//    }
+    DrawCylinder(Vec pos1, Vec pos2, double radius) : DrawItem<A>(dimension) {
+        draw(pos1, pos2, radius);
+    }
+    private:void draw(Vec pos1, Vec pos2, float radius) {
+          //http://lifeofaprogrammergeek.blogspot.ca/2008/07/rendering-cylinder-between-two-points.html
+        GLUquadricObj *quadric = gluNewQuadric();
+        gluQuadricNormals(quadric, GLU_SMOOTH);
+        int subdivisions = 10;
+        float vx = pos2.x-pos1.x;
+        float vy = pos2.y-pos1.y;
+        float vz = pos2.z-pos1.z;
+
+        //handle the degenerate case of pos1.z == z2 with an approximation
+        if(fabs(vz) < 0.0001)
+           vz = 0.0001;
+
+        float v = sqrt( vx*vx + vy*vy + vz*vz );
+        float ax = 57.2957795*acos( vz/v );
+        if ( vz < 0.0 )
+            ax = -ax;
+        float rx = -vy*vz;
+        float ry = vx*vz;
+        glPushMatrix();
+
+        //draw the cylinder body
+        glTranslatef( pos1.x,pos1.y,pos1.z );
+        glRotatef(ax, rx, ry, 0.0);
+        gluQuadricOrientation(quadric,GLU_OUTSIDE);
+        gluCylinder(quadric, radius, radius, v, subdivisions, 1);
+
+        //draw the first cap
+        gluQuadricOrientation(quadric,GLU_INSIDE);
+        gluDisk( quadric, 0.0, radius, subdivisions, 1);
+        glTranslatef( 0,0,v );
+
+        //draw the second cap
+        gluQuadricOrientation(quadric,GLU_OUTSIDE);
+        gluDisk( quadric, 0.0, radius, subdivisions, 1);
+        glPopMatrix();
+          gluDeleteQuadric(quadric);
+
+    }
+};
+
+
 #endif // SHAPES_CPP

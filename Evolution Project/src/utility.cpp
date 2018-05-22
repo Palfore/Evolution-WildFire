@@ -1,6 +1,7 @@
 #include "utility.h"
 #include <ctime>
 #include <vector>
+#include <deque>
 
 #include <iostream>
 #include <algorithm>
@@ -31,8 +32,9 @@ namespace utility {
         return subject;
     }
 
-    std::vector<std::string> split(std::string stringToBeSplit, std::string delimeter) {
-         std::vector<std::string> splitString;
+    template<template <typename, typename = std::allocator<std::string>> class C>
+    C<std::string> split(std::string stringToBeSplit, std::string delimeter) {
+         C<std::string> splitString;
          int startIndex = 0;
          int endIndex   = 0;
          while (static_cast<unsigned>(endIndex = stringToBeSplit.find(delimeter, startIndex)) < stringToBeSplit.size()) {
@@ -46,6 +48,8 @@ namespace utility {
          }
          return splitString;
     }
+    template std::vector<std::string, std::allocator<std::string>> split<std::vector>(std::string s, std::string delim);
+    template std::deque<std::string, std::allocator<std::string>> split<std::deque>(std::string s, std::string delim);
 
     std::string getCurrentDate() {
         std::string months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};

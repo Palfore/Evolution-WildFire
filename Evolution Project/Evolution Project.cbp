@@ -23,6 +23,10 @@
 					<Add directory="include/Graphics/UserInput" />
 					<Add directory="include/Graphics/Audio" />
 					<Add directory="include/Config" />
+					<Add directory="include/Simulation/Genetics" />
+					<Add directory="include/Simulation/Physics" />
+					<Add directory="include/Simulation/Creatures" />
+					<Add directory="include/Simulation/Population" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -42,6 +46,11 @@
 					<Add directory="include/Graphics/UserInput" />
 					<Add directory="include/Audio" />
 					<Add directory="include/Config" />
+					<Add directory="include/Genetics" />
+					<Add directory="include/Simulation/Genetics" />
+					<Add directory="include/Simulation/Physics" />
+					<Add directory="include/Simulation/Creatures" />
+					<Add directory="include/Simulation/Population" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -49,9 +58,6 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-fomit-frame-pointer" />
-			<Add option="-fexpensive-optimizations" />
-			<Add option="-O" />
 			<Add option="-Wnon-virtual-dtor" />
 			<Add option="-Wshadow" />
 			<Add option="-Winit-self" />
@@ -80,7 +86,6 @@
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-s" />
 			<Add option="-lopengl32" />
 			<Add library="libraries/SOIL/lib/libSOIL.a" />
 			<Add library="opengl32" />
@@ -106,10 +111,20 @@
 		<Unit filename="include/Graphics/GFramework.h" />
 		<Unit filename="include/Graphics/GlutCallBacks.h" />
 		<Unit filename="include/Graphics/MyGlut.h" />
+		<Unit filename="include/Graphics/UserInput/Button.h" />
 		<Unit filename="include/Graphics/UserInput/UserFunction.h" />
 		<Unit filename="include/Graphics/UserInput/UserInput.h" />
 		<Unit filename="include/Logger/Logger.h" />
 		<Unit filename="include/Math/MyMath.h" />
+		<Unit filename="include/Simulation/Creatures/Creature.h" />
+		<Unit filename="include/Simulation/Genetics/Gene.h" />
+		<Unit filename="include/Simulation/Genetics/Genome.h" />
+		<Unit filename="include/Simulation/Genetics/Muscle.h" />
+		<Unit filename="include/Simulation/Genetics/MuscleGene.h" />
+		<Unit filename="include/Simulation/Genetics/NodeGene.h" />
+		<Unit filename="include/Simulation/Physics/Ball.h" />
+		<Unit filename="include/Simulation/Physics/Piston.h" />
+		<Unit filename="include/Simulation/Population/Population.h" />
 		<Unit filename="include/Simulation/Simulation.h" />
 		<Unit filename="include/utility.h" />
 		<Unit filename="include/version.h" />
@@ -125,10 +140,19 @@
 		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
 		<Unit filename="src/Graphics/MyGlut.cpp" />
+		<Unit filename="src/Graphics/UserInput/Button.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserFunction.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserInput.cpp" />
 		<Unit filename="src/Logger/Logger.cpp" />
 		<Unit filename="src/Math/MyMath.cpp" />
+		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
+		<Unit filename="src/Simulation/Genetics/Gene.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genome.cpp" />
+		<Unit filename="src/Simulation/Genetics/MuscleGene.cpp" />
+		<Unit filename="src/Simulation/Genetics/NodeGene.cpp" />
+		<Unit filename="src/Simulation/Physics/Ball.cpp" />
+		<Unit filename="src/Simulation/Physics/Piston.cpp" />
+		<Unit filename="src/Simulation/Population/Population.cpp" />
 		<Unit filename="src/Simulation/Simulation.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/utility.cpp" />

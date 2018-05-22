@@ -19,31 +19,39 @@ namespace glutCB {
     void renderScene() {
         /* Run Simulation */
         if (!GFramework::get->display) { // Run asap
-            GFramework::get->simulation->run(0);
+            GFramework::get->simulation->run(1);
         } else {
-            static auto getTime = [](){
+            static auto getTime = [](){  // in seconds
                 auto time = std::chrono::system_clock::now().time_since_epoch();
-                auto seconds = std::chrono::duration_cast<std::chrono::microseconds>(time).count();
-                return seconds / 1000000.0;
+                auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(time).count();
+                return microseconds / 1000000.0;
             };
+//            static auto avg = [](std::vector<double> values) {
+//                double sum = 0.0;
+//                for (double value : values) {
+//                    sum += value;
+//                }
+//                return sum / double(values.size());
+//            };
 
-            static unsigned int COLLECTED_FRAMES = 60;
-            static std::vector<double> times = {};
 
-            times.push_back(getTime());
-            double currentFPS = 0;
-            if (times.size() == COLLECTED_FRAMES) {
-                double delta = times[times.size() - 1] - times[0];
-                currentFPS = COLLECTED_FRAMES / delta;
-                double deviation = currentFPS - GFramework::get->FPS;
-                int milliseconds = deviation > 0 ? deviation : 0;
+            ////////////////////////////////////////
+            static double lastFrameTime = 0; // This assumes that the background time is negligable.
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+            double start = getTime();
+
+            GFramework::get->simulation->run(lastFrameTime);
+            std::this_thread::sleep_for(std::chrono::milliseconds((int) 10));
+
+            double fps = GFramework::FPS;
+            double stop = getTime();
+            if ((1/fps - lastFrameTime) > 0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds((int) (
+                    (1/fps) - lastFrameTime
+                )));
             }
-            while (times.size() >= COLLECTED_FRAMES) {
-                times.erase(times.begin());
-            }
-            GFramework::get->simulation->run(currentFPS);
+            lastFrameTime = stop - start;
+            //printf("%f %f %f\n", 1/fps, lastFrameTime, (1/fps - lastFrameTime)*fps);
         }
     }
 

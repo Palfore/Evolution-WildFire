@@ -1,0 +1,563 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 20.48      0.17     0.17     5555     0.03     0.03  GFramework::readyDrawing()
+ 14.46      0.29     0.12                             __pthread_self_lite
+ 12.05      0.39     0.10                             pthread_getspecific
+  7.23      0.45     0.06                             _Unwind_SjLj_Register
+  6.02      0.50     0.05                             pthread_spin_lock
+  4.82      0.54     0.04    49995     0.00     0.00  Drawing::changeColor(Appearance)
+  4.82      0.58     0.04     5555     0.01     0.05  Simulation::run(double)
+  4.82      0.62     0.04                             pthread_spin_unlock
+  2.41      0.64     0.02                             glutCB::renderScene()
+  2.41      0.66     0.02                             std::string::_M_mutate(unsigned int, unsigned int, unsigned int)
+  2.41      0.68     0.02                             std::this_thread::__sleep_for(std::chrono::duration<long long, std::ratio<1ll, 1ll> >, std::chrono::duration<long long, std::ratio<1ll, 1000000000ll> >)
+  2.41      0.70     0.02                             _pthread_once_raw.constprop.5
+  2.41      0.72     0.02                             cosf
+  2.41      0.74     0.02                             pthread_setspecific
+  1.20      0.75     0.01    44440     0.00     0.00  glTexVert3f(reactphysics3d::Vector2, reactphysics3d::Vector3)
+  1.20      0.76     0.01    44440     0.00     0.00  glTexVert3f(double, double, double, double, double)
+  1.20      0.77     0.01    27775     0.00     0.00  Drawing::enable3D()
+  1.20      0.78     0.01        2     5.00     5.00  void std::vector<UserFunction, std::allocator<UserFunction> >::_M_assign_aux<UserFunction const*>(UserFunction const*, UserFunction const*, std::forward_iterator_tag)
+  1.20      0.79     0.01                             GetLastError@0
+  1.20      0.80     0.01                             _Unwind_SjLj_Unregister
+  1.20      0.81     0.01                             std::string::reserve(unsigned int)
+  1.20      0.82     0.01                             std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, int)
+  1.20      0.83     0.01                             glClear@4
+  0.00      0.83     0.00   105545     0.00     0.00  Drawing::isColor(Appearance)
+  0.00      0.83     0.00    66660     0.00     0.00  glTexVert2f(reactphysics3d::Vector2, reactphysics3d::Vector2)
+  0.00      0.83     0.00    66660     0.00     0.00  glTexVert2f(double, double, double, double)
+  0.00      0.83     0.00    66660     0.00     0.00  Drawing::isTexture(Appearance)
+  0.00      0.83     0.00    49995     0.00     0.00  Drawing::changeColor(reactphysics3d::Vector3)
+  0.00      0.83     0.00    49995     0.00     0.00  Drawing::enableND(Drawing::Dimension)
+  0.00      0.83     0.00    33330     0.00     0.00  Drawing::enable2D()
+  0.00      0.83     0.00    16665     0.00     0.00  Drawing::changeTexture(Appearance)
+  0.00      0.83     0.00    16665     0.00     0.00  Drawing::changeTexture(unsigned int)
+  0.00      0.83     0.00     5573     0.00     0.00  std::string utility::numToStr<int>(int)
+  0.00      0.83     0.00     5573     0.00     0.00  std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*>(char*, char*, std::allocator<char> const&)
+  0.00      0.83     0.00     5555     0.00     0.00  DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool)
+  0.00      0.83     0.00     5555     0.00     0.00  GFramework::showScene()
+  0.00      0.83     0.00     5555     0.00     0.00  UserInput::isInputStringSubmitted()
+  0.00      0.83     0.00      546     0.00     0.00  std::function<void ()>::function(std::function<void ()> const&)
+  0.00      0.83     0.00      507     0.00     0.00  main
+  0.00      0.83     0.00      447     0.00     0.00  glTexVert3f(double, double, reactphysics3d::Vector3)
+  0.00      0.83     0.00      244     0.00     0.00  UserFunction::~UserFunction()
+  0.00      0.83     0.00      185     0.00     0.00  UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>)
+  0.00      0.83     0.00       96     0.00     0.00  void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&)
+  0.00      0.83     0.00       91     0.00     0.00  UserFunction::UserFunction(char, std::function<void ()>)
+  0.00      0.83     0.00       24     0.00     0.00  void std::vector<std::string, std::allocator<std::string> >::_M_emplace_back_aux<std::string const&>(std::string const&)
+  0.00      0.83     0.00       12     0.00     0.00  utility::split(std::string, std::string)
+  0.00      0.83     0.00       12     0.00     0.00  utility::toUpper(std::string)
+  0.00      0.83     0.00        8     0.00     0.00  void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&)
+  0.00      0.83     0.00        7     0.00     0.00  void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&)
+  0.00      0.83     0.00        6     0.00     0.00  std::string* std::__find_if<std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const> >(std::string*, std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const>, std::random_access_iterator_tag)
+  0.00      0.83     0.00        3     0.00     0.00  bool ConfigValueConverters::getValue_<bool>(std::string)
+  0.00      0.83     0.00        3     0.00     0.00  Config::getFileValue(std::string)
+  0.00      0.83     0.00        3     0.00     0.00  Logger::logMessage(std::string, bool)
+  0.00      0.83     0.00        3     0.00     0.00  Logger::getTimeStamp()
+  0.00      0.83     0.00        3     0.00     0.00  Logger::log(int, std::string, std::string, std::string, LogDegree, LogType)
+  0.00      0.83     0.00        3     0.00     0.00  Logger::toString(LogType)
+  0.00      0.83     0.00        3     0.00     0.00  Logger::toString(LogDegree)
+  0.00      0.83     0.00        3     0.00     0.00  utility::getCurrentDate()
+  0.00      0.83     0.00        3     0.00     0.00  utility::getCurrentTime()
+  0.00      0.83     0.00        2     0.00     0.00  UserInput::setToDefault()
+  0.00      0.83     0.00        1     0.00     0.00  GFramework::startup()
+  0.00      0.83     0.00        1     0.00     0.00  Simulation::loadGameModeKeyboard()
+  0.00      0.83     0.00        1     0.00     9.96  Simulation::setInputTypeKeyboard()
+  0.00      0.83     0.00        1     0.00     0.00  Simulation::init()
+  0.00      0.83     0.00        1     0.00     0.00  UserFunction::UserFunction(int, std::function<void ()>)
+  0.00      0.83     0.00        1     0.00     0.00  Logger::normalExit(int, std::string, std::string)
+  0.00      0.83     0.00        1     0.00     0.04  std::function<void ()>::operator()() const
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 1.20% of 0.83 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     37.3    0.02    0.29                 glutCB::renderScene() [1]
+                0.04    0.25    5555/5555        Simulation::run(double) [2]
+                0.00    0.00       7/7           void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&) [54]
+-----------------------------------------------
+                0.04    0.25    5555/5555        glutCB::renderScene() [1]
+[2]     34.9    0.04    0.25    5555         Simulation::run(double) [2]
+                0.17    0.00    5555/5555        GFramework::readyDrawing() [3]
+                0.04    0.00   44440/49995       Drawing::changeColor(Appearance) [8]
+                0.01    0.01   44440/44440       glTexVert3f(double, double, double, double, double) [10]
+                0.00    0.01       1/1           Simulation::setInputTypeKeyboard() [25]
+                0.00    0.01   44440/49995       Drawing::enableND(Drawing::Dimension) [26]
+                0.00    0.01    5555/5555        DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [27]
+                0.00    0.00    5555/5555        GFramework::showScene() [28]
+                0.00    0.00   66660/66660       glTexVert2f(double, double, double, double) [34]
+                0.00    0.00   44440/66660       Drawing::isTexture(Appearance) [35]
+                0.00    0.00   44440/105545      Drawing::isColor(Appearance) [32]
+                0.00    0.00   16665/16665       Drawing::changeTexture(Appearance) [38]
+                0.00    0.00    5555/5573        std::string utility::numToStr<int>(int) [40]
+                0.00    0.00    5555/5555        UserInput::isInputStringSubmitted() [42]
+-----------------------------------------------
+                0.17    0.00    5555/5555        Simulation::run(double) [2]
+[3]     20.7    0.17    0.00    5555         GFramework::readyDrawing() [3]
+                0.00    0.00    5555/27775       Drawing::enable3D() [18]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     14.5    0.12    0.00                 __pthread_self_lite [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]     12.0    0.10    0.00                 pthread_getspecific [5]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]      7.2    0.06    0.00                 _Unwind_SjLj_Register [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      6.0    0.05    0.00                 pthread_spin_lock [7]
+-----------------------------------------------
+                0.00    0.00    5555/49995       DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [27]
+                0.04    0.00   44440/49995       Simulation::run(double) [2]
+[8]      4.8    0.04    0.00   49995         Drawing::changeColor(Appearance) [8]
+                0.00    0.00   49995/105545      Drawing::isColor(Appearance) [32]
+                0.00    0.00   49995/49995       Drawing::changeColor(reactphysics3d::Vector3) [36]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      4.8    0.04    0.00                 pthread_spin_unlock [9]
+-----------------------------------------------
+                0.01    0.01   44440/44440       Simulation::run(double) [2]
+[10]     2.4    0.01    0.01   44440         glTexVert3f(double, double, double, double, double) [10]
+                0.01    0.00   44440/44440       glTexVert3f(reactphysics3d::Vector2, reactphysics3d::Vector3) [17]
+-----------------------------------------------
+                                                 <spontaneous>
+[11]     2.4    0.02    0.00                 std::string::_M_mutate(unsigned int, unsigned int, unsigned int) [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     2.4    0.02    0.00                 std::this_thread::__sleep_for(std::chrono::duration<long long, std::ratio<1ll, 1ll> >, std::chrono::duration<long long, std::ratio<1ll, 1000000000ll> >) [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     2.4    0.02    0.00                 _pthread_once_raw.constprop.5 [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     2.4    0.02    0.00                 cosf [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     2.4    0.02    0.00                 pthread_setspecific [15]
+-----------------------------------------------
+[16]     1.2    0.01    0.00     262+1423    <cycle 1 as a whole> [16]
+                0.01    0.00       2             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_assign_aux<UserFunction const*>(UserFunction const*, UserFunction const*, std::forward_iterator_tag) <cycle 1> [19]
+                0.00    0.00     546             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                0.00    0.00     507             main <cycle 1> [44]
+                0.00    0.00     244             UserFunction::~UserFunction() <cycle 1> [46]
+                0.00    0.00     185             UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+                0.00    0.00      96             void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+                0.00    0.00      91             UserFunction::UserFunction(char, std::function<void ()>) <cycle 1> [49]
+                0.00    0.00       8             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&) <cycle 1> [53]
+                0.00    0.00       2             UserInput::setToDefault() <cycle 1> [65]
+                0.00    0.00       1             GFramework::startup() <cycle 1> [66]
+                0.00    0.00       1             Simulation::init() <cycle 1> [68]
+                0.00    0.00       1             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                0.00    0.00       1             UserFunction::UserFunction(int, std::function<void ()>) <cycle 1> [69]
+-----------------------------------------------
+                0.01    0.00   44440/44440       glTexVert3f(double, double, double, double, double) [10]
+[17]     1.2    0.01    0.00   44440         glTexVert3f(reactphysics3d::Vector2, reactphysics3d::Vector3) [17]
+-----------------------------------------------
+                0.00    0.00    5555/27775       GFramework::showScene() [28]
+                0.00    0.00    5555/27775       GFramework::readyDrawing() [3]
+                0.01    0.00   16665/27775       Drawing::enableND(Drawing::Dimension) [26]
+[18]     1.2    0.01    0.00   27775         Drawing::enable3D() [18]
+-----------------------------------------------
+                                   2             UserInput::setToDefault() <cycle 1> [65]
+[19]     1.2    0.01    0.00       2         void std::vector<UserFunction, std::allocator<UserFunction> >::_M_assign_aux<UserFunction const*>(UserFunction const*, UserFunction const*, std::forward_iterator_tag) <cycle 1> [19]
+                                  21             UserFunction::~UserFunction() <cycle 1> [46]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     1.2    0.01    0.00                 GetLastError@0 [20]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     1.2    0.01    0.00                 _Unwind_SjLj_Unregister [21]
+-----------------------------------------------
+                                                 <spontaneous>
+[22]     1.2    0.01    0.00                 std::string::reserve(unsigned int) [22]
+-----------------------------------------------
+                                                 <spontaneous>
+[23]     1.2    0.01    0.00                 std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, int) [23]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     1.2    0.01    0.00                 glClear@4 [24]
+-----------------------------------------------
+                0.00    0.01       1/1           Simulation::run(double) [2]
+[25]     1.2    0.00    0.01       1         Simulation::setInputTypeKeyboard() [25]
+                0.00    0.00      65/262         UserFunction::UserFunction(char, std::function<void ()>) <cycle 1> [49]
+                0.00    0.00      65/262         void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+                0.00    0.00      65/262         UserFunction::~UserFunction() <cycle 1> [46]
+                0.00    0.00      65/262         main <cycle 1> [44]
+                0.00    0.00       1/262         UserInput::setToDefault() <cycle 1> [65]
+-----------------------------------------------
+                0.00    0.00    5555/49995       DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [27]
+                0.00    0.01   44440/49995       Simulation::run(double) [2]
+[26]     0.7    0.00    0.01   49995         Drawing::enableND(Drawing::Dimension) [26]
+                0.01    0.00   16665/27775       Drawing::enable3D() [18]
+                0.00    0.00   33330/33330       Drawing::enable2D() [37]
+-----------------------------------------------
+                0.00    0.01    5555/5555        Simulation::run(double) [2]
+[27]     0.6    0.00    0.01    5555         DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [27]
+                0.00    0.00    5555/49995       Drawing::changeColor(Appearance) [8]
+                0.00    0.00    5555/49995       Drawing::enableND(Drawing::Dimension) [26]
+                0.00    0.00   11110/105545      Drawing::isColor(Appearance) [32]
+                0.00    0.00    5555/66660       Drawing::isTexture(Appearance) [35]
+-----------------------------------------------
+                0.00    0.00    5555/5555        Simulation::run(double) [2]
+[28]     0.2    0.00    0.00    5555         GFramework::showScene() [28]
+                0.00    0.00    5555/27775       Drawing::enable3D() [18]
+-----------------------------------------------
+                0.00    0.00       1/1           glutCB::keyPressed(unsigned char, int, int) [30]
+[29]     0.0    0.00    0.00       1         std::function<void ()>::operator()() const [29]
+                0.00    0.00       1/262         UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     0.0    0.00    0.00                 glutCB::keyPressed(unsigned char, int, int) [30]
+                0.00    0.00       1/1           std::function<void ()>::operator()() const [29]
+-----------------------------------------------
+                0.00    0.00   11110/105545      DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [27]
+                0.00    0.00   44440/105545      Simulation::run(double) [2]
+                0.00    0.00   49995/105545      Drawing::changeColor(Appearance) [8]
+[32]     0.0    0.00    0.00  105545         Drawing::isColor(Appearance) [32]
+-----------------------------------------------
+                0.00    0.00   66660/66660       glTexVert2f(double, double, double, double) [34]
+[33]     0.0    0.00    0.00   66660         glTexVert2f(reactphysics3d::Vector2, reactphysics3d::Vector2) [33]
+-----------------------------------------------
+                0.00    0.00   66660/66660       Simulation::run(double) [2]
+[34]     0.0    0.00    0.00   66660         glTexVert2f(double, double, double, double) [34]
+                0.00    0.00   66660/66660       glTexVert2f(reactphysics3d::Vector2, reactphysics3d::Vector2) [33]
+-----------------------------------------------
+                0.00    0.00    5555/66660       DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [27]
+                0.00    0.00   16665/66660       Drawing::changeTexture(Appearance) [38]
+                0.00    0.00   44440/66660       Simulation::run(double) [2]
+[35]     0.0    0.00    0.00   66660         Drawing::isTexture(Appearance) [35]
+-----------------------------------------------
+                0.00    0.00   49995/49995       Drawing::changeColor(Appearance) [8]
+[36]     0.0    0.00    0.00   49995         Drawing::changeColor(reactphysics3d::Vector3) [36]
+-----------------------------------------------
+                0.00    0.00   33330/33330       Drawing::enableND(Drawing::Dimension) [26]
+[37]     0.0    0.00    0.00   33330         Drawing::enable2D() [37]
+-----------------------------------------------
+                0.00    0.00   16665/16665       Simulation::run(double) [2]
+[38]     0.0    0.00    0.00   16665         Drawing::changeTexture(Appearance) [38]
+                0.00    0.00   16665/66660       Drawing::isTexture(Appearance) [35]
+                0.00    0.00   16665/16665       Drawing::changeTexture(unsigned int) [39]
+-----------------------------------------------
+                0.00    0.00   16665/16665       Drawing::changeTexture(Appearance) [38]
+[39]     0.0    0.00    0.00   16665         Drawing::changeTexture(unsigned int) [39]
+-----------------------------------------------
+                0.00    0.00       3/5573        Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+                0.00    0.00       6/5573        utility::getCurrentDate() [63]
+                0.00    0.00       9/5573        utility::getCurrentTime() [64]
+                0.00    0.00    5555/5573        Simulation::run(double) [2]
+[40]     0.0    0.00    0.00    5573         std::string utility::numToStr<int>(int) [40]
+                0.00    0.00    5573/5573        std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*>(char*, char*, std::allocator<char> const&) [41]
+-----------------------------------------------
+                0.00    0.00    5573/5573        std::string utility::numToStr<int>(int) [40]
+[41]     0.0    0.00    0.00    5573         std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*>(char*, char*, std::allocator<char> const&) [41]
+-----------------------------------------------
+                0.00    0.00    5555/5555        Simulation::run(double) [2]
+[42]     0.0    0.00    0.00    5555         UserInput::isInputStringSubmitted() [42]
+-----------------------------------------------
+                                   1             UserFunction::UserFunction(int, std::function<void ()>) <cycle 1> [69]
+                                   8             UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+                                  91             UserFunction::UserFunction(char, std::function<void ()>) <cycle 1> [49]
+                                 176             void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+                                 270             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&) <cycle 1> [53]
+[43]     0.0    0.00    0.00     546         std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                0.00    0.00     215/447         glTexVert3f(double, double, reactphysics3d::Vector3) [45]
+                                 246             main <cycle 1> [44]
+                                  85             UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+-----------------------------------------------
+                                  15             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                                 181             UserFunction::~UserFunction() <cycle 1> [46]
+                                 246             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                0.00    0.00      65/262         Simulation::setInputTypeKeyboard() [25]
+[44]     0.0    0.00    0.00     507         main <cycle 1> [44]
+                                   1             GFramework::startup() <cycle 1> [66]
+-----------------------------------------------
+                0.00    0.00     215/447         std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                0.00    0.00     232/447         UserFunction::~UserFunction() <cycle 1> [46]
+[45]     0.0    0.00    0.00     447         glTexVert3f(double, double, reactphysics3d::Vector3) [45]
+-----------------------------------------------
+                                  11             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                                  20             UserInput::setToDefault() <cycle 1> [65]
+                                  21             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_assign_aux<UserFunction const*>(UserFunction const*, UserFunction const*, std::forward_iterator_tag) <cycle 1> [19]
+                                 127             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&) <cycle 1> [53]
+                0.00    0.00      65/262         Simulation::setInputTypeKeyboard() [25]
+[46]     0.0    0.00    0.00     244         UserFunction::~UserFunction() <cycle 1> [46]
+                0.00    0.00     232/447         glTexVert3f(double, double, reactphysics3d::Vector3) [45]
+                                 181             main <cycle 1> [44]
+                                  75             UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+-----------------------------------------------
+                                   4             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                                  20             UserInput::setToDefault() <cycle 1> [65]
+                                  75             UserFunction::~UserFunction() <cycle 1> [46]
+                                  85             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                0.00    0.00       1/262         std::function<void ()>::operator()() const [29]
+[47]     0.0    0.00    0.00     185         UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+                                   8             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+-----------------------------------------------
+                                  11             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                                  20             UserInput::setToDefault() <cycle 1> [65]
+                0.00    0.00      65/262         Simulation::setInputTypeKeyboard() [25]
+[48]     0.0    0.00    0.00      96         void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+                                 176             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                                   8             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&) <cycle 1> [53]
+-----------------------------------------------
+                                   6             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                                  20             UserInput::setToDefault() <cycle 1> [65]
+                0.00    0.00      65/262         Simulation::setInputTypeKeyboard() [25]
+[49]     0.0    0.00    0.00      91         UserFunction::UserFunction(char, std::function<void ()>) <cycle 1> [49]
+                                  91             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+-----------------------------------------------
+                0.00    0.00      24/24          utility::split(std::string, std::string) [51]
+[50]     0.0    0.00    0.00      24         void std::vector<std::string, std::allocator<std::string> >::_M_emplace_back_aux<std::string const&>(std::string const&) [50]
+-----------------------------------------------
+                0.00    0.00       3/12          Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+                0.00    0.00       9/12          Config::getFileValue(std::string) [57]
+[51]     0.0    0.00    0.00      12         utility::split(std::string, std::string) [51]
+                0.00    0.00      24/24          void std::vector<std::string, std::allocator<std::string> >::_M_emplace_back_aux<std::string const&>(std::string const&) [50]
+-----------------------------------------------
+                0.00    0.00      12/12          Config::getFileValue(std::string) [57]
+[52]     0.0    0.00    0.00      12         utility::toUpper(std::string) [52]
+-----------------------------------------------
+                                   8             void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+[53]     0.0    0.00    0.00       8         void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&) <cycle 1> [53]
+                                 270             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+                                 127             UserFunction::~UserFunction() <cycle 1> [46]
+-----------------------------------------------
+                0.00    0.00       7/7           glutCB::renderScene() [1]
+[54]     0.0    0.00    0.00       7         void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&) [54]
+-----------------------------------------------
+                0.00    0.00       6/6           bool ConfigValueConverters::getValue_<bool>(std::string) [56]
+[55]     0.0    0.00    0.00       6         std::string* std::__find_if<std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const> >(std::string*, std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const>, std::random_access_iterator_tag) [55]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+[56]     0.0    0.00    0.00       3         bool ConfigValueConverters::getValue_<bool>(std::string) [56]
+                0.00    0.00       6/6           std::string* std::__find_if<std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const> >(std::string*, std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const>, std::random_access_iterator_tag) [55]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+[57]     0.0    0.00    0.00       3         Config::getFileValue(std::string) [57]
+                0.00    0.00      12/12          utility::toUpper(std::string) [52]
+                0.00    0.00       9/12          utility::split(std::string, std::string) [51]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+[58]     0.0    0.00    0.00       3         Logger::logMessage(std::string, bool) [58]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+[59]     0.0    0.00    0.00       3         Logger::getTimeStamp() [59]
+                0.00    0.00       3/3           utility::getCurrentTime() [64]
+                0.00    0.00       3/3           utility::getCurrentDate() [63]
+-----------------------------------------------
+                0.00    0.00       1/3           Logger::normalExit(int, std::string, std::string) [70]
+                0.00    0.00       2/3           GFramework::startup() <cycle 1> [66]
+[60]     0.0    0.00    0.00       3         Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+                0.00    0.00       3/3           Logger::toString(LogType) [61]
+                0.00    0.00       3/3           Logger::toString(LogDegree) [62]
+                0.00    0.00       3/12          utility::split(std::string, std::string) [51]
+                0.00    0.00       3/5573        std::string utility::numToStr<int>(int) [40]
+                0.00    0.00       3/3           Logger::getTimeStamp() [59]
+                0.00    0.00       3/3           Config::getFileValue(std::string) [57]
+                0.00    0.00       3/3           bool ConfigValueConverters::getValue_<bool>(std::string) [56]
+                0.00    0.00       3/3           Logger::logMessage(std::string, bool) [58]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+[61]     0.0    0.00    0.00       3         Logger::toString(LogType) [61]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+[62]     0.0    0.00    0.00       3         Logger::toString(LogDegree) [62]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::getTimeStamp() [59]
+[63]     0.0    0.00    0.00       3         utility::getCurrentDate() [63]
+                0.00    0.00       6/5573        std::string utility::numToStr<int>(int) [40]
+-----------------------------------------------
+                0.00    0.00       3/3           Logger::getTimeStamp() [59]
+[64]     0.0    0.00    0.00       3         utility::getCurrentTime() [64]
+                0.00    0.00       9/5573        std::string utility::numToStr<int>(int) [40]
+-----------------------------------------------
+                                   1             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                0.00    0.00       1/262         Simulation::setInputTypeKeyboard() [25]
+[65]     0.0    0.00    0.00       2         UserInput::setToDefault() <cycle 1> [65]
+                                  20             UserFunction::UserFunction(char, std::function<void ()>) <cycle 1> [49]
+                                  20             void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+                                  20             UserFunction::~UserFunction() <cycle 1> [46]
+                                  20             UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+                                   2             void std::vector<UserFunction, std::allocator<UserFunction> >::_M_assign_aux<UserFunction const*>(UserFunction const*, UserFunction const*, std::forward_iterator_tag) <cycle 1> [19]
+-----------------------------------------------
+                                   1             main <cycle 1> [44]
+[66]     0.0    0.00    0.00       1         GFramework::startup() <cycle 1> [66]
+                0.00    0.00       2/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+                                   1             Simulation::init() <cycle 1> [68]
+-----------------------------------------------
+                                   1             Simulation::init() <cycle 1> [68]
+[67]     0.0    0.00    0.00       1         Simulation::loadGameModeKeyboard() <cycle 1> [67]
+                                  15             main <cycle 1> [44]
+                                  11             void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&) <cycle 1> [48]
+                                  11             UserFunction::~UserFunction() <cycle 1> [46]
+                                   6             UserFunction::UserFunction(char, std::function<void ()>) <cycle 1> [49]
+                                   4             UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) <cycle 1> [47]
+                                   1             UserInput::setToDefault() <cycle 1> [65]
+                                   1             UserFunction::UserFunction(int, std::function<void ()>) <cycle 1> [69]
+-----------------------------------------------
+                                   1             GFramework::startup() <cycle 1> [66]
+[68]     0.0    0.00    0.00       1         Simulation::init() <cycle 1> [68]
+                                   1             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+-----------------------------------------------
+                                   1             Simulation::loadGameModeKeyboard() <cycle 1> [67]
+[69]     0.0    0.00    0.00       1         UserFunction::UserFunction(int, std::function<void ()>) <cycle 1> [69]
+                                   1             std::function<void ()>::function(std::function<void ()> const&) <cycle 1> [43]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Function_handler<void (), UserInput::setToDefault()::{lambda()#1}>::_M_invoke(std::_Any_data const&) [2320]
+[70]     0.0    0.00    0.00       1         Logger::normalExit(int, std::string, std::string) [70]
+                0.00    0.00       1/3           Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [60]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [20] GetLastError@0         [70] Logger::normalExit(int, std::string, std::string) [22] std::string::reserve(unsigned int)
+   [6] _Unwind_SjLj_Register  [59] Logger::getTimeStamp() [11] std::string::_M_mutate(unsigned int, unsigned int, unsigned int)
+  [21] _Unwind_SjLj_Unregister [60] Logger::log(int, std::string, std::string, std::string, LogDegree, LogType) [41] std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<char*>(char*, char*, std::allocator<char> const&)
+  [33] glTexVert2f(reactphysics3d::Vector2, reactphysics3d::Vector2) [61] Logger::toString(LogType) [12] std::this_thread::__sleep_for(std::chrono::duration<long long, std::ratio<1ll, 1ll> >, std::chrono::duration<long long, std::ratio<1ll, 1000000000ll> >)
+  [34] glTexVert2f(double, double, double, double) [62] Logger::toString(LogDegree) [23] std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, int)
+  [17] glTexVert3f(reactphysics3d::Vector2, reactphysics3d::Vector3) [1] glutCB::renderScene() [48] void std::vector<UserFunction, std::allocator<UserFunction> >::emplace_back<UserFunction>(UserFunction&&)
+  [45] glTexVert3f(double, double, reactphysics3d::Vector3) [8] Drawing::changeColor(Appearance) [19] void std::vector<UserFunction, std::allocator<UserFunction> >::_M_assign_aux<UserFunction const*>(UserFunction const*, UserFunction const*, std::forward_iterator_tag)
+  [10] glTexVert3f(double, double, double, double, double) [36] Drawing::changeColor(reactphysics3d::Vector3) [53] void std::vector<UserFunction, std::allocator<UserFunction> >::_M_emplace_back_aux<UserFunction>(UserFunction&&)
+  [27] DrawString<(Appearance)138>::DrawString(std::string, float, float, bool, bool) [38] Drawing::changeTexture(Appearance) [50] void std::vector<std::string, std::allocator<std::string> >::_M_emplace_back_aux<std::string const&>(std::string const&)
+   [3] GFramework::readyDrawing() [39] Drawing::changeTexture(unsigned int) [54] void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&)
+  [66] GFramework::startup()  [32] Drawing::isColor(Appearance) [43] std::function<void ()>::function(std::function<void ()> const&)
+  [28] GFramework::showScene() [37] Drawing::enable2D()   [55] std::string* std::__find_if<std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const> >(std::string*, std::string*, __gnu_cxx::__ops::_Iter_equals_val<std::string const>, std::random_access_iterator_tag)
+  [67] Simulation::loadGameModeKeyboard() [18] Drawing::enable3D() [4] __pthread_self_lite
+  [25] Simulation::setInputTypeKeyboard() [26] Drawing::enableND(Drawing::Dimension) [13] _pthread_once_raw.constprop.5
+   [2] Simulation::run(double) [35] Drawing::isTexture(Appearance) [14] cosf
+  [68] Simulation::init()     [63] utility::getCurrentDate() [24] glClear@4
+  [49] UserFunction::UserFunction(char, std::function<void ()>) [64] utility::getCurrentTime() [44] main
+  [69] UserFunction::UserFunction(int, std::function<void ()>) [51] utility::split(std::string, std::string) [5] pthread_getspecific
+  [47] UserFunction::UserFunction(int, std::function<void ()>, std::function<void ()>) [52] utility::toUpper(std::string) [15] pthread_setspecific
+  [46] UserFunction::~UserFunction() [40] std::string utility::numToStr<int>(int) [7] pthread_spin_lock
+  [56] bool ConfigValueConverters::getValue_<bool>(std::string) [65] UserInput::setToDefault() [9] pthread_spin_unlock
+  [57] Config::getFileValue(std::string) [42] UserInput::isInputStringSubmitted() [16] <cycle 1>
+  [58] Logger::logMessage(std::string, bool) [29] std::function<void ()>::operator()() const

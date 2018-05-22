@@ -20,9 +20,9 @@ void Logger::log(int line, std::string file, std::string func, std::string msg, 
     std::string logDetails = toString(d) + " " + toString(t);
     std::string relativeFilePath = ""; // Alternatively, you could split at "Evolution Project\\" but no need to show src or include since .h or .cpp shows that.
     if (file.find("src\\") != std::string::npos) {
-        relativeFilePath = utility::split(file, "src\\")[1];
+        relativeFilePath = utility::split<std::vector>(file, "src\\")[1];
     } else if (file.find("include\\") != std::string::npos) {
-        relativeFilePath = utility::split(file, "include\\")[1];
+        relativeFilePath = utility::split<std::vector>(file, "include\\")[1];
     } else {
         relativeFilePath = file;
     }
@@ -101,6 +101,7 @@ std::string Logger::toString(LogType t) {
         case LogType::INPUT:    return "INPUT";
         case LogType::AUDIO:    return "AUDIO";
         case LogType::CONFIG:   return "CONFIG";
+        case LogType::GENETIC:   return "GENETIC";
         default:        return "UNKNOWN";
     }
 }

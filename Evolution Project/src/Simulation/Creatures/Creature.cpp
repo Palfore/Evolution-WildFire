@@ -1,0 +1,152 @@
+#include "Creature.h"
+
+#include "MuscleGene.h"
+#include "NodeGene.h"
+#include "Ball.h"
+#include "Piston.h"
+#include "Genome.h"
+
+#include <utility>
+
+Creature::Creature(std::string g) : Creature(Genome(g)) {}
+Creature::Creature(int n, int m) : Creature(Genome(n, m)) {}
+Creature::Creature(Genome g) : nodes({}), muscles({}) {
+    for (auto const& gene: g.genes[NodeGene::symbol]) {
+        this->nodes.push_back(new Ball(*static_cast<NodeGene*>(gene)));
+    }
+    for (auto const& gene: g.genes[MuscleGene::symbol]) {
+        this->muscles.push_back(new Piston(*static_cast<MuscleGene*>(gene), this->nodes));
+    }
+    lowerToGround();
+    centerCOM();
+}
+
+
+
+Creature::~Creature() {
+    for (Ball* b : nodes) {
+        delete b;
+    }
+    for (Piston* p : muscles) {
+        delete p;
+    }
+}
+
+Creature::Creature(const Creature &other) : nodes({}), muscles({}) {
+    for (auto const& node: other.nodes) {
+        this->nodes.push_back(new Ball(*node));
+    }
+    for (auto const& muscle: other.muscles) {
+        this->muscles.push_back(new Piston(muscle->getIndex1(), muscle->getIndex2(),
+                                            this->nodes[muscle->getIndex1()], this->nodes[muscle->getIndex2()]));
+
+    }
+}
+
+Creature& Creature::operator=(Creature other) {
+    std::swap(nodes, other.nodes);
+    std::swap(muscles, other.muscles);
+    return *this;
+}
+
+
+void Creature::moveCOMTo(Vec to) {
+    Vec COM = getCOM();
+    Vec dr = to - COM;
+    for (auto * node : this->nodes) {
+        node->position += dr;
+    }
+}
+void Creature::lowerToGround() {
+    double dz = this->getLowestBodyHeight() - 1; //-1 for not embeding creatures
+    for (auto * node : this->nodes) {
+        node->position.z -= dz;
+    }
+}
+void Creature::centerCOM() {
+    this->moveCOMTo(Vec(0,0, this->getCOM().z));
+}
+
+Vec Creature::getCOM() const {
+    if (this->nodes.empty()) {
+        return Vec(0,0,0);
+    }
+    Vec COM = Vec(0,0,0);
+    double mass = 0.0;
+    for (auto const& node : this->nodes) {
+            COM += node->position * node->mass;
+            mass += node->mass;
+    }
+    return COM /= mass;
+}
+
+
+#include <limits>
+double Creature::getLowestBodyHeight() const {
+    double minHeight = std::numeric_limits<double>::max();
+    for (auto const& node : this->nodes) {
+        double lowestPart = node->position.z - node->radius;
+        minHeight = lowestPart < minHeight  ? lowestPart : minHeight ;
+    }
+    return minHeight;
+}
+
+double Creature::getFitness() const {
+//    return randf(0, 100);
+    return euc2D(Vec(0,0,0), this->getCOM());
+}
+
+#include "Shapes.h"
+void Creature::draw(double t) const {
+    Vec COM = getCOM();
+    DrawSphere<Appearance::BLUE>(COM, 0.5);
+    for (auto const& node : this->nodes) {
+        node->draw(t);
+    }
+    for (auto const& muscle : this->muscles) {
+        muscle->draw(t);
+    }
+}
+
+void Creature::update(double t) {
+    double dt = 1;
+    for (auto const& node: this->nodes) {
+        node->acceleration = Vec(0, 0, -0.0066);
+    }
+
+    /* Get Muscle Forces : Find force needed to get to this frames length */
+    for (Piston * muscle: this->muscles) {
+        double currLength    = euc(muscle->getPosition1(), muscle->getPosition2());
+        double desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * (5* ((t) / dt))));
+        double deviation     = desiredLength - currLength;
+
+        Vec radVector = (muscle->getPosition1() - muscle->getPosition2());
+        Vec deltaAcc  = radVector * (deviation * 0.4) / (radVector.length() * dt * dt);
+
+        this->nodes[muscle->getIndex1()]->acceleration += deltaAcc;
+        this->nodes[muscle->getIndex2()]->acceleration -= deltaAcc;
+    }
+
+    for (auto const& node: this->nodes) {
+        /// Apply Constraints
+        if (node->position.z < node->radius) {
+            node->position.z = node->radius;
+
+            node->velocity.x *= (1 - 0.5 * dt) ;// * (isinf(x) || (x>100)? 1 : x / sqrt(1 + x*x));
+            node->velocity.y *= (1 - 0.5 * dt) ;// * (isinf(y) || (y>100)? 1 : y / sqrt(1 + y*y));
+            node->velocity.z *= -0.01;
+        }
+
+        node->velocity *= 1 - 0.03 * dt;
+
+
+        /// Apply Kinematics
+        node->velocity += node->acceleration * dt;
+        node->position += node->velocity * dt;
+
+    }
+    if (t<0) t = t;
+}
+
+
+

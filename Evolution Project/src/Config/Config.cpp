@@ -62,7 +62,7 @@ std::string Config::getFileValue(std::string key) {
     std::ifstream infile(CONFIG_FILE);
     key = utility::toUpper(key);
     while (std::getline(infile, line)) {
-        auto tokens = utility::split(line, " ");
+        auto tokens = utility::split<std::vector>(line, " ");
 
         int numTokens = tokens.size();
         switch(numTokens) {

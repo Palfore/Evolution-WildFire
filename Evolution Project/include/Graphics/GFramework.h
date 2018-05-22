@@ -33,16 +33,16 @@ struct Mouse {
  */
 class GFramework {
     public:
-        Vec2 windowSize;         ///< (width, height) dimensions of the window.
+        Vec2 windowSize;                  ///< (width, height) dimensions of the window.
         Drawing::Dimension drawingState;  ///< What dimension the GFramework is prepared to draw in.
-        Camera * camera;           ///< The camera on the users head.
-        Mouse mouse;             ///< The mouse the user controls.
-        UserInput userInput;     ///< Set of user inputs.
-        Audio * audio;             ///< Audio system for the engine.
+        Camera * camera;                  ///< The camera on the users head.
+        Mouse mouse;                      ///< The mouse the user controls.
+        UserInput userInput;              ///< Set of user inputs.
+        Audio * audio;                    ///< Audio system for the engine.
 
-        Simulation * simulation;   ///< The simulation to be run in this framework.
+        Simulation * simulation;          ///< The simulation to be run in this framework.
 
-        bool display = true;     ///< Whether the scene is being shown to the user. (set to false for maximum speed)
+        bool display = true;              ///< Whether the scene is being shown to the user. (set to false for maximum speed)
 
         static double constexpr FPS = 60;                ///< Frames per second for the simulation to run at.
         static int constexpr RENDERING_DISTANCE = 1000;  ///< How far objects should be rendered.

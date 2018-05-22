@@ -5,6 +5,8 @@
 #include <sstream>  // ostringstream
 #include <vector>
 
+#include "Logger.h"
+
 /** @brief This namespace contains functions which you might expect to be standard in cpp.
  *
  * Specifically functions in the standard libraries. If you ever ask "why isnt that function standard?"
@@ -67,15 +69,31 @@ namespace utility {
         return ss.str();
     }
 
+    template<typename T>
+    T strToNum(const std::string& numberAsString) {
+        T valor;
+        std::stringstream stream(numberAsString);
+        stream >> valor;
+        if (stream.fail()) {
+            LOG("String conversion to number failed", LogDegree::FATAL, LogType::GENERAL);
+        }
+        return valor;
+    }
+
 
     /** @brief Splits a string based on a supplied delimiter.
      *
+     * @param C The container the collection of strings should be returned as.
      * @param stringToBeSplit std::string The string to be split.
      * @param delimiter std::string The delimiter to split the string on.
      * @return std::vector<std::string> A vector of the split strings.
      *
+     * @example std::vector<std::string> = split<std::vector>(myString, myDelimiter);
      */
-    std::vector<std::string> split(std::string stringToBeSplit, std::string delimiter);
+    template<template <typename, typename = std::allocator<std::string>> class C>
+    C<std::string> split(std::string stringToBeSplit, std::string delimiter);
+
+
 
 
     /** @brief Returns the current time.
