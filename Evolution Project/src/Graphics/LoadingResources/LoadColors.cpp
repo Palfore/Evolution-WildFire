@@ -1,5 +1,7 @@
 #include "GFramework.h"
 
+/// The rgb values are stored here. At the end of this function, they are all divided by 255
+/// to get the values onto [0,1], which is required by opengl.
 void GFramework::loadColors() {
     this->colorMap = {
         {Appearance::MAROON, Vec(128,0,0)},
@@ -142,4 +144,7 @@ void GFramework::loadColors() {
         {Appearance::WHITE_SMOKE, Vec(245,245,245)},
         {Appearance::WHITE, Vec(255,255,255)}
     };
+    for (auto& c: colorMap) {
+        c.second /= 255;
+    }
 }

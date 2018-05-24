@@ -14,11 +14,11 @@ class Gene {
         Gene(const Gene& other);
         virtual ~Gene();
 
-        virtual Gene* clone() const;
+        virtual Gene* clone() const = 0;
 
-        std::string toStringFormat(char geneSymbol, std::vector<std::string>) const;
+        std::string toStringFormat(std::vector<std::string> values) const;
         virtual std::string toString() const;
-        virtual void mutate(const Genome& genome);
+        virtual void mutate(const Genome& genome) = 0;
 
 };
 

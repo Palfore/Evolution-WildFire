@@ -33,23 +33,35 @@ namespace utility {
     }
 
     template<template <typename, typename = std::allocator<std::string>> class C>
-    C<std::string> split(std::string stringToBeSplit, std::string delimeter) {
-         C<std::string> splitString;
-         int startIndex = 0;
-         int endIndex   = 0;
-         while (static_cast<unsigned>(endIndex = stringToBeSplit.find(delimeter, startIndex)) < stringToBeSplit.size()) {
-           std::string val = stringToBeSplit.substr(startIndex, endIndex - startIndex);
-           splitString.push_back(val);
-           startIndex = endIndex + delimeter.size();
-         }
-         if (static_cast<unsigned>(startIndex) < stringToBeSplit.size()) {
-           std::string val = stringToBeSplit.substr(startIndex);
-           splitString.push_back(val);
-         }
-         return splitString;
+    C<std::string> split(std::string stringToBeSplit, std::string delimeter, int maxSplits) {
+        C<std::string> splitString;
+        int numSplits = 0;
+        int startIndex = 0;
+        int endIndex   = 0;
+        while (static_cast<unsigned>(endIndex = stringToBeSplit.find(delimeter, startIndex)) < stringToBeSplit.size()) {
+            std::string val = stringToBeSplit.substr(startIndex, endIndex - startIndex);
+            splitString.push_back(val);
+            startIndex = endIndex + delimeter.size();
+
+            if ((maxSplits != -1) && (++numSplits >= maxSplits)) {
+                break;
+            }
+        }
+        if (static_cast<unsigned>(startIndex) < stringToBeSplit.size()) {
+            std::string val = stringToBeSplit.substr(startIndex);
+            splitString.push_back(val);
+        }
+        return splitString;
     }
-    template std::vector<std::string, std::allocator<std::string>> split<std::vector>(std::string s, std::string delim);
-    template std::deque<std::string, std::allocator<std::string>> split<std::deque>(std::string s, std::string delim);
+    template std::vector<std::string, std::allocator<std::string>> split<std::vector>(std::string s, std::string delim, int maxSplits);
+    template std::deque<std::string, std::allocator<std::string>> split<std::deque>(std::string s, std::string delim, int maxSplits);
+
+    template<template <typename, typename = std::allocator<std::string>> class C>
+    C<std::string> split(std::string stringToBeSplit, char delimiter, int maxSplits) {
+        return split<C>(stringToBeSplit, std::string(1, delimiter), maxSplits);
+    }
+    template std::vector<std::string, std::allocator<std::string>> split<std::vector>(std::string s, char delim, int maxSplits);
+    template std::deque<std::string, std::allocator<std::string>> split<std::deque>(std::string s, char delim, int maxSplits);
 
     std::string getCurrentDate() {
         std::string months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};

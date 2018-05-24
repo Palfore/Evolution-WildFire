@@ -129,7 +129,7 @@ class DrawItem {
 
     protected:
 
-        /** @brief Applies the appearance. The subclass is used to perform the drawing.
+        /** @brief Applies the appearance. Subclasses are used to draw shapes.
          * @details Constructor is used as decorator. This will apply the texture before the drawing is performed.
          * @param dim Drawing::Dimension
          *

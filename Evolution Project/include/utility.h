@@ -91,7 +91,20 @@ namespace utility {
      * @example std::vector<std::string> = split<std::vector>(myString, myDelimiter);
      */
     template<template <typename, typename = std::allocator<std::string>> class C>
-    C<std::string> split(std::string stringToBeSplit, std::string delimiter);
+    C<std::string> split(std::string stringToBeSplit, std::string delimiter, int maxSplits=-1);
+
+
+    /** @brief Splits a string based on a supplied delimiter.
+     *
+     * @param C The container the collection of strings should be returned as.
+     * @param stringToBeSplit std::string The string to be split.
+     * @param delimiter char The delimiter to split the string on.
+     * @return std::vector<std::string> A vector of the split strings.
+     *
+     * @example std::vector<std::string> = split<std::vector>(myString, myDelimiter);
+     */
+    template<template <typename, typename = std::allocator<std::string>> class C>
+    C<std::string> split(std::string stringToBeSplit, char delimiter, int maxSplits=-1);
 
 
 

@@ -4,35 +4,34 @@
 #include "Genetics/Gene.h"
 #include <string>
 
-struct Connection {
-    int a;
-    int b;
-    Connection(int a_t, int b_t): a(a_t), b(b_t){};
-    Connection(): a(-1), b(-1){};
-    Connection(const Connection &c): a(c.a), b(c.b){};
-};
+
 
 //// This is the new one
+#include <map>
+#include "BoneGene.h"
 class Genome;
-class MuscleGene : public Gene {
+class MuscleGene : public BoneGene {
     public:
         static constexpr char symbol = 'm';
-        Connection connection;
+        double speed;
+
+//        enum class Mut : unsigned int {ADD_MUSCLE, REMOVE_MUSCLE};
+//
+//        std::map<enum Mutation, double> mutationRates = {{Mut::ADD_MUSCLE, 0.4543}, {Mut::REMOVE_MUSCLE, 0.1242}};
 
         MuscleGene(std::string representation);
-        MuscleGene(int numNodes, std::vector<Gene*> muscleGenes);
-        MuscleGene(int a, int b);
-        MuscleGene(Connection c);
+        MuscleGene(int numNodes, const Genome& genome);
+        MuscleGene(int a, int b, double s=getRandomSpeed());
+        MuscleGene(Connection c, double s=getRandomSpeed());
         MuscleGene(const MuscleGene& other);
         virtual ~MuscleGene();
 
-        virtual Gene* clone() const;
-
-        void mutate(const Genome& genome);
+        virtual Gene* clone() const override;
+        void mutate(const Genome& genome) override;
         std::string toString() const override;
 
     private:
-        Connection getGoodConnection(int numNodes, std::vector<Gene*> muscleGenes) const;
+        static double getRandomSpeed();
 };
 
 #endif // MUSCLEGENE_H

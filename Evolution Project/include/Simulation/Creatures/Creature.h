@@ -9,7 +9,7 @@ class Piston;
 class Genome;
 class Creature {
     public:
-        Creature(int n, int m);
+        Creature(int n, int m, int b);
         Creature(Genome g);
         Creature(std::string g);
         Creature(const Creature &other);
@@ -32,6 +32,7 @@ class Creature {
 
         std::vector<Ball*> nodes;
         std::vector<Piston*> muscles;
+        std::vector<Piston*> bones;
 };
 
 #endif // CREATURE_H

@@ -5,9 +5,9 @@
 template class Population<Genome>;
 
 template<class T>
-Population<T>::Population(int numMembers) : population({}), gen(0), currentMember(0,0), memberIndex(0), simStep(0) {
+Population<T>::Population(int numMembers) : population({}), gen(0), currentMember(0,0,0), memberIndex(0), simStep(0) {
     for (int i = 0; i < numMembers; i++) {
-        population.push_back(new T(5,6));
+        population.push_back(new T(5,3,3));
     }
     currentMember = Creature(*population[memberIndex]);
 }

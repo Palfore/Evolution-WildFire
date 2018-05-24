@@ -16,7 +16,7 @@ class NodeGene : public Gene {
         double mass;
 
         NodeGene(std::string representation);
-        NodeGene(std::vector<Gene*> genes);
+        NodeGene(const Genome& genes);
         NodeGene(Vec position);
         NodeGene(Vec position, double mass);
         NodeGene(const NodeGene& other);
@@ -28,8 +28,8 @@ class NodeGene : public Gene {
         void mutate(const Genome& genome);
 
     private:
-        void relocateNodes(std::vector<Gene*> genome, double chance);
-        Vec getValidPosition(std::vector<Gene*> genes) const;
+        void relocateNodes(const Genome& genome, double chance);
+        Vec getValidPosition(const Genome& genome) const;
 
 
 };

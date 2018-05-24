@@ -10,12 +10,13 @@ class Genome;
 class Piston {
     public:
         Piston(MuscleGene muscleGene, std::vector<Ball*> nodes);
-        Piston(int a, int b, const Ball* ball1, const Ball* ball2); // This is used to copy instead.
+        Piston(int a, int b, const Ball* ball1, const Ball* ball2, double speed_t); // This is used to copy instead.
         Piston(const Piston& obj) = delete; // Can't copy piston because of Ball reference (copy doesnt make sense)
         Piston& operator= (const Piston &obj) = delete;
         virtual ~Piston();
 
         const double initialLength;
+        const double speed;
 
         void draw(double t) const;
         void update(double t);

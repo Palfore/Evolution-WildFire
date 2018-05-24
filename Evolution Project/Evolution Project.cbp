@@ -117,9 +117,9 @@
 		<Unit filename="include/Logger/Logger.h" />
 		<Unit filename="include/Math/MyMath.h" />
 		<Unit filename="include/Simulation/Creatures/Creature.h" />
+		<Unit filename="include/Simulation/Genetics/BoneGene.h" />
 		<Unit filename="include/Simulation/Genetics/Gene.h" />
 		<Unit filename="include/Simulation/Genetics/Genome.h" />
-		<Unit filename="include/Simulation/Genetics/Muscle.h" />
 		<Unit filename="include/Simulation/Genetics/MuscleGene.h" />
 		<Unit filename="include/Simulation/Genetics/NodeGene.h" />
 		<Unit filename="include/Simulation/Physics/Ball.h" />
@@ -146,6 +146,7 @@
 		<Unit filename="src/Logger/Logger.cpp" />
 		<Unit filename="src/Math/MyMath.cpp" />
 		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
+		<Unit filename="src/Simulation/Genetics/BoneGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Gene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Genome.cpp" />
 		<Unit filename="src/Simulation/Genetics/MuscleGene.cpp" />

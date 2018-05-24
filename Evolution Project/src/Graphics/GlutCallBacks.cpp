@@ -19,7 +19,7 @@ namespace glutCB {
     void renderScene() {
         /* Run Simulation */
         if (!GFramework::get->display) { // Run asap
-            GFramework::get->simulation->run(1);
+            GFramework::get->simulation->run(&GFramework::get->userInput.functions, 1);
         } else {
             static auto getTime = [](){  // in seconds
                 auto time = std::chrono::system_clock::now().time_since_epoch();
@@ -40,7 +40,7 @@ namespace glutCB {
 
             double start = getTime();
 
-            GFramework::get->simulation->run(lastFrameTime);
+            GFramework::get->simulation->run(&GFramework::get->userInput.functions, lastFrameTime);
             std::this_thread::sleep_for(std::chrono::milliseconds((int) 10));
 
             double fps = GFramework::FPS;

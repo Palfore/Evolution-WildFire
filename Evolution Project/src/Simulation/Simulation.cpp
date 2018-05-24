@@ -8,33 +8,24 @@
 #include "utility.h" // numToStr
 #include <iostream>
 
-#include "Creature.h"
+
 Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {LOG("Initialized Simulation.");}
 Simulation::~Simulation() {}
 
 #include <thread>
-
-
-
-
-void processCreatures(std::vector<Creature> creatures, std::vector<double> & fitnesses, bool & done) {
-    for (auto creature: creatures) {
-        for (int i = 0; i < 9000; i++) {
-            creature.update(i);
-        }
-        fitnesses.push_back(creature.getFitness());
-    }
-    done = true;
-}
-
-
-
 #include <functional>
+#include "Creature.h"
+#include <ctime>
+#include <iostream>
+
+#include "Genome.h"
+#include "Population.h"
+#include "NodeGene.h"
+
 class MultiThread {
     public:
         std::vector<double> fitnesses;
         MultiThread() : fitnesses({}), t(), finished(false) {}
-
 
         void spawn(std::function<void(std::vector<Creature>, std::vector<double> &, bool &)> f, std::vector<Creature> creatures) {
             finished = false;
@@ -43,8 +34,31 @@ class MultiThread {
             t.detach(); // need to return values & reinstansiate thread.
         }
 
-        bool isFinished() {
+        bool isFinished() const {
             return finished;
+        }
+
+        static void processCreatures(std::vector<Creature> creatures, std::vector<double> & fitnesses, bool & done) {
+            for (auto creature: creatures) {
+                double initialFitness = 0;
+                for (int i = 0; i < 9000; i++) {
+                    initialFitness = i == 1000 ? creature.getFitness() : initialFitness;
+                    creature.update(i);
+                }
+                fitnesses.push_back(creature.getFitness() - initialFitness);
+            }
+            done = true;
+        }
+
+        static void spawnChildren(std::vector<MultiThread*> mt, int numThreads, std::vector<Creature> creatures) {
+            auto begining = creatures.cbegin();
+            const int blockSize = creatures.size() / numThreads;
+            for (int i = 0; i < numThreads; i++) {
+                auto e1 = begining + i     * blockSize;
+                auto e2 = begining + (i+1) * blockSize;
+                if (i == numThreads - 1) e2 = creatures.cend();
+                mt[i]->spawn(processCreatures, std::vector<Creature>(e1, e2));
+            }
         }
 
     private:
@@ -52,41 +66,23 @@ class MultiThread {
         bool finished;
 };
 
-void spawnChildren(std::vector<MultiThread*> mt, int numThreads, std::vector<Creature> creatures) {
-    auto begining = creatures.cbegin();
-    const int blockSize = creatures.size() / numThreads;
-    for (int i = 0; i < numThreads; i++) {
-        auto e1 = begining + i     * blockSize;
-        auto e2 = begining + (i+1) * blockSize;
-        if (i == numThreads - 1) e2 = creatures.cend();
-        mt[i]->spawn(processCreatures, std::vector<Creature>(e1, e2));
-    }
-}
-#include <ctime>
-#include <iostream>
-
-#include "Genome.h"
-#include "Population.h"
-#include "NodeGene.h"
-void Simulation::run(const double fps) {
+#include "Shapes.h"
+void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps) {
     if (inputType != InputType::DEFAULT) {
-        /* Stop Data Processing */// Don't know why I put this here
+        goto showMessages;
     }
-    GFramework::get->readyDrawing();
-
 
     ///////////////////////////////////////////////// "Actual Simulation"
-    static int numThreads = std::thread.hardware_concurrency() - 2 > 0 ? std::thread.hardware_concurrency() - 2 : 1;
-    static Population<Genome> pop(2000);
+    static int numThreads = std::thread::hardware_concurrency() - 2 > 0 ? std::thread::hardware_concurrency() - 2 : 1;
+    static Population<Genome> pop(1000);
     static std::vector<MultiThread*> mt;
     static int gen = 0;
-
 
     if (mt.empty()) { // initialize
         for (int i = 0; i < numThreads; i++) {
             mt.push_back(new MultiThread());
         }
-        spawnChildren(mt, numThreads, pop.getCreatures());
+        MultiThread::spawnChildren(mt, numThreads, pop.getCreatures());
     }
 
     if (all_of(mt.cbegin(), mt.cend(), [](MultiThread * m){return m->isFinished();})) { // done generation
@@ -97,7 +93,6 @@ void Simulation::run(const double fps) {
                 pop.population[c++]->fitness = mt[i]->fitnesses[j];
             }
         }
-
 
         /// Sort Population
         std::sort(pop.population.begin(), pop.population.end(), [](Genome* a, Genome* b){
@@ -121,18 +116,19 @@ void Simulation::run(const double fps) {
         std::cout<< "Finished Generation " << gen << " With average fitness " << pop.getAvg() <<
          " and max fitness of " << pop.population[0]->fitness << '\n' ;
         gen++;
-        spawnChildren(mt, numThreads, pop.getCreatures());
+        MultiThread::spawnChildren(mt, numThreads, pop.getCreatures());
         pop.showCreature(0);
     }
 
     DrawPlane<Appearance::GRASS>(100);
-
     pop.draw();
     pop.nextStep();
 
 
+    DrawString<Appearance::BLACK>("Generation " + utility::numToStr<int>(gen), 0.01, 0.03, false, false);
+    DrawString<Appearance::BLACK>("Population Size " + utility::numToStr<int>(pop.population.size()), 0.01, 0.05, false, false);
 
-//    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
+
 
 
 
@@ -167,6 +163,8 @@ void Simulation::run(const double fps) {
 //        }
 //    }
 //
+
+    showMessages:
     if (inputType == InputType::FATAL_MESSAGE) {
         DrawRectangle<Appearance::BUTTON>(0.2, 0.2, 0.8, 0.8);
         DrawString<Appearance::BLACK>("A fatal error occured. Press ENTER to quit.", 0.5, 0.5);
@@ -175,8 +173,10 @@ void Simulation::run(const double fps) {
         DrawRectangle<Appearance::BUTTON>(0.2, 0.2, 0.8, 0.8);
         DrawString<Appearance::BLACK>("A warning has been logged. Press ENTER to continue.", 0.5, 0.5);
     }
-    GFramework::get->showScene();
 
+
+    GFramework::get->showScene();
+    GFramework::get->readyDrawing();
 }
 
 void Simulation::init() {

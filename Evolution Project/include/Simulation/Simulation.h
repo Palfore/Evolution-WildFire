@@ -1,6 +1,8 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
+#include <vector>
+class UserFunction;
 enum class GameMode : unsigned int {MAIN_MENU, SIMULATION};
 enum class InputType: unsigned int {DEFAULT, BLOCKING_MESSAGE, FATAL_MESSAGE, NUMERIC_INPUT, ALPHA_NUMERIC_INPUT};
 class Simulation {
@@ -8,7 +10,7 @@ class Simulation {
         GameMode gameMode;
         InputType inputType;
 
-        void run(double fps);
+        void run(std::vector<UserFunction> *userFunctions, const double fps);
         void init();
         void setGameMode(GameMode g);
         void setInputType(InputType t);

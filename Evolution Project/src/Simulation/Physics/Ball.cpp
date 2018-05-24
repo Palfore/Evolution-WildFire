@@ -8,7 +8,7 @@ Ball::Ball(NodeGene nodeGene) : Ball(nodeGene.position, 1, nodeGene.mass) {}
 Ball::~Ball() {}
 
 void Ball::draw(double time) const {
-    DrawSphere<Appearance::BLUE_VIOLET>(this->position, this->radius);
+    DrawSphere<Appearance::WHITE>(this->position, this->radius);
     if (time < 0) time = time;
 }
 
