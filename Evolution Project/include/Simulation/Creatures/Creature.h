@@ -21,10 +21,11 @@ class Creature {
         void draw(double t) const;
         void update(double t);
 
-        void moveCOMTo(Vec to);
+        void moveCOGTo(Vec to);
         void lowerToGround();
-        void centerCOM();
-        Vec getCOM() const;
+        void centerCOG();
+        Vec getCOM() const; // Center of Mass
+        Vec getCOG() const; // Center of Geometry
 
         double getFitness() const;
     private:

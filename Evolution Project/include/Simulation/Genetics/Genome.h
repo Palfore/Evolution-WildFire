@@ -22,6 +22,7 @@ class Genome {
         double fitness;
 
         virtual std::string toString() const;
+        void mutate();
 
         template<class GeneType>
         std::vector<GeneType*> getGenes() const {
@@ -39,9 +40,15 @@ class Genome {
             return typedGenes;
         }
     private:
+        std::unordered_map<char, std::vector<Gene*>> genes;
         static constexpr char VALUE_DELIMITER = ',';
         static constexpr char GENE_DELIMITER = '|';
-        std::unordered_map<char, std::vector<Gene*>> genes;
+
+        void addNodes(double chance);
+        void removeNodes(double chance);
+
+
+
 };
 
 #endif // GENOME_H

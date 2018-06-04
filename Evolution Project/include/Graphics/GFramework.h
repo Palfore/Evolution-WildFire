@@ -12,6 +12,7 @@ class Audio;
 class Simulation;
 class Camera;
 
+#define GLOBAL GFramework::get
 
 /** @brief This class contains information about the user's mouse.
     @details Specifically, its position, whether is had been clicked, and if its held down.

@@ -11,18 +11,34 @@ double randf(const double lower, const double upper) { // thread safe
     return distribution(*generator);
 }
 
+int randi(const int lower, const int upper) { // thread safe
+    std::hash<std::thread::id> hasher;
+    static thread_local std::mt19937* generator = new std::mt19937(std::clock() + hasher(std::this_thread::get_id()));
+    std::uniform_int_distribution<int> distribution(lower, upper);
+    return distribution(*generator);
+}
+
+// Random int [0, number]
+int randi(const int upper) {
+    return randi(0, upper);
+}
+
+// Random int [-number, +number]
+int pmRandi(const int bounds) {
+    return 2 * (randi(bounds) - (0.5 * bounds));
+}
 
 // Random float [0, number]
 double randf(const double upper) {
     return randf(0, upper);
 }
 
-// Ramdom float [-number, +number]
-double pmRandf(double bounds) {
+// Random float [-number, +number]
+double pmRandf(const double bounds) {
     return 2 * (randf(bounds) - (0.5 * bounds));
 }
 
-int comb(int n) {
+int comb(const int n) {
     return 0.5 * n * (n - 1);
 }
 

@@ -13,8 +13,11 @@ typedef reactphysics3d::Vector2 Vec2;
 
 double randf(const double upper);
 double randf(const double lower, const double upper);
-double pmRandf(double number);
-int comb(int n);
+int randi(const int lower, const int upper);
+int randi(const int upper);
+int pmRandi(const int bounds);
+double pmRandf(const double number);
+int comb(const int n);
 
 double euc(Vec a, Vec b);
 double euc2D(Vec a, Vec b);

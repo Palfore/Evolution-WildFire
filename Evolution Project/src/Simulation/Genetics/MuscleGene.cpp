@@ -36,7 +36,7 @@ std::string MuscleGene::toString() const {
     }));
 }
 
-void MuscleGene::mutate(const Genome& genome) {
+void MuscleGene::mutate(Genome& genome) {
     if (genome.fitness < 0) return;
 }
 

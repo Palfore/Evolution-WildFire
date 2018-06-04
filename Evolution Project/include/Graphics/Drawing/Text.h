@@ -18,7 +18,7 @@ struct DrawString : DrawItem<A> {
     }
     private: draw(std::string s, float x, float y, bool centerX=true, bool centerY=true) {
         int width = 0;
-        int fontHeight = 18;
+        const int fontHeight = 18;
         if (centerX) {
             for (const char &c: s) {
                 width += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, c);

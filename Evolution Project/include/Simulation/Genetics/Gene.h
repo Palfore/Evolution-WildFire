@@ -18,7 +18,7 @@ class Gene {
 
         std::string toStringFormat(std::vector<std::string> values) const;
         virtual std::string toString() const;
-        virtual void mutate(const Genome& genome) = 0;
+        virtual void mutate(Genome& genome) = 0;
 
 };
 

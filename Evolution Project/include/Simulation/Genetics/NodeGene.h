@@ -1,16 +1,18 @@
 #ifndef NODEGENE_H
 #define NODEGENE_H
 
-#include "Simulation/Genetics/Gene.h"
-#include "Math/myMath.h"
+#include "Simulation/Genetics/Gene.h" // Gene
+#include "Math/myMath.h" // Vec
 
 class NodeGene : public Gene {
     private:
         static constexpr double CAGE_SIZE = 30;
-        static constexpr bool twoD = false;
         static constexpr double MIN_NODE_DISTANCE = 1.5;
+        static constexpr bool twoD = false;
     public:
         static constexpr char symbol = 'n';
+        static constexpr double MAX_MASS = 5.0;
+        static constexpr double MIN_MASS = 0.1;
 
         Vec position;
         double mass;
@@ -23,15 +25,42 @@ class NodeGene : public Gene {
         ~NodeGene();
 
         virtual Gene* clone() const;
-
         virtual std::string toString() const override;
-        void mutate(const Genome& genome);
+        void mutate(Genome& genome);
 
     private:
-        void relocateNodes(const Genome& genome, double chance);
-        Vec getValidPosition(const Genome& genome) const;
+        /// Mutations
+        void suffleNodes(const Genome& genome, double chance);
+        void shiftNodes(const Genome& genome, double chance);
+        void addNodes(Genome& genome, double chance);
+        void removeNodes(Genome& genome, double chance);
+        void suffleStats(const Genome& genome, double chance);
+        void shiftStats(const Genome& genome, double chance);
 
-
+        /// Getting Valid Parameters
+        static Vec getValidPosition(const Genome& genome);
+        static Vec getValidShift(const Genome& genome, const Vec nodePos, double amount);
+        Vec getValidShift(const Genome& genome, double amount) const;
+        static double getValidMass();
+        static double getValidMassShift(double currentMass, double amount);
+        double getValidMassShift(double amount) const;
 };
 
 #endif // NODEGENE_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,7 +8,9 @@ Ball::Ball(NodeGene nodeGene) : Ball(nodeGene.position, 1, nodeGene.mass) {}
 Ball::~Ball() {}
 
 void Ball::draw(double time) const {
-    DrawSphere<Appearance::WHITE>(this->position, this->radius);
+    double massPercentage = (this->mass - NodeGene::MIN_MASS) / (NodeGene::MAX_MASS - NodeGene::MIN_MASS);
+    GLOBAL->colorMap[Appearance::CUSTOM] =  GLOBAL->colorMap[Appearance::LIGHT_BLUE] * massPercentage;
+    DrawSphere<Appearance::CUSTOM>(this->position, this->radius);
     if (time < 0) time = time;
 }
 

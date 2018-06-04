@@ -4,6 +4,7 @@
 /// to get the values onto [0,1], which is required by opengl.
 void GFramework::loadColors() {
     this->colorMap = {
+        {Appearance::CUSTOM, Vec(255, 255, 255)},
         {Appearance::MAROON, Vec(128,0,0)},
         {Appearance::DARK_RED, Vec(139,0,0)},
         {Appearance::BROWN, Vec(165,42,42)},

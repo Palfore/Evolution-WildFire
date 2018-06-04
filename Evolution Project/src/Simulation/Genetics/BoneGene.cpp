@@ -33,7 +33,7 @@ std::string BoneGene::toString() const {
     }));
 }
 
-void BoneGene::mutate(const Genome& genome) {
+void BoneGene::mutate(Genome& genome) {
     if (genome.fitness < 0) return;
 }
 

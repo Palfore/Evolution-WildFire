@@ -12,16 +12,16 @@ Creature::Creature(std::string g) : Creature(Genome(g)) {}
 Creature::Creature(int n, int m, int b) : Creature(Genome(n, m, b)) {}
 Creature::Creature(Genome genome) : nodes({}), muscles({}), bones({}) {
     for (auto const& gene: genome.getGenes<NodeGene>()) {
-        this->nodes.push_back(new Ball(*dynamic_cast<NodeGene*>(gene)));
+        this->nodes.push_back(new Ball(*gene));
     }
     for (auto const& gene: genome.getGenes<MuscleGene>()) {
-        this->muscles.push_back(new Piston(*static_cast<MuscleGene*>(gene), this->nodes));
+        this->muscles.push_back(new Piston(*gene, this->nodes));
     }
     for (auto const& gene: genome.getGenes<BoneGene>()) {
         this->bones.push_back(new Piston(*static_cast<MuscleGene*>(gene), this->nodes));
     }
-    lowerToGround();
-    centerCOM();
+  //  lowerToGround();
+ //   centerCOG();
 }
 
 
@@ -60,9 +60,9 @@ Creature& Creature::operator=(Creature other) {
 }
 
 
-void Creature::moveCOMTo(Vec to) {
-    Vec COM = getCOM();
-    Vec dr = to - COM;
+void Creature::moveCOGTo(Vec to) {
+    Vec COG = getCOG();
+    Vec dr = to - COG;
     for (auto * node : this->nodes) {
         node->position += dr;
     }
@@ -73,23 +73,28 @@ void Creature::lowerToGround() {
         node->position.z -= dz;
     }
 }
-void Creature::centerCOM() {
-    this->moveCOMTo(Vec(0,0, this->getCOM().z));
+void Creature::centerCOG() {
+    this->moveCOGTo(Vec(0,0, this->getCOG().z));
 }
 
 Vec Creature::getCOM() const {
-    if (this->nodes.empty()) {
-        return Vec(0,0,0);
-    }
     Vec COM = Vec(0,0,0);
     double mass = 0.0;
     for (auto const& node : this->nodes) {
             COM += node->position * node->mass;
             mass += node->mass;
     }
-    return COM /= mass;
+    if (mass < 0.000000001) return Vec(0,0,0);
+    return COM / mass;
 }
 
+Vec Creature::getCOG() const {
+    Vec COM = Vec(0,0,0);
+    for (auto const& node : this->nodes) {
+            COM += node->position;
+    }
+    return COM;
+}
 
 #include <limits>
 double Creature::getLowestBodyHeight() const {

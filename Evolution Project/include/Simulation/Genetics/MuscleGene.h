@@ -27,7 +27,7 @@ class MuscleGene : public BoneGene {
         virtual ~MuscleGene();
 
         virtual Gene* clone() const override;
-        void mutate(const Genome& genome) override;
+        void mutate(Genome& genome) override;
         std::string toString() const override;
 
     private:

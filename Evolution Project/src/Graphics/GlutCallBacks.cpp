@@ -142,14 +142,14 @@ namespace glutCB {
         if (key && x && y) return;
     }
 
-    void pressSpecialKey(int key, int kxx, int kyy) { // not yet implemented
+    void pressSpecialKey(int key, int kxx, int kyy) {
         for (auto const& func : GFramework::get->userInput.functions) {
             if (func.specialKey == key) func.action();
         }
         if (key && kxx && kyy) return;
     }
 
-    void releaseSpecialKey(int key, int kx, int ky) { // not yet implemented
+    void releaseSpecialKey(int key, int kx, int ky) {
         for (auto const& func : GFramework::get->userInput.functions) {
             if (func.specialKey == key) func.release();
         }

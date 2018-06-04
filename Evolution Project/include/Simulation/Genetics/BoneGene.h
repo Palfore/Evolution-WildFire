@@ -10,6 +10,7 @@ struct Connection {
     Connection(): a(-1), b(-1){};
     Connection(const Connection &c): a(c.a), b(c.b){};
 };
+
 class BoneGene : public Gene {
     public:
         static constexpr char symbol = 'b';
@@ -25,7 +26,7 @@ class BoneGene : public Gene {
         virtual Gene* clone() const;
 
         static double getRandomSpeed();
-        void mutate(const Genome& genome);
+        void mutate(Genome& genome);
         std::string toString() const override;
 
     protected:

@@ -5,6 +5,8 @@
 #include "Logger.h"
 #include "GFramework.h"
 
+
+
 template <Appearance A>
 struct DrawRectangle : DrawItem<A> {
     static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(2);
@@ -16,10 +18,10 @@ struct DrawRectangle : DrawItem<A> {
     }
     private:void draw(double x, double y, double X, double Y) {
         glBegin(GL_QUADS);
-            glTexVert2f(0, 0, x, y);
-            glTexVert2f(0, 1, x, Y);
-            glTexVert2f(1, 1, X, Y);
-            glTexVert2f(1, 0, X, y);
+            glTexVert2f(0, 1, x, y);
+            glTexVert2f(0, 0, x, Y);
+            glTexVert2f(1, 0, X, Y);
+            glTexVert2f(1, 1, X, y);
         glEnd();
     }
 };
@@ -82,10 +84,22 @@ struct DrawSphere : DrawItem<A> {
         draw(pos, r);
     }
     private:void draw(Vec pos, double r) {
+        GLUquadric *qobj = gluNewQuadric();
+
+        gluQuadricTexture(qobj,GL_TRUE);
+
         glPushMatrix();
-            glTranslated(pos.x, pos.y, pos.z);
-            glutSolidSphere(r, 20, 20);
+            glTranslatef(pos.x, pos.y, pos.z);
+            gluSphere(qobj,r,20,20);
         glPopMatrix();
+
+        gluDeleteQuadric(qobj);
+        gluQuadricTexture(qobj,GL_FALSE);
+
+//        glPushMatrix();
+//            glTranslated(pos.x, pos.y, pos.z);
+//            glutSolidSphere(r, 20, 20);
+//        glPopMatrix();
     }
 };
 
@@ -103,6 +117,7 @@ struct DrawCylinder : DrawItem<A> {
     private:void draw(Vec pos1, Vec pos2, float radius) {
           //http://lifeofaprogrammergeek.blogspot.ca/2008/07/rendering-cylinder-between-two-points.html
         GLUquadricObj *quadric = gluNewQuadric();
+        gluQuadricTexture(quadric,GL_TRUE);
         gluQuadricNormals(quadric, GLU_SMOOTH);
         int subdivisions = 10;
         float vx = pos2.x-pos1.x;
@@ -127,6 +142,9 @@ struct DrawCylinder : DrawItem<A> {
         gluQuadricOrientation(quadric,GLU_OUTSIDE);
         gluCylinder(quadric, radius, radius, v, subdivisions, 1);
 
+
+
+
         //draw the first cap
         gluQuadricOrientation(quadric,GLU_INSIDE);
         gluDisk( quadric, 0.0, radius, subdivisions, 1);
@@ -137,6 +155,8 @@ struct DrawCylinder : DrawItem<A> {
         gluDisk( quadric, 0.0, radius, subdivisions, 1);
         glPopMatrix();
           gluDeleteQuadric(quadric);
+
+        gluQuadricTexture(quadric,GL_FALSE);
 
     }
 };
