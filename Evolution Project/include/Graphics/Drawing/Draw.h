@@ -27,9 +27,7 @@ enum Appearance{CUSTOM, MAROON, DARK_RED, BROWN, FIREBRICK, CRIMSON, RED, TOMATO
             GRASS, TREE_TOP, BARK,
             GAME_TITLE, LAST_TEXTURE__};
 
-struct Drawing {
-    enum class Dimension: unsigned int {NONE=0, TWO=2, THREE=3};  ///< Specifies the dimensionality for drawing purposes.
-
+class Drawing {
     static constexpr const char * UNKNOWN_DIMENSION_MESSAGE = "Invalid number of dimensions, defaulting to 2D.";
     static constexpr const char * INVALID_DRAWING_ORDER_MESSAGE = "Cannot render 2D GFramework before 3D.";
     static constexpr const char * INVALID_COLOR_MESSAGE = "Color is not valid.";
@@ -37,94 +35,113 @@ struct Drawing {
     static constexpr const char * UNKNOWN_APPROVED_COLOR_MESSAGE = "Approved color not found.";
     static constexpr const char * UNKNOWN_APPROVED_TEXTURE_MESSAGE = "Approved texture not found.";
 
+    public:
+        enum class Dimension: unsigned int {NONE=0, TWO=2, THREE=3};  ///< Specifies the dimensionality for drawing purposes.
 
-    /** @brief Prepares drawing for the specified dimension.
-     *
-     * @param d Dimension The desired drawing dimension.
-     * @return void
-     *
-     */
-    static void enableND(Dimension d);
+        /** @brief Changes the Appearance::CUSTOM colors to the specified value.
+         *
+         * @param r The [0,1] value representing the r (red) value of the color.
+         * @param g The [0,1] value representing the g (green) value of the color.
+         * @param b The [0,1] value representing the b (blue) value of the color.
+         * @return void
+         */
+        static void changeCustomColor(double r, double g, double b);
 
+        /** @brief Changes the Appearance::CUSTOM colors to the specified value.
+         *
+         * @param color The vector representing the RGB values.
+         * @return void
+         */
+        static void changeCustomColor(Vec color);
 
-    /** @brief Prepares the drawing for 2 dimensional drawing.
-     *
-     * @return void
-     *
-     */
-    static void enable2D();
-
-
-    /** @brief Prepares the drawing for 2 dimensional drawing.
-     *
-     * @return void
-     *
-     */
-    static void enable3D();
-
-
-    /** @brief Specifies the color for drawing.
-     *
-     * @param c Vec The (r,g,b) values for the color.
-     * @return void
-     *
-     */
-    static void changeColor(Vec c);
+        /** @brief Prepares drawing for the specified dimension.
+         *
+         * @param d Dimension The desired drawing dimension.
+         * @return void
+         *
+         */
+        static void enableND(Dimension d);
 
 
-    /** @brief Specifies the color for drawing.
-     *
-     * @param C Appearance The Appearance enum for the color.
-     * @return void
-     * @see Appearance
-     */
-    static void changeColor(Appearance C);
+        /** @brief Prepares the drawing for 2 dimensional drawing.
+         *
+         * @return void
+         *
+         */
+        static void enable2D();
 
 
-    /** @brief Specifies the texture for drawing.
-     *
-     * @param textureID Tex The id corresponding to the texture to draw with.
-     * @return void
-     *
-     */
-    static void changeTexture(Tex textureID);
+        /** @brief Prepares the drawing for 2 dimensional drawing.
+         * @param force bool Force the conversion to 3D, supresses the FATAL warning.
+         *
+         * @return void
+         *
+         */
+        static void enable3D(bool force=false);
 
 
-    /** @brief Specfies the texture for drawing.
-     *
-     * @param C Appearance The Appearance enum corresponding to the texture to draw with.
-     * @return void
-     * @see Appearance
-     */
-    static void changeTexture(Appearance C);
+        /** @brief Specifies the color for drawing.
+         *
+         * @param c Vec The (r,g,b) values for the color.
+         * @return void
+         *
+         */
+        static void changeColor(Vec c);
 
 
-    /** @brief Determines if the specified Appearance is a color.
-     *
-     * @param A Appearance The Appearance to check.
-     * @return bool True if the Appearance is a color. False otherwise.
-     *
-     */
-    static bool isColor(Appearance A);
+        /** @brief Specifies the color for drawing.
+         *
+         * @param C Appearance The Appearance enum for the color.
+         * @return void
+         * @see Appearance
+         */
+        static void changeColor(Appearance C);
 
 
-    /** @brief Determines if the specified Appearance is a texture.
-     *
-     * @param A Appearance The Appearance to check.
-     * @return bool True if the Appearance is a texture. False otherwise.
-     *
-     */
-    static bool isTexture(Appearance A);
+        /** @brief Specifies the texture for drawing.
+         *
+         * @param textureID Tex The id corresponding to the texture to draw with.
+         * @return void
+         *
+         */
+        static void changeTexture(Tex textureID);
+
+
+        /** @brief Specfies the texture for drawing.
+         *
+         * @param C Appearance The Appearance enum corresponding to the texture to draw with.
+         * @return void
+         * @see Appearance
+         */
+        static void changeTexture(Appearance C);
+
+
+        /** @brief Determines if the specified Appearance is a color.
+         *
+         * @param A Appearance The Appearance to check.
+         * @return bool True if the Appearance is a color. False otherwise.
+         *
+         */
+        static bool isColor(Appearance A);
+
+
+        /** @brief Determines if the specified Appearance is a texture.
+         *
+         * @param A Appearance The Appearance to check.
+         * @return bool True if the Appearance is a texture. False otherwise.
+         *
+         */
+        static bool isTexture(Appearance A);
 };
 
 
 
 /** @brief The parent class of items which can drawn.
- *
+ * @note This parent class ensures that all Drawing methods correctly call the required precursory methods.
  * @tparam A The appearance to be used when drawing.
  * @warning Not all children will know how to use textures.
- *  This may be fine, but it might also log a warning or crash the program.
- *
+ * This may be fine, but it might also log a warning or crash the program.
+ * @todo Allow parameters to be specified as by percentage or by pixel.
  */
 template <Appearance A>
 class DrawItem {

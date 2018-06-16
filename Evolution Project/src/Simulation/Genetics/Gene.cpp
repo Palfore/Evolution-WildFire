@@ -14,7 +14,7 @@ Gene::~Gene() {
 }
 
 #include "stdio.h"
-std::string Gene::toStringFormat(std::vector<std::string> values) const {
+std::string Gene::toStringFormat(std::vector<std::string> values) {
     std::string representation = "";
     for (auto const& value : values) {
         representation += value + ",";

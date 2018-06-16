@@ -59,8 +59,8 @@ namespace glutCB {
         glutPostRedisplay(); // redisplay everything, maybe this should be moved
         GFramework::get->windowSize = Vec2(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)); // maybe move to redisplay
 
-        for (auto const& func : GFramework::get->userInput.functions) {
-            if (GFramework::get->userInput.keyStates[static_cast<int>(func.key)]) func.action(); // key holds
+        for (auto & func : GFramework::get->userInput.functions) {
+            func.update();
         }
 
         double eps = 1e-10;
@@ -105,11 +105,18 @@ namespace glutCB {
             if ((camera->ang.z - camera->del.z > -0.5*PI) && (camera->del.z < 0)) camera->ang.z += camera->del.z;
             camera->dir.z = sin(camera->ang.z);
         }
-
-        camera->mov.setToZero();
     }
 
     void callMouse(int button, int state, int mx, int my) {
+        for (auto & func : GFramework::get->userInput.functions) {
+            if (button == GLUT_LEFT_BUTTON) {// only handle left clicks
+                switch(state) {
+                    case GLUT_DOWN: func.element->affectState(mx, my, CALL_TYPE::ACTION); break;
+                    case GLUT_UP: func.element->affectState(mx, my, CALL_TYPE::RELEASE); break;
+                    default: break;
+                }
+            }
+        }
         if (button && state) return;
         if (mx && my) return;
     }
@@ -119,41 +126,40 @@ namespace glutCB {
     }
 
     void passiveMouse(int x, int y) {
+        for (auto & func : GFramework::get->userInput.functions) {
+            func.element->affectState(x, y, CALL_TYPE::NONE);
+        }
         GFramework::get->mouse.x = x;
         GFramework::get->mouse.y = y;
         GFramework::get->camera->del.setToZero(); // Prevent motion after mouse release (if used to move camera)
     }
 
     void keyPressed(unsigned char key, int x, int y) {
-        if (key & x * y){}
-        if (GFramework::get->userInput.keyInputIsHeld) {
-            GFramework::get->userInput.keyStates[tolower(key)] = true; // Set the state of the current key to pressed for holding
+        for (auto & func : GFramework::get->userInput.functions) {
+            func.element->affectState(key, CALL_TYPE::ACTION);
         }
-        for (auto const& func : GFramework::get->userInput.functions) {
-            if (func.key == key) func.action(); // single press
-        }
+        if (x && y){}
     }
 
     void keyUp(unsigned char key, int x, int y) {
-        GFramework::get->userInput.keyStates[tolower(key)] = false; // Release the state of the current key to pressed for holding
-        for (auto const& func : GFramework::get->userInput.functions) {
-            if (func.key == key) func.release();
+        for (auto & func : GFramework::get->userInput.functions) {
+            func.element->affectState(key, CALL_TYPE::RELEASE);
         }
-        if (key && x && y) return;
+        if (x && y) return;
     }
 
     void pressSpecialKey(int key, int kxx, int kyy) {
-        for (auto const& func : GFramework::get->userInput.functions) {
-            if (func.specialKey == key) func.action();
+        for (auto & func : GFramework::get->userInput.functions) {
+            func.element->affectState(key, CALL_TYPE::ACTION);
         }
-        if (key && kxx && kyy) return;
+        if (kxx && kyy) return;
     }
 
     void releaseSpecialKey(int key, int kx, int ky) {
-        for (auto const& func : GFramework::get->userInput.functions) {
-            if (func.specialKey == key) func.release();
+        for (auto & func : GFramework::get->userInput.functions) {
+            func.element->affectState(key, CALL_TYPE::RELEASE);
         }
-        if (key && kx && ky) return;
+        if (kx && ky) return;
     }
 }
 

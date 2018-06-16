@@ -9,27 +9,51 @@
 
 static Population pop(200);
 
+static void cinematicCamera();
 
 static void draw() {
-    DrawPlane<Appearance::GRASS>(200);
+    const int r = 50;
+    int bounds = 1000;
+    for (int x = -bounds; x < bounds; x+=r) {
+        for (int y = -bounds; y < bounds;y += r) {
+           DrawPlane<Appearance::GRASS>(Vec(x, y, 0), r/2);
+        }
+    }
+
     DrawCylinder<Appearance::BARK>(Vec(-50, 50, 0), Vec(-50, 50, 50), 8);
     DrawSphere<Appearance::TREE_TOP>(Vec(-50, 50, 50), 25);
     DrawSkybox(500);
     pop.draw();
 
-    //DrawRectangle<Appearance::LION>(0.6, 0.5, 1, 0.9);
-    //DrawRectangle<Appearance::BUTTON>(0.1, 0.3, 0.3, 0.37);
-    //DrawRectangle<Appearance::BUTTON>(0.1, 0.37, 0.3, 0.44);
-    //DrawRectangle<Appearance::BUTTON>(0.1, 0.44, 0.3, 0.51);
-
-    Button<Appearance::BUTTON> b("This is a test",0.1, 0.44, 0.3, 0.51, by_position());
-    b.draw();
-
-
+//    DrawRectangle<Appearance::LION>(0.6, 0.5, 1, 0.9);
 
     DrawRectangle<Appearance::PALFORE>(0, 0.875, 0.07, 1);
     DrawRectangle<Appearance::GAME_TITLE>(0.25, 0.05, 0.75, 0.2);
 }
+
+void Simulation::mainMenuMode() {
+    pop.nextStep();
+    draw();
+    cinematicCamera();
+}
+
+#include "Audio.h"
+void Simulation::loadMainMenu() {
+    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
+    userFunctions->push_back(UserFunction(new UIchar(ENTER), [this](){
+        this->setGameMode(GameMode::EVOLVE);
+    }));
+    userFunctions->push_back(UserFunction(new Button<Appearance::BUTTON>("Enter Simulation Mode", 0.1, 0.44, 0.3, 0.48, by_position()), [this](){
+        GFramework::get->audio->playSound("click.wav");
+        this->setGameMode(GameMode::EVOLVE);
+    }));
+    userFunctions->push_back(UserFunction(new Button<Appearance::BUTTON>("Exit", 0.1, 0.48, 0.3, 0.52, by_position()), [this](){
+        GFramework::get->audio->playSound("click.wav");
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        NORMAL_EXIT();
+    }));
+}
+
 
 static void cinematicCamera() {
     static int step = 0;
@@ -83,21 +107,4 @@ static void cinematicCamera() {
     camera->dir.y = -camera->pos.y + 50 * sinf(step * speed);
     camera->dir.z = -camera->pos.z + 50 * sinf(step * speed) + 20;
     step++;
-}
-
-
-
-void Simulation::mainMenuMode() {
-    pop.nextStep();
-    draw();
-    cinematicCamera();
-
-    //DrawRectangle<Appearance::BUTTON>);
-}
-
-void Simulation::loadMainMenu() {
-    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
-    userFunctions->push_back(UserFunction(ENTER, [this](){
-        this->setGameMode(GameMode::EVOLVE);
-    }));
 }

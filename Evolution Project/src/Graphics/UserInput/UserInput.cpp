@@ -3,8 +3,9 @@
 #include "Drawing/text.h"
 #include "Audio.h"
 
+#include "Drawing/shapes.h"
 
-UserInput::UserInput() : inputString(""), functions({}), keyInputIsHeld(true) {
+UserInput::UserInput() : inputString(""), functions({}) {
     //ctor
 }
 
@@ -13,43 +14,43 @@ UserInput::~UserInput() {
 }
 #include <iostream>
 void UserInput::setToDefault() { // Functions that all gamemodes should have
+    for (auto &f : functions) {
+        delete f.element;
+    }
     functions = {};
-    functions.push_back(UserFunction(ESC, [](){NORMAL_EXIT();}));
-    functions.push_back(UserFunction(TAB, [this](){
+
+    functions.push_back(UserFunction(new UIchar(ESC), [](){NORMAL_EXIT();}));
+    functions.push_back(UserFunction(new UIchar(TAB), [this](){
         glutFullScreenToggle();
-        keyStates[TAB] = false; // stop multiple toggle per key press
     }));
     /* Audio Test */
-    functions.push_back(UserFunction('.', [this](){
+    functions.push_back(UserFunction(new UIchar('.'), [this](){
         GFramework::get->audio->playSound("gunShot.wav");
-        keyStates['.'] = false; // stop multiple toggle per key press
     }));
-    functions.push_back(UserFunction(',', [](){
+    functions.push_back(UserFunction(new UIchar(GLUT_KEY_F9), [](){
         saveScreenShot();
+        puts("Saved ScreenShot");
     }));
-    functions.push_back(UserFunction('0', [](){
+    functions.push_back(UserFunction(new UIchar('0'), [](){
         LOG("Test debug message.", LogDegree::DEBUG, LogType::GENERAL);
     }));
-    functions.push_back(UserFunction('9', [](){
+    functions.push_back(UserFunction(new UIchar('9'), [](){
         LOG("Test fatal message.", LogDegree::FATAL, LogType::GENERAL);
     }));
-    functions.push_back(UserFunction('8', [](){
+    functions.push_back(UserFunction(new UIchar('8'), [](){
         LOG("Test warning message.", LogDegree::WARNING, LogType::GENERAL);
     }));
-    functions.push_back(UserFunction('+', [this](){
+    functions.push_back(UserFunction(new UIchar('+', 200), [this](){
         GFramework::get->audio->volumeUp(5);
-//        std::cout << "Up\n";
-        keyStates['+'] = false; // stop multiple toggle per key press
+        puts("Volume Up");
     }));
-    functions.push_back(UserFunction('-', [this](){
+    functions.push_back(UserFunction(new UIchar('-', 200), [this](){
         GFramework::get->audio->volumeDown(5);
-//        std::cout << "Down\n";
-        keyStates['-'] = false; // stop multiple toggle per key press
+        puts("Volume Down");
     }));
-    functions.push_back(UserFunction('*', [this](){
+    functions.push_back(UserFunction(new UIchar('*'), [this](){
         GFramework::get->audio->toggleMute();
-//        std::cout << "muted\n";
-        keyStates['*'] = false; // stop multiple toggle per key press
+        puts("Volume Muted");
     }));
 }
 
@@ -62,7 +63,7 @@ void UserInput::submitInputString() {
 
 void UserInput::drawUserString(double x, double y, bool xCenter, bool yCenter) {
     if (isInputStringSubmitted() && ((inputString.size() - 1) > 0)) {
-        DrawString<Appearance::GRASS>(inputString.substr(0, inputString.size()-1), x, y, xCenter, yCenter);
+        DrawString<Appearance::GRASS>(inputString.substr(0, inputString.size()-1), x, y, by_percentage(), xCenter, yCenter);
     }
 }
 

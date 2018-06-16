@@ -12,7 +12,9 @@
 #ifndef MYGLUT_H_INCLUDED
 #define MYGLUT_H_INCLUDED
 
-#include "MyMath.h" // vec, vec2
+class Vec;
+class Vec2;
+#include <string>
 
 typedef GLuint Tex; ///< Used to refer to textures (used in the SOIL library).
 
@@ -87,7 +89,7 @@ void glTexVert2f(double tx, double ty, double vx, double vy);
 /** @brief Draws a 3D textured vertex.
  *
  * @param t Vec2 The texture coordinates (both should be [0, 1]).
- * @param v Vec3 The world coordinates of the vertex.
+ * @param v Vec The world coordinates of the vertex.
  * @return void
  *
  * @note No bounds checking on input parameters since shapes might start out of bounds for a reason, but still be drawn in the scene.
@@ -99,7 +101,7 @@ void glTexVert3f(Vec2 t, Vec v);
  *
  * @param tx double The texture x coordinates (both should be [0, 1]).
  * @param ty double The texture y coordinates (both should be [0, 1]).
- * @param v Vec3 The world coordinates of the vertex.
+ * @param v Vec The world coordinates of the vertex.
  * @return void
  *
  * @note No bounds checking on input parameters since shapes might start out of bounds for a reason, but still be drawn in the scene.

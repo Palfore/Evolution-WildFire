@@ -3,7 +3,7 @@
 
 #include <SFML/Audio.hpp>
 #include "MyMath.h" // vec
-
+#include <map>
 
 /** @brief The audio engine.
  * @details This class is incomplete. It needs more options! Mono vs Stereo, disable spatialization, loop, attenuation, min distance, CLEAR WHEN DONE.

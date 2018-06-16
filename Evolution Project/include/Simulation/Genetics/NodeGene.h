@@ -2,12 +2,12 @@
 #define NODEGENE_H
 
 #include "Simulation/Genetics/Gene.h" // Gene
-#include "Math/myMath.h" // Vec
+#include "Math/Vec.h" // Vec
 
 class NodeGene : public Gene {
     private:
-        static constexpr double CAGE_SIZE = 30;
-        static constexpr double MIN_NODE_DISTANCE = 1.5;
+        static constexpr double CAGE_SIZE = 50;
+        static constexpr double MIN_NODE_DISTANCE = 4;
         static constexpr bool twoD = false;
     public:
         static constexpr char symbol = 'n';
@@ -39,7 +39,7 @@ class NodeGene : public Gene {
 
         /// Getting Valid Parameters
         static Vec getValidPosition(const Genome& genome);
-        static Vec getValidShift(const Genome& genome, const Vec nodePos, double amount);
+        static Vec getValidShift(const Genome& genome, const NodeGene& node, double amount);
         Vec getValidShift(const Genome& genome, double amount) const;
         static double getValidMass();
         static double getValidMassShift(double currentMass, double amount);

@@ -4,10 +4,21 @@
 #include "Drawing/Draw.h"
 #include "GFramework.h"
 
-
+/** @brief This will draw a textured cube at a fixed distance from the user.
+ * @details This cube will follow the user so that it appears static. The distance parameter will therefore
+ * determine the rendering distance in a sense. However because of the corners being farther, this is not exact.
+ * This requires that all of Appearance::SKYBOX_{P,M}{X,Y,Z} be set, valid and in order.
+ * @return
+ *
+ */
 struct DrawSkybox : DrawItem<Appearance::WHITE> {
     static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
 
+    /** @brief Draws the skybox at a fixed distance from the user.
+     * @param distance The distance away from the user.
+     * @return
+     *
+     */
     DrawSkybox(double distance) : DrawItem<Appearance::WHITE>(dimension) {
         draw(distance);
     }

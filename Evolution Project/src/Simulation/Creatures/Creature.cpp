@@ -10,7 +10,7 @@
 
 Creature::Creature(std::string g) : Creature(Genome(g)) {}
 Creature::Creature(int n, int m, int b) : Creature(Genome(n, m, b)) {}
-Creature::Creature(Genome genome) : nodes({}), muscles({}), bones({}) {
+Creature::Creature(Genome genome) : nodes({}), muscles({}), bones({}), genomeString(getGenomeString()) {
     for (auto const& gene: genome.getGenes<NodeGene>()) {
         this->nodes.push_back(new Ball(*gene));
     }
@@ -20,8 +20,8 @@ Creature::Creature(Genome genome) : nodes({}), muscles({}), bones({}) {
     for (auto const& gene: genome.getGenes<BoneGene>()) {
         this->bones.push_back(new Piston(*static_cast<MuscleGene*>(gene), this->nodes));
     }
-  //  lowerToGround();
- //   centerCOG();
+    lowerToGround();
+    centerCOM();
 }
 
 
@@ -38,7 +38,7 @@ Creature::~Creature() {
     }
 }
 
-Creature::Creature(const Creature &other) : nodes({}), muscles({}), bones({}) {
+Creature::Creature(const Creature &other) : nodes({}), muscles({}), bones({}), genomeString(other.genomeString) {
     for (auto const& node: other.nodes) {
         this->nodes.push_back(new Ball(*node));
     }
@@ -67,6 +67,14 @@ void Creature::moveCOGTo(Vec to) {
         node->position += dr;
     }
 }
+
+void Creature::moveCOMTo(Vec to) {
+    Vec COM = getCOM();
+    Vec dr = to - COM;
+    for (auto * node : this->nodes) {
+        node->position += dr;
+    }
+}
 void Creature::lowerToGround() {
     double dz = this->getLowestBodyHeight() - 1; //-1 for not embeding creatures
     for (auto * node : this->nodes) {
@@ -77,12 +85,16 @@ void Creature::centerCOG() {
     this->moveCOGTo(Vec(0,0, this->getCOG().z));
 }
 
+void Creature::centerCOM() {
+    this->moveCOMTo(Vec(0,0, this->getCOM().z));
+}
+
 Vec Creature::getCOM() const {
     Vec COM = Vec(0,0,0);
     double mass = 0.0;
     for (auto const& node : this->nodes) {
-            COM += node->position * node->mass;
-            mass += node->mass;
+        COM += node->position * node->mass;
+        mass += node->mass;
     }
     if (mass < 0.000000001) return Vec(0,0,0);
     return COM / mass;
@@ -91,12 +103,27 @@ Vec Creature::getCOM() const {
 Vec Creature::getCOG() const {
     Vec COM = Vec(0,0,0);
     for (auto const& node : this->nodes) {
-            COM += node->position;
+        COM += node->position;
     }
     return COM;
 }
-
 #include <limits>
+Vec Creature::getTop() const {
+    double highestNode = -std::numeric_limits<double>::max();
+    double comX = 0;
+    double comY = 0;
+
+    double mass = 0.0;
+    for (auto const& node : this->nodes) {
+        highestNode = node->position.z > highestNode ? node->position.z : highestNode;
+        comX += node->position.x * node->mass;
+        comY += node->position.y * node->mass;
+        mass += node->mass;
+    }
+    return Vec(comX / mass, comY / mass, highestNode + 10);
+}
+
+
 double Creature::getLowestBodyHeight() const {
     double minHeight = std::numeric_limits<double>::max();
     for (auto const& node : this->nodes) {
@@ -134,7 +161,7 @@ void Creature::update(double t) {
     /* Get Muscle Forces : Find force needed to get to this frames length */
     for (Piston * muscle: this->muscles) {
         double currLength    = euc(muscle->getPosition1(), muscle->getPosition2());
-        double desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * (10* ((t) / dt))));
+        double desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * muscle->speed * (10* ((t) / dt))));
         double deviation     = desiredLength - currLength;
 
         Vec radVector = (muscle->getPosition1() - muscle->getPosition2());
@@ -173,8 +200,41 @@ void Creature::update(double t) {
         node->position += node->velocity * dt;
 
     }
-    if (t<0) t = t;
 }
+
+#include "utility.h"
+std::string Creature::getGenomeString() const {
+    std::string genome = "<MetaData>";
+    for (auto const& node : this->nodes) {
+        genome += Gene::toStringFormat(std::vector<std::string>({std::string(1, NodeGene::symbol),
+            utility::numToStr<double>(node->position.x),
+            utility::numToStr<double>(node->position.y),
+            utility::numToStr<double>(node->position.z),
+            utility::numToStr<double>(node->mass)
+        }));
+    }
+    for (auto const& muscle : this->muscles) {
+        genome += Gene::toStringFormat(std::vector<std::string>({std::string(1, MuscleGene::symbol),
+            utility::numToStr<double>(muscle->getIndex1()),
+            utility::numToStr<double>(muscle->getIndex2()),
+            utility::numToStr<double>(muscle->speed)
+        }));
+    }
+    for (auto const& bone : this->bones) {
+        genome += Gene::toStringFormat(std::vector<std::string>({std::string(1, BoneGene::symbol),
+            utility::numToStr<double>(bone->getIndex1()),
+            utility::numToStr<double>(bone->getIndex2())
+        }));
+    }
+    return genome;
+}
+
+
+
+
+
+
+
 
 
 

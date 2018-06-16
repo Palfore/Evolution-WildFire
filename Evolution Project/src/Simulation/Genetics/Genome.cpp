@@ -87,9 +87,11 @@ std::string Genome::toString() const {
     return representation;
 }
 
+
+
 void Genome::mutate() {
-    addNodes(100);
-    removeNodes(0);
+//    addNodes(100);
+//    removeNodes(0);
 
     for (auto * gene: this->getGenes<NodeGene>()) {
         gene->mutate(*this);

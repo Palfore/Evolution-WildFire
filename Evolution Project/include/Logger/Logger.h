@@ -25,23 +25,25 @@ enum class LogType   : unsigned int {GENERAL, GRAPHICS, DISPLAY, INPUT, AUDIO, C
  */
 class Logger {
     /**
-     * @brief This macro passes the line, file, and function to the logger, along with additional parameters.
+     * @brief This macro passes the line, file, and function to the logger, along with a message and optional parameters.
      * @details It effectively acts like a decorator and allows more detailed logging information to be passed to the logger.
      * Should be called like so (the last two parameters are optional):
-     * @code{.cpp}
+     * @code {.cpp}
      *     LOG("This is my message.", LogDegree::DEBUG, LogType::GENERAL);
      * @endcode
      *
-     * @param msg The message to be printed with the log.
-     * @param You may optionally pass a LogDegree, and also LogType.
+     * @param msg (Required) The message to be printed with the log.
+     * @param logDegree (Optional) The message to be printed with the log.
+     * @param logType (Optional) The message to be printed with the log.
      *
      * @return void
      * @warning Type and argument checking is lacking due to macro implementation. It may be difficult to determine the incorrect call
      * to this macro if incorrect parameters are passed. This is because the compiler redirects you to this definition instead of the culprite.
      * @see Logger::log
      * @note Although the input is '...' you a required to specify a message. This is to prevent 'c99 requires rest arguments to be used' error.
+     * @note If the function is printed as "operator()" this means a lambda expression.
      */
-    #define LOG(...) Logger::get().log(__LINE__, __FILE__, __FUNCTION__, __VA_ARGS__) // __FUNCTION__ printing "operator()" means lambda expression
+    #define LOG(...) Logger::get().log(__LINE__, __FILE__, __PRETTY_FUNCTION__, __VA_ARGS__)
 
 
     /** @brief Exits the program normally, but also logs the line, file and function where the exiting call came from.
@@ -51,7 +53,7 @@ class Logger {
      * to this macro if incorrect parameters are passed. This is because the compiler redirects you to this definition instead of the culprite.
      * @see Logger::normalExit
      */
-    #define NORMAL_EXIT() Logger::get().normalExit(__LINE__, __FILE__, __FUNCTION__)
+    #define NORMAL_EXIT() Logger::get().normalExit(__LINE__, __FILE__, __PRETTY_FUNCTION__)
 
     private:
         static constexpr const LogDegree DEFAULT_DEGREE = LogDegree::DEBUG; ///< The LogDegree to use if none is specified.

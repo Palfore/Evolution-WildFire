@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <algorithm>
+
 class Gene;
 class Genome {
     public:
@@ -46,9 +47,6 @@ class Genome {
 
         void addNodes(double chance);
         void removeNodes(double chance);
-
-
-
 };
 
 #endif // GENOME_H

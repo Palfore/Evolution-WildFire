@@ -1,6 +1,6 @@
 #include "Audio.h"
 #include "Logger.h"
-
+#include "Vec.h"
 
 Audio::Audio(unsigned int volume_t) : volume(volume_t), isMuted(false), music(), soundBuffers(), sounds()  {
     sf::Listener::setUpVector(0, 0, 1);
@@ -8,7 +8,7 @@ Audio::Audio(unsigned int volume_t) : volume(volume_t), isMuted(false), music(),
         LOG(COULD_NOT_LOAD_MUSIC_MESSAGE + std::string("Sunday_Spirit.wav") + '.', LogDegree::WARNING, LogType::AUDIO);
     }
 
-    std::array<std::string, 1> soundFiles = {"gunShot.wav"};
+    std::array<std::string, 2> soundFiles = {"gunShot.wav", "click.wav"};
     for (unsigned int i = 0; i < soundFiles.size(); i++) {
         soundBuffers.insert({soundFiles.at(i), sf::SoundBuffer()});
         if (!soundBuffers.at(soundFiles.at(i)).loadFromFile(std::string(AUDIO_DIRECTORY) + soundFiles[i])) {

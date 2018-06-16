@@ -16,7 +16,7 @@ class Gene {
 
         virtual Gene* clone() const = 0;
 
-        std::string toStringFormat(std::vector<std::string> values) const;
+        static std::string toStringFormat(std::vector<std::string> values);
         virtual std::string toString() const;
         virtual void mutate(Genome& genome) = 0;
 

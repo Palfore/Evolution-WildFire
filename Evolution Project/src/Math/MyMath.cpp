@@ -4,6 +4,10 @@
 #include <time.h>
 #include <thread>
 
+#include "Vec.h"
+
+
+
 double randf(const double lower, const double upper) { // thread safe
     std::hash<std::thread::id> hasher;
     static thread_local std::mt19937* generator = new std::mt19937(std::clock() + hasher(std::this_thread::get_id()));
@@ -42,6 +46,9 @@ int comb(const int n) {
     return 0.5 * n * (n - 1);
 }
 
+bool approxEqual(double a, double b, double epsilon) {
+    return (std::fabs(a - b) < epsilon);
+}
 
 double euc(Vec a, Vec b) {
     double x = (a.x - b.x);

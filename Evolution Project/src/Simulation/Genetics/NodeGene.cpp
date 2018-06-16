@@ -39,10 +39,11 @@ Gene* NodeGene::clone() const {
 }
 
 void NodeGene::mutate(Genome& genome) {
-    suffleNodes(genome, 0);
-    shiftNodes(genome, 0);
-    suffleStats(genome, 0);
-    shiftStats(genome, 0);
+    int c = 10;
+    suffleNodes(genome, c);
+    shiftNodes(genome, c);
+    suffleStats(genome, c);
+    shiftStats(genome, c);
 }
 
 void NodeGene::suffleNodes(const Genome& genome, double chance) {
@@ -61,11 +62,13 @@ void NodeGene::suffleStats(const Genome& genome, double chance) {
     if (randf(100) < chance) {
         this->mass = getValidMass();
     }
+    if (genome.fitness > 0) return;
 }
 void NodeGene::shiftStats(const Genome& genome, double chance) {
     if (randf(100) < chance) {
         this->mass = this->getValidMassShift(this->mass, 0.5);
     }
+    if (genome.fitness > 0) return;
 }
 
 Vec NodeGene::getValidPosition(const Genome& genes) {
@@ -78,9 +81,10 @@ Vec NodeGene::getValidPosition(const Genome& genes) {
                          randf(CAGE_SIZE));
 
         /* Check if it is in the same location as another */
-        for (auto const& gene : genes.getGenes<NodeGene>()) {
+        for (auto const& gene : genes.getGenes<NodeGene>()) { // Allowed to avoid self. No self check.
             if (euc(newPos, gene->position) < MIN_NODE_DISTANCE) {
                 validPosition = false;
+                break;
             }
         }
 
@@ -93,18 +97,20 @@ Vec NodeGene::getValidPosition(const Genome& genes) {
     return Vec(0,0,0);
 }
 
-Vec NodeGene::getValidShift(const Genome& genome, const Vec nodePos, double amount) {
-    for (int numAttempts = 0; numAttempts < 1000; numAttempts++) {
+Vec NodeGene::getValidShift(const Genome& genome, const NodeGene& node, double amount) {
+    for (int numAttempts = 0; numAttempts < 50; numAttempts++) {
         bool validPosition = true; // Not False
 
         /* Try a new location */
-        Vec newPos = nodePos + Vec(pmRandf(amount),
+        Vec newPos = node.position + Vec(pmRandf(amount),
                                       NodeGene::twoD ? 0 : pmRandf(amount),
                                       pmRandf(amount));
 
         for (auto const& gene : genome.getGenes<NodeGene>()) {
+            if (&node == gene) continue; // Skip the same node
+
             /* Check if it is in the same location as another */
-            if (euc(newPos, gene->position) < MIN_NODE_DISTANCE) {
+            if (euc(node.position, gene->position) < MIN_NODE_DISTANCE) {
                 validPosition = false;
                 break;
             }
@@ -112,7 +118,7 @@ Vec NodeGene::getValidShift(const Genome& genome, const Vec nodePos, double amou
             if (fabs(newPos.x) > CAGE_SIZE || // Could clamp instead
                 fabs(newPos.y) > CAGE_SIZE ||
                       newPos.z > CAGE_SIZE ||
-                      newPos.z < MIN_NODE_DISTANCE ){
+                      newPos.z < 1 ){ // 1 is radius
                 validPosition = false;
                 break;
              }
@@ -122,12 +128,12 @@ Vec NodeGene::getValidShift(const Genome& genome, const Vec nodePos, double amou
         }
     }
     /* Couldn't find a valid position */
-    return nodePos;
+    return node.position;
 }
 
 
 Vec NodeGene::getValidShift(const Genome& genome, double amount) const {
-    return getValidShift(genome, this->position, amount);
+    return getValidShift(genome, *this, amount);
 }
 
 double NodeGene::getValidMass() {

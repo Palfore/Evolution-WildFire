@@ -6,7 +6,8 @@
 
 class Ball;
 class Piston;
-class Genome;
+#include <Genome.h>
+//class Genome;
 class Creature {
     public:
         Creature(int n, int m, int b);
@@ -16,24 +17,28 @@ class Creature {
         Creature& operator=(Creature other);
         virtual ~Creature();
 
-        void initialize(Creature c);
-
         void draw(double t) const;
         void update(double t);
 
         void moveCOGTo(Vec to);
-        void lowerToGround();
+        void moveCOMTo(Vec to);
         void centerCOG();
+        void centerCOM();
+        void lowerToGround();
         Vec getCOM() const; // Center of Mass
         Vec getCOG() const; // Center of Geometry
+        Vec getTop() const; // Centralized Top of Creature
 
-        double getFitness() const;
+        double getFitness() const; // This should consider the initial COM.
+        std::string getGenomeString() const;
     private:
         double getLowestBodyHeight() const;
 
         std::vector<Ball*> nodes;
         std::vector<Piston*> muscles;
         std::vector<Piston*> bones;
+
+        std::string genomeString;
 };
 
 #endif // CREATURE_H

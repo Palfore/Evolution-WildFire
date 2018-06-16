@@ -3,6 +3,15 @@
 #include "GFramework.h" // GFramework::get().drawingState, Dimension
 #include "Logger.h"
 
+void Drawing::changeCustomColor(double r, double g, double b) {
+    GLOBAL->colorMap[Appearance::CUSTOM] = Vec(r, g, b);
+    Drawing::changeColor(Appearance::CUSTOM);
+}
+
+void Drawing::changeCustomColor(Vec color) {
+    Drawing::changeCustomColor(color.x, color.y, color.z);
+}
+
 bool Drawing::isColor(Appearance A) {
     if (A < 0) return false;
     if (A >= Appearance::LAST_COLOR__) return false;
@@ -61,15 +70,15 @@ void Drawing::enable2D() {
     glDisable(GL_LIGHTING);
 }
 
-void Drawing::enable3D() {
-    if (GFramework::get->drawingState == Dimension::TWO) LOG(INVALID_DRAWING_ORDER_MESSAGE, LogDegree::FATAL, LogType::GRAPHICS);
+void Drawing::enable3D(bool force) {
+    if ((GFramework::get->drawingState == Dimension::TWO) && !force) LOG(INVALID_DRAWING_ORDER_MESSAGE, LogDegree::FATAL, LogType::GRAPHICS);
     if (GFramework::get->drawingState == Dimension::THREE) return;
     GFramework::get->drawingState = Dimension::THREE;
 
     glPopMatrix(); //From 2D
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0, (double) GFramework::get->windowSize.x / (double) GFramework::get->windowSize.y, 0.1f, 1000);
+    gluPerspective(45.0, (double) GFramework::get->windowSize.x / (double) GFramework::get->windowSize.y, 0.1f, GFramework::RENDERING_DISTANCE);
     glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
     glMatrixMode(GL_MODELVIEW);
 

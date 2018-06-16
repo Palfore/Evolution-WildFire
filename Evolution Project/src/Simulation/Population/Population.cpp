@@ -3,13 +3,13 @@
 #include "Creature.h"
 #include "Genome.h"
 
-Population::Population(int numMembers) : population({}), gen(0), currentMember(0,0,0), memberIndex(0), simStep(0) {
+Population::Population(int numMembers) : population({}), history(), gen(0), viewingGenomes({}), displayingCreature(0,0,0), activeCreatureIndex(0), simStep(0) {
     for (int i = 0; i < numMembers; i++) {
-//        population.push_back(new Genome(5,3,3));
-//|b,4,1|b,1,3|b,2,4
-        population.push_back(new Genome(5,3,3));//"<MetaData>|m,4,3,0.798331|m,0,3,0.114983|m,1,2,0.875029|n,11.0887,7.67372,10.0779,1|n,-22.9639,0.0986828,22.3698,1|n,-6.49215,18.2589,26.7995,1|n,1.32824,-27.3546,25.1702,1|n,21.3509,-26.9144,24.1151,1"));
+        Genome* g = new Genome(5,3,3);
+        population.push_back(g);
+        viewingGenomes.push_back(*g);
     }
-    currentMember = Creature(*population[memberIndex]);
+    showCreature(0);
 }
 
 Population::~Population() {
@@ -19,11 +19,15 @@ Population::~Population() {
 }
 
 void Population::draw() const {
-    currentMember.draw(simStep);
+    displayingCreature.draw(simStep);
 }
 
 void Population::nextStep() {
-    currentMember.update(simStep++);
+    displayingCreature.update(simStep++);
+}
+
+int Population::getSimStep() const {
+    return simStep;
 }
 
 std::vector<Creature> Population::getCreatures() const {
@@ -36,7 +40,7 @@ std::vector<Creature> Population::getCreatures() const {
 }
 
 void Population::printCurrentGenome() const {
-    std::cout << this->population[memberIndex]->toString() << '\n';
+    std::cout << this->population[activeCreatureIndex]->toString() << '\n';
 }
 
 void Population::printGenome(int index) const {
@@ -44,13 +48,35 @@ void Population::printGenome(int index) const {
 }
 
 void Population::nextCreature() {
-    this->memberIndex = (this->memberIndex + 1) % this->population.size();
-    currentMember = Creature(*population[memberIndex]);
+    int index = (this->activeCreatureIndex + 1) % this->population.size();
+    showCreature(index);
+}
+
+void Population::prevCreature() {
+    int index = (this->activeCreatureIndex - 1) >= 0 ? this->activeCreatureIndex - 1 :  this->population.size() - 1;
+    showCreature(index);
 }
 
 void Population::showCreature(int index) {
-    memberIndex = index;
-    currentMember = Creature(*population[memberIndex]);
+    activeCreatureIndex = index;
+    displayingCreature = Creature(viewingGenomes[activeCreatureIndex]);
+    simStep = 0;
+}
+
+void Population::resetCreature() {
+    showCreature(this->activeCreatureIndex);
+}
+
+void Population::updateViewingGenomes() {
+    viewingGenomes.clear();
+    for (const auto& genome: this->population) {
+        viewingGenomes.push_back(*genome);
+    }
+    showCreature(0);
+}
+
+Creature Population::getActiveCreature() const {
+    return displayingCreature;
 }
 
 double Population::getAvg() const {
@@ -61,11 +87,22 @@ double Population::getAvg() const {
     return sum / this->population.size();
 }
 
+
+void Population::recordHistory() {
+    history.addPoint(population, gen);
+}
+
+
+void Population::printHistory() {
+    history.writeToConsole();
+}
+
 void Population::getThreadedFitnesses(const std::vector<MultiThread*>& threads) {
     int c = 0;
     for (unsigned int i = 0; i < threads.size(); i++) {
-        for (unsigned int j = 0; j < threads[i]->fitnesses.size(); j++) {
-            this->population[c++]->fitness = threads[i]->fitnesses[j];
+        const std::vector<double> f = threads[i]->fitnesses;
+        for (unsigned int j = 0; j < f.size(); j++) {
+            this->population[c++]->fitness = f[j];
         }
     }
 }
@@ -89,9 +126,12 @@ void Population::mutate() {
     }
 }
 
+
 int Population::getMemberIndex() const {
-    return memberIndex;
+    return activeCreatureIndex;
 }
+
+
 
 
 

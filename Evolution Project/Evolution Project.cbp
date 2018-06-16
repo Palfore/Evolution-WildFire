@@ -34,7 +34,6 @@
 					<Add option="-Wfatal-errors" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-O0" />
 					<Add directory="include/Graphics" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation" />
@@ -49,7 +48,11 @@
 					<Add directory="include/Simulation/Physics" />
 					<Add directory="include/Simulation/Creatures" />
 					<Add directory="include/Simulation/Population" />
+					<Add directory="include/Graphics/GUI" />
 				</Compiler>
+				<Linker>
+					<Add option="-O3" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/Evolution Project" prefix_auto="1" extension_auto="1" />
@@ -73,6 +76,7 @@
 					<Add directory="include/Simulation/Physics" />
 					<Add directory="include/Simulation/Creatures" />
 					<Add directory="include/Simulation/Population" />
+					<Add directory="include/Graphics/GUI" />
 				</Compiler>
 				<Linker>
 					<Add option="-O3" />
@@ -82,7 +86,6 @@
 		<Compiler>
 			<Add option="-std=c++11" />
 			<Add option="-Iinclude" />
-			<Add option="-isystemlibraries/reactphysics3d/src" />
 			<Add option="-isystemlibraries\SFML-2.4.2\include" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
 		</Compiler>
@@ -94,11 +97,9 @@
 			<Add library="winmm" />
 			<Add library="gdi32" />
 			<Add library="freeglut" />
-			<Add library="libraries/reactphysics3d/libreactphysics3d.a" />
 			<Add library="libraries/SFML-2.4.2/lib/libsfml-audio.a" />
 			<Add library="libraries/SFML-2.4.2/lib/libsfml-system.a" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
-			<Add directory="libraries/reactphysics3d" />
 			<Add directory="libraries/SFML-2.4.2/lib" />
 		</Linker>
 		<Unit filename="assets/config.config" />
@@ -110,13 +111,17 @@
 		<Unit filename="include/Graphics/Drawing/Shapes.h" />
 		<Unit filename="include/Graphics/Drawing/Text.h" />
 		<Unit filename="include/Graphics/GFramework.h" />
+		<Unit filename="include/Graphics/GUI/Button.h" />
 		<Unit filename="include/Graphics/GlutCallBacks.h" />
 		<Unit filename="include/Graphics/MyGlut.h" />
-		<Unit filename="include/Graphics/UserInput/Button.h" />
 		<Unit filename="include/Graphics/UserInput/UserFunction.h" />
 		<Unit filename="include/Graphics/UserInput/UserInput.h" />
 		<Unit filename="include/Logger/Logger.h" />
+		<Unit filename="include/Math/Matrix.h" />
+		<Unit filename="include/Math/Matrix2.h" />
 		<Unit filename="include/Math/MyMath.h" />
+		<Unit filename="include/Math/Vec.h" />
+		<Unit filename="include/Math/Vec2.h" />
 		<Unit filename="include/Simulation/Creatures/Creature.h" />
 		<Unit filename="include/Simulation/Genetics/BoneGene.h" />
 		<Unit filename="include/Simulation/Genetics/Gene.h" />
@@ -137,15 +142,19 @@
 		<Unit filename="src/Graphics/Drawing/Shapes.cpp" />
 		<Unit filename="src/Graphics/Drawing/Text.cpp" />
 		<Unit filename="src/Graphics/GFramework.cpp" />
+		<Unit filename="src/Graphics/GUI/Button.cpp" />
 		<Unit filename="src/Graphics/GlutCallBacks.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
 		<Unit filename="src/Graphics/MyGlut.cpp" />
-		<Unit filename="src/Graphics/UserInput/Button.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserFunction.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserInput.cpp" />
 		<Unit filename="src/Logger/Logger.cpp" />
+		<Unit filename="src/Math/Matrix.cpp" />
+		<Unit filename="src/Math/Matrix2.cpp" />
 		<Unit filename="src/Math/MyMath.cpp" />
+		<Unit filename="src/Math/Vec.cpp" />
+		<Unit filename="src/Math/Vec2.cpp" />
 		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
 		<Unit filename="src/Simulation/Genetics/BoneGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Gene.cpp" />
@@ -173,7 +182,7 @@
 			<lib_finder disable_auto="1" />
 			<DoxyBlocks>
 				<comment_style block="0" line="2" />
-				<doxyfile_project project_number="1.9.953" use_auto_version="1" />
+				<doxyfile_project project_number="1.41.3002" use_auto_version="1" />
 				<doxyfile_build extract_all="1" extract_private="1" extract_static="1" />
 				<doxyfile_warnings />
 				<doxyfile_output latex="1" />

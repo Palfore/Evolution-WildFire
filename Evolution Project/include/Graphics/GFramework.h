@@ -11,6 +11,9 @@
 class Audio;
 class Simulation;
 class Camera;
+#include <vec2.h>
+#include <vec.h>
+#include <map>
 
 #define GLOBAL GFramework::get
 
@@ -46,7 +49,7 @@ class GFramework {
         bool display = true;              ///< Whether the scene is being shown to the user. (set to false for maximum speed)
 
         static double constexpr FPS = 60;                ///< Frames per second for the simulation to run at.
-        static int constexpr RENDERING_DISTANCE = 1000;  ///< How far objects should be rendered.
+        static int constexpr RENDERING_DISTANCE = 1500;  ///< How far objects should be rendered.
 
         std::map<enum Appearance, Tex> textureMap = {};  ///< Maps an appearance to a texture for drawing.
         std::map<enum Appearance, Vec> colorMap = {};    ///< Maps an appearance to a color for drawing.
@@ -99,7 +102,7 @@ class GFramework {
  */
 struct Camera {
     static double constexpr DEFAULT_T_SPEED = 60.0 / GFramework::FPS;  ///< The default translation speed.
-    static double constexpr DEFAULT_R_SPEED = 2.40 / GFramework::FPS; ///< The default rotation speed.
+    static double constexpr DEFAULT_R_SPEED = 2.00 / GFramework::FPS; ///< The default rotation speed.
     static double constexpr DEFAULT_HEIGHT = 1.8;   ///< The default height of the camera (wrt z=0)
 
     double translationSpeed;  ///< How fast the camera moves forward
@@ -111,7 +114,7 @@ struct Camera {
     Vec del;  ///< The next frame rotation of the camera.
 
     Camera() : translationSpeed(DEFAULT_T_SPEED), rotationSpeed(DEFAULT_R_SPEED),
-                        pos(0, -40, DEFAULT_HEIGHT), mov(0, 0, DEFAULT_HEIGHT), dir(0, 1, 0), ang(0,0,0), del(0,0,0) {};
+                        pos(0, -40, DEFAULT_HEIGHT), mov(0, 0, 0), dir(0, 1, 0), ang(0,0,0), del(0,0,0) {};
 };
 
 #endif // GFramework_H

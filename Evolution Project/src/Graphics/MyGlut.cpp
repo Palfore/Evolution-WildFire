@@ -2,6 +2,8 @@
 #include "SOIL.h"
 #include "Logger.h"
 #include "utility.h"
+#include "Vec2.h"
+#include "Vec.h"
 
 Tex glLoadTexture(std::string fileName) {
     return SOIL_load_OGL_texture (

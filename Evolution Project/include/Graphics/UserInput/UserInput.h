@@ -7,13 +7,16 @@
 
 class UserInput {
     private:
-        static int constexpr NUM_KEYS = 256;
         static char constexpr TERMINATING_CHAR = '#';
     public:
         std::string inputString;
         std::vector<UserFunction> functions;
-        bool keyStates[NUM_KEYS] = {false}; // keypresses
-        bool keyInputIsHeld;
+
+        void draw() {
+            for (const auto& f : functions) {
+                f.draw();
+            }
+        }
 
         UserInput();
         ~UserInput();
