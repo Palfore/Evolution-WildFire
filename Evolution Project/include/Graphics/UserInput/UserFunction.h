@@ -14,7 +14,9 @@ enum class REPEATABLE: bool {YES, NO};
 
 class UIElement {
     public:
-        UIElement() : callFunction(CALL_TYPE::NONE) {}
+        int id;
+
+        UIElement(int ID=-1) : id(ID), callFunction(CALL_TYPE::NONE) {}
         virtual ~UIElement() {}
         CALL_TYPE shouldCallFunction() {return callFunction;}
         void resetCallFunction() {callFunction = CALL_TYPE::NONE;}

@@ -13,8 +13,7 @@
 class Gene;
 class Genome {
     public:
-        Genome();
-        Genome(int n, int m, int b);
+        Genome(int n, int m, int b, std::vector<unsigned int> N);
         Genome(const Genome &obj);
         Genome(std::string genomeString);
         Genome& operator=(Genome other);
@@ -41,10 +40,12 @@ class Genome {
             return typedGenes;
         }
     private:
+        Genome();
         std::unordered_map<char, std::vector<Gene*>> genes;
         static constexpr char VALUE_DELIMITER = ',';
         static constexpr char GENE_DELIMITER = '|';
 
+        /// Mutations
         void addNodes(double chance);
         void removeNodes(double chance);
 };

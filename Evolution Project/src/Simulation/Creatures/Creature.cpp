@@ -9,8 +9,8 @@
 #include <utility>
 
 Creature::Creature(std::string g) : Creature(Genome(g)) {}
-Creature::Creature(int n, int m, int b) : Creature(Genome(n, m, b)) {}
-Creature::Creature(Genome genome) : nodes({}), muscles({}), bones({}), genomeString(getGenomeString()) {
+Creature::Creature(int n, int m, int b, std::vector<unsigned int> N) : Creature(Genome(n, m, b, N)) {}
+Creature::Creature(Genome genome) : moveTo(Vec(0,0,0)), initCOM(Vec(0,0,0)), nodes({}), muscles({}), bones({}), NN(genome.getGenes<AxonGene>()), genomeString(getGenomeString()) {
     for (auto const& gene: genome.getGenes<NodeGene>()) {
         this->nodes.push_back(new Ball(*gene));
     }
@@ -22,6 +22,7 @@ Creature::Creature(Genome genome) : nodes({}), muscles({}), bones({}), genomeStr
     }
     lowerToGround();
     centerCOM();
+    initCOM = getCOM();
 }
 
 
@@ -38,7 +39,7 @@ Creature::~Creature() {
     }
 }
 
-Creature::Creature(const Creature &other) : nodes({}), muscles({}), bones({}), genomeString(other.genomeString) {
+Creature::Creature(const Creature &other) : moveTo(other.moveTo), initCOM(other.initCOM), nodes({}), muscles({}), bones({}), NN(other.NN), genomeString(other.genomeString) {
     for (auto const& node: other.nodes) {
         this->nodes.push_back(new Ball(*node));
     }
@@ -56,6 +57,8 @@ Creature& Creature::operator=(Creature other) {
     std::swap(nodes, other.nodes);
     std::swap(muscles, other.muscles);
     std::swap(bones, other.bones);
+    std::swap(NN, other.NN);
+    std::swap(genomeString, other.genomeString);
     return *this;
 }
 
@@ -134,38 +137,77 @@ double Creature::getLowestBodyHeight() const {
 }
 
 double Creature::getFitness() const {
-//    return randf(0, 100);
-    return euc2D(Vec(0,0,0), this->getCOM());
+//    return euc2D(Vec(0,0,0), this->getCOM());
+    return 1.0/cosh(euc2D(this->getCOM(), moveTo));
 }
 
 #include "Shapes.h"
-void Creature::draw(double t) const {
+void Creature::draw() const {
     DrawSphere<Appearance::BLUE>(getCOM(), 0.5);
     for (auto const& node : this->nodes) {
-        node->draw(t);
+        node->draw();
     }
     for (auto const& muscle : this->muscles) {
-        muscle->draw(t);
+        muscle->draw();
     }
     for (auto const& bone : this->bones) {
-        bone->draw(t);
+        bone->draw();
     }
 }
 
-void Creature::update(double t) {
-    double dt = 1;
+void Creature::drawBrain(bool drawLines) const {
+    this->NN.draw(drawLines);
+}
+
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
+double Creature::update(int t) { // returns fitness update
+    double fitness = 0;
+    const double dt = 1.0;
+
+    if (t == 0) { // Try a moving target (small incememrnts)
+        initCOM.x = 75;
+        moveTo = Vec(0, 0, initCOM.x);
+    }
+    fitness = getFitness();
+
     for (auto const& node: this->nodes) {
         node->acceleration = Vec(0, 0, -0.0066);
     }
 
+    std::vector<double> musclePercentages(this->muscles.size());
+    std::transform(this->muscles.begin(), this->muscles.end(), musclePercentages.begin(), [](const Piston* muscle) {
+        return (euc(muscle->getPosition1(), muscle->getPosition2())/muscle->initialLength - 1.0) / (1.2 - 1.0);
+    });
+
+    const double a = acosh(10) / (this->moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
+    const double b = acosh(10) / (this->moveTo.y + 2); // find out why +0.1 works, but +2 doesnt.
+    const double distanceFactorX = tanh(0.2*(this->getCOM().x - this->moveTo.x)); //should be +/-(something) depending on direction => tanh
+    const double distanceFactorY = 1.0 / cosh(b*(this->getCOM().y - this->moveTo.y));
+    musclePercentages.push_back(distanceFactorX);
+//    musclePercentages.push_back(distanceFactorY);
+
+    std::vector<double> desiredChanges = NN.propagate(musclePercentages);
+
     /* Get Muscle Forces : Find force needed to get to this frames length */
-    for (Piston * muscle: this->muscles) {
+    for (unsigned int i = 0; i < this->muscles.size(); i++) {
+        Piston * muscle = this->muscles[i];
         double currLength    = euc(muscle->getPosition1(), muscle->getPosition2());
-        double desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * muscle->speed * (10* ((t) / dt))));
+
+        static constexpr double L = acosh(10);
+        double stretch = currLength / muscle->initialLength - 1;
+        double factor = 1.0 / cosh(L/0.4 * stretch); // maxes at stretch=1, ie best power at normal length
+
+        double newFactor = (sgn<double>(stretch) * sgn<double>(factor) > 0 ? factor : 1); // Reduce movement capability if changing length away from init.
+        double desiredLength = currLength + 0.05 * desiredChanges[i] * newFactor;
+        desiredLength *= exp(-0.01*(stretch)); // Low powered return to original length
+
+//        double desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * muscle->speed * (10* ((t) / dt))));
         double deviation     = desiredLength - currLength;
 
         Vec radVector = (muscle->getPosition1() - muscle->getPosition2());
-        Vec deltaAcc  = radVector * (deviation * 0.4) / (radVector.length() * dt * dt);
+        Vec deltaAcc  = radVector * (deviation * 0.5) / (radVector.length() * dt * dt);
 
         this->nodes[muscle->getIndex1()]->acceleration += deltaAcc;
         this->nodes[muscle->getIndex2()]->acceleration -= deltaAcc;
@@ -184,15 +226,18 @@ void Creature::update(double t) {
 
     for (auto const& node: this->nodes) {
         /// Apply Constraints
-        if (node->position.z < node->radius) {
+        if (node->position.z < 1.05*node->radius) {
             node->position.z = node->radius;
 
-            node->velocity.x *= (1 - 0.5 * dt) ;// * (isinf(x) || (x>100)? 1 : x / sqrt(1 + x*x));
-            node->velocity.y *= (1 - 0.5 * dt) ;// * (isinf(y) || (y>100)? 1 : y / sqrt(1 + y*y));
-            node->velocity.z *= -0.01;
+            node->velocity.x *= (1 - node->mass / NodeGene::MAX_MASS * 0.5 * dt) ;// * (isinf(x) || (x>100)? 1 : x / sqrt(1 + x*x));
+            node->velocity.y *= (1 - node->mass / NodeGene::MAX_MASS * 0.5 * dt) ;// * (isinf(y) || (y>100)? 1 : y / sqrt(1 + y*y));
+
+        }
+        if (node->position.z < node->radius) {
+            node->velocity.z *= (1 - node->mass / NodeGene::MAX_MASS * 0.05 * dt) ;
         }
 
-        node->velocity *= 1 - 0.03 * dt;
+        node->velocity *= 1 - 0.02 * dt;
 
 
         /// Apply Kinematics
@@ -200,6 +245,7 @@ void Creature::update(double t) {
         node->position += node->velocity * dt;
 
     }
+    return fitness;
 }
 
 #include "utility.h"

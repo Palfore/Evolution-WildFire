@@ -18,8 +18,8 @@ class Piston {
         const double initialLength;
         const double speed;
 
-        void draw(double t) const;
-        void update(double t);
+        void draw() const;
+        void update(int t);
 
         int getIndex1() const;
         int getIndex2() const;

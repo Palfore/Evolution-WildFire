@@ -33,17 +33,15 @@ Vec Piston::getPosition2() const {
     return this->b2->position;
 }
 
-void Piston::draw(double t) const {
+void Piston::draw() const {
     if (this->speed < 0.0000001) {
         DrawCylinder<Appearance::WHITE>(b1->position, b2->position, b1->radius / 2.0);
     } else {
         DrawCylinder<Appearance::RED>(b1->position, b2->position, b1->radius / 2.0);
     }
-
-    if (t < 0) t = t;
 }
 
-void Piston::update(double t) {
+void Piston::update(int t) {
     if (t < 0) t = t;
 }
 

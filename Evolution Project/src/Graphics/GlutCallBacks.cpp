@@ -131,6 +131,7 @@ namespace glutCB {
         }
         GFramework::get->mouse.x = x;
         GFramework::get->mouse.y = y;
+//        std::cout << x << ',' << y << '\n';
         GFramework::get->camera->del.setToZero(); // Prevent motion after mouse release (if used to move camera)
     }
 

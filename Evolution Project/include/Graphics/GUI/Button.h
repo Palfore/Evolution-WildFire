@@ -30,9 +30,9 @@ class Button : public UIElement { // only handles left clicks
             }
         }
 
-        Button(std::string s, double x_t, double y_t, double X_t, double Y_t, by_position) :
+        Button(std::string s, double x_t, double y_t, double X_t, double Y_t, by_position, int ID=-1) : UIElement(ID),
             label(s), x(x_t), y(y_t), X(X_t), Y(Y_t), hovering(false), highlightTime(-1) {}
-        Button(std::string s, double x_t, double y_t, double w, double h, by_dims) :
+        Button(std::string s, double x_t, double y_t, double w, double h, by_dims, int ID=-1) : UIElement(ID),
             label(s), x(x_t - w/2.0), y(y_t - h/2.0), X(x_t + w/2.0), Y(y_t + h/2.0), hovering(false), highlightTime(-1) {}
         virtual ~Button(){}
 
@@ -108,32 +108,42 @@ class Button : public UIElement { // only handles left clicks
 };
 
 template <Appearance A>
-class Checkbox : public Button<A> {
+class Checkbox : public Button<A> { /// @todo Maybe this should have a reference to a boolean "state" so it can be affected externally!
     public:
         void affectState(int mx, int my, CALL_TYPE type) override {
             Button<A>::hovering = false;
             if (this->isIn(mx, my)) {
                 switch(type) {
                     case CALL_TYPE::NONE: Button<A>::hovering = true; break;
-                    case CALL_TYPE::ACTION: Button<A>::callFunction = type; Button<A>::highlightTime = std::clock(); this->state ^= true; break;
+                    case CALL_TYPE::ACTION: Button<A>::callFunction = type; Button<A>::highlightTime = std::clock(); (*this->state) ^= true; break;
                     case CALL_TYPE::RELEASE: Button<A>::callFunction = type; break;
                     default: break;
                 }
             }
         }
         void update() {
-            if (state) {
+            if (*state) {
                 Button<A>::highlightTime = std::clock() - Button<A>::HIGHLIGHT_DURATION + 1;
             } else {
                 Button<A>::highlightTime = -1;
             }
         }
 
-        Checkbox(std::string s, double x_t, double y_t, double X_t, double Y_t, by_position p) : Button<A>(s, x_t, y_t, X_t, Y_t, p), state(false)  {}
-        Checkbox(std::string s, double x_t, double y_t, double w, double h, by_dims d) : Button<A>(s, x_t, y_t, w, h, d), state(false) {}
+        operator=(const Checkbox&) = delete;
+        Checkbox(std::string s, bool *const  active, double x_t, double y_t, double X_t, double Y_t, by_position p, int ID=-1) : Button<A>(s, x_t, y_t, X_t, Y_t, p, ID), state(active) {
+            if (*state) { // if checkbox starts off "on", trigger an action on initilization.
+                Button<A>::callFunction = CALL_TYPE::ACTION;
+            }
+        }
+        Checkbox(std::string s, bool *const active, double x_t, double y_t, double w, double h, by_dims d, int ID=-1) : Button<A>(s, x_t, y_t, w, h, d, ID), state(active) {
+            if (*state) {
+                Button<A>::callFunction = CALL_TYPE::ACTION;
+            }
+        }
+        Checkbox(const Checkbox& other) : Button<A>(other), state(other.state) {}
         virtual ~Checkbox(){}
 
-        bool state;
+        bool *const state;
     private:
 
 };

@@ -11,6 +11,39 @@
  * @todo Create a constructor which specifies the center, width and height.
  */
 template <Appearance A>
+struct DrawLine : DrawItem<A> {
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(2);
+
+    /** @brief Draws a 2D rectangle given corner values.
+     * @param upperLeft The position of the top left corner of the rectangle.
+     * @param lowerRight The position of the bottom right corner of the rectangle.
+     */
+    DrawLine(Vec2 upperLeft, Vec2 lowerRight) : DrawLine(upperLeft.x, upperLeft.y, lowerRight.x, lowerRight.y) {}
+
+    /** @brief Draws a 2D rectangle given corner values.
+     * @param x The left-most x.
+     * @param y The up-most y.
+     * @param X The right-most x.
+     * @param Y The down-most y.
+     */
+    DrawLine(double x, double y, double X, double Y) : DrawItem<A>(dimension) {
+        double w = GFramework::get->windowSize.x;
+        double h = GFramework::get->windowSize.y;
+        draw(x*w, y*h, X*w, Y*h);
+    }
+    private:void draw(double x, double y, double X, double Y) {
+        glBegin(GL_LINES);
+            glTexVert2f(0, 0, x, y);
+            glTexVert2f(1, 1, X, Y);
+        glEnd();
+    }
+};
+
+/** @brief Draw a 2D rectangle. (T/C)
+ * @tparam A (Textured/Colored) The appearance.
+ * @todo Create a constructor which specifies the center, width and height.
+ */
+template <Appearance A>
 struct DrawRectangle : DrawItem<A> {
     static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(2);
 
