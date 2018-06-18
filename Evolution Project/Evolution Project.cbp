@@ -62,7 +62,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-march=native" />
 					<Add directory="include/Graphics" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation" />
@@ -124,13 +123,17 @@
 		<Unit filename="include/Math/Vec.h" />
 		<Unit filename="include/Math/Vec2.h" />
 		<Unit filename="include/Simulation/Creatures/Creature.h" />
+		<Unit filename="include/Simulation/Genetics/AxonGene.h" />
 		<Unit filename="include/Simulation/Genetics/BoneGene.h" />
 		<Unit filename="include/Simulation/Genetics/Gene.h" />
 		<Unit filename="include/Simulation/Genetics/Genome.h" />
 		<Unit filename="include/Simulation/Genetics/MuscleGene.h" />
 		<Unit filename="include/Simulation/Genetics/NodeGene.h" />
 		<Unit filename="include/Simulation/Physics/Ball.h" />
+		<Unit filename="include/Simulation/Physics/NeuralNetwork.h" />
 		<Unit filename="include/Simulation/Physics/Piston.h" />
+		<Unit filename="include/Simulation/Population/History.h" />
+		<Unit filename="include/Simulation/Population/MultiThread.h" />
 		<Unit filename="include/Simulation/Population/Population.h" />
 		<Unit filename="include/Simulation/Simulation.h" />
 		<Unit filename="include/utility.h" />
@@ -157,13 +160,17 @@
 		<Unit filename="src/Math/Vec.cpp" />
 		<Unit filename="src/Math/Vec2.cpp" />
 		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
+		<Unit filename="src/Simulation/Genetics/AxonGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/BoneGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Gene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Genome.cpp" />
 		<Unit filename="src/Simulation/Genetics/MuscleGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/NodeGene.cpp" />
 		<Unit filename="src/Simulation/Physics/Ball.cpp" />
+		<Unit filename="src/Simulation/Physics/NeuralNetwork.cpp" />
 		<Unit filename="src/Simulation/Physics/Piston.cpp" />
+		<Unit filename="src/Simulation/Population/History.cpp" />
+		<Unit filename="src/Simulation/Population/MultiThread.cpp" />
 		<Unit filename="src/Simulation/Population/Population.cpp" />
 		<Unit filename="src/Simulation/Simulation.cpp" />
 		<Unit filename="src/Simulation/evolveMode.cpp" />
@@ -183,6 +190,7 @@
 			<lib_finder disable_auto="1" />
 			<DoxyBlocks>
 				<comment_style block="0" line="2" />
+				<doxyfile_project project_number="1.44.3316" use_auto_version="1" />
 				<doxyfile_build extract_all="1" extract_private="1" extract_static="1" />
 				<doxyfile_warnings />
 				<doxyfile_output latex="1" />
