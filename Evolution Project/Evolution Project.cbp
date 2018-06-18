@@ -13,6 +13,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-fexpensive-optimizations" />
 					<Add option="-Wnon-virtual-dtor" />
 					<Add option="-Wshadow" />
 					<Add option="-Winit-self" />
@@ -182,7 +183,6 @@
 			<lib_finder disable_auto="1" />
 			<DoxyBlocks>
 				<comment_style block="0" line="2" />
-				<doxyfile_project project_number="1.41.3002" use_auto_version="1" />
 				<doxyfile_build extract_all="1" extract_private="1" extract_static="1" />
 				<doxyfile_warnings />
 				<doxyfile_output latex="1" />

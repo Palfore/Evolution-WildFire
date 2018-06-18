@@ -8,7 +8,7 @@ constexpr char NodeGene::symbol;
 NodeGene::NodeGene(const Genome& genes) : NodeGene(getValidPosition(genes)) {}
 NodeGene::NodeGene(Vec position_t) : NodeGene(position_t, 1) {} // randf(4) + 1
 NodeGene::NodeGene(Vec position_t, double mass_t) : position(position_t), mass(mass_t) {}
-NodeGene::NodeGene(std::string representation) : position(Vec(0,0,0)), mass(1) {
+NodeGene::NodeGene(std::string representation) : position(Vec(0,0,0)), mass(0) {
     std::vector<std::string> values = utility::split<std::vector>(representation, ",");
     position = Vec(utility::strToNum<double>(values[0]),
                    utility::strToNum<double>(values[1]),

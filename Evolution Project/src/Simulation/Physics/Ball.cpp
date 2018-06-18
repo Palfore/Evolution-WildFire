@@ -7,13 +7,12 @@ Ball::Ball(Vec pos, double r, double m) : position(pos), velocity(Vec(0,0,0)), a
 Ball::Ball(NodeGene nodeGene) : Ball(nodeGene.position, 1, nodeGene.mass) {}
 Ball::~Ball() {}
 
-void Ball::draw(double time) const {
-    double massPercentage = (this->mass - NodeGene::MIN_MASS) / (NodeGene::MAX_MASS - NodeGene::MIN_MASS);
+void Ball::draw() const {
+    double massPercentage = 1 - (this->mass - NodeGene::MIN_MASS) / (NodeGene::MAX_MASS - NodeGene::MIN_MASS);
     GLOBAL->colorMap[Appearance::CUSTOM] =  GLOBAL->colorMap[Appearance::LIGHT_BLUE] * massPercentage;
     DrawSphere<Appearance::CUSTOM>(this->position, this->radius);
-    if (time < 0) time = time;
 }
 
-void Ball::update(double time) {
+void Ball::update(int time) {
     if (time < 0) time = time;
 }

@@ -19,8 +19,8 @@ class Ball {
         double radius;
         double mass;
 
-        void draw(double time) const;
-        void update(double t);
+        void draw() const;
+        void update(int t);
 };
 
 #endif // BALL_H

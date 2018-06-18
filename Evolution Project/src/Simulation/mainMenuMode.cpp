@@ -38,6 +38,7 @@ void Simulation::mainMenuMode() {
 }
 
 #include "Audio.h"
+#include <thread>
 void Simulation::loadMainMenu() {
     std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
     userFunctions->push_back(UserFunction(new UIchar(ENTER), [this](){

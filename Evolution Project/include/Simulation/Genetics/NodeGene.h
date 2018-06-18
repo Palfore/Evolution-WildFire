@@ -7,8 +7,8 @@
 class NodeGene : public Gene {
     private:
         static constexpr double CAGE_SIZE = 50;
-        static constexpr double MIN_NODE_DISTANCE = 4;
-        static constexpr bool twoD = false;
+        static constexpr double MIN_NODE_DISTANCE = 10;
+        static constexpr bool twoD = true;
     public:
         static constexpr char symbol = 'n';
         static constexpr double MAX_MASS = 5.0;
@@ -22,7 +22,7 @@ class NodeGene : public Gene {
         NodeGene(Vec position);
         NodeGene(Vec position, double mass);
         NodeGene(const NodeGene& other);
-        ~NodeGene();
+        virtual ~NodeGene();
 
         virtual Gene* clone() const;
         virtual std::string toString() const override;

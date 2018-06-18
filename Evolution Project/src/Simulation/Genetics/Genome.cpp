@@ -2,13 +2,15 @@
 
 #include "NodeGene.h"
 #include "MuscleGene.h"
+#include "BoneGene.h"
+#include "AxonGene.h" //NewGeneEditHere
 #include "Logger.h"
 #include "utility.h"
 
 #include <deque>
 
-Genome::Genome() : fitness(0), genes({{NodeGene::symbol, {}}, {MuscleGene::symbol, {}}}) {}
-Genome::Genome(int n, int m, int b) : Genome() {
+Genome::Genome() : fitness(0), genes({{NodeGene::symbol, {}}, {MuscleGene::symbol, {}}, {BoneGene::symbol, {}}, {AxonGene::symbol, {}}}) {} //NewGeneEditHere
+Genome::Genome(int n, int m, int b, std::vector<unsigned int> sizes) : Genome() {
     if (m + b > comb(n)) LOG("Too many connections for valid creature", LogDegree::FATAL, LogType::GENETIC);
     if (n < 0) LOG("Creature created with 0 nodes.", LogDegree::FATAL, LogType::GENETIC);
 
@@ -20,6 +22,16 @@ Genome::Genome(int n, int m, int b) : Genome() {
     }
     for (int i = 0; i < b; i++) {
         this->genes[BoneGene::symbol].push_back(new BoneGene(this->genes[NodeGene::symbol].size(), *this));
+    }
+
+    sizes.insert(sizes.begin(), m+1);
+    sizes.push_back(m);
+    for (unsigned int layer = 0; layer < sizes.size() - 1; layer++) {
+        for (unsigned int i = 0; i < sizes[layer]; i++) {
+            for (unsigned int j = 0; j < sizes[layer+1]; j++) {
+                this->genes[AxonGene::symbol].push_back(new AxonGene(i, j, layer, pmRandf(1)));
+            }
+        }
     }
 }
 
@@ -39,7 +51,7 @@ Genome& Genome::operator=(Genome other) {
 
 
 
-Genome::Genome(std::string genomeString) : Genome() {
+Genome::Genome(std::string genomeString) : Genome() { //NewGeneEditHere
 
     std::deque<std::string> geneStrings = utility::split<std::deque>(genomeString, GENE_DELIMITER);
     std::string metaData = geneStrings[0];
@@ -58,6 +70,9 @@ Genome::Genome(std::string genomeString) : Genome() {
                 break;
             case BoneGene::symbol:
                 this->genes[BoneGene::symbol].push_back(new BoneGene(headAndValues[1]));
+                break;
+            case AxonGene::symbol:
+                this->genes[AxonGene::symbol].push_back(new AxonGene(headAndValues[1]));
                 break;
             default:
                 LOG("Genome(std::string) parsed invalid string:(" + std::string(1, headAndValues[0][0]) + ")", LogDegree::FATAL, LogType::GENETIC);

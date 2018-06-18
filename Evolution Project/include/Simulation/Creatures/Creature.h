@@ -2,23 +2,26 @@
 #define CREATURE_H
 
 #include <vector>
-#include "MyMath.h"
+#include "NeuralNetwork.h"
+#include "Vec.h"
 
 class Ball;
 class Piston;
-#include <Genome.h>
-//class Genome;
+class Genome;
 class Creature {
     public:
-        Creature(int n, int m, int b);
+        Vec moveTo;
+
+        Creature(int n, int m, int b, std::vector<unsigned int> N);
         Creature(Genome g);
         Creature(std::string g);
         Creature(const Creature &other);
         Creature& operator=(Creature other);
         virtual ~Creature();
 
-        void draw(double t) const;
-        void update(double t);
+        void draw() const;
+        void drawBrain(bool drawAxons) const;
+        double update(int t);
 
         void moveCOGTo(Vec to);
         void moveCOMTo(Vec to);
@@ -31,12 +34,15 @@ class Creature {
 
         double getFitness() const; // This should consider the initial COM.
         std::string getGenomeString() const;
+
     private:
         double getLowestBodyHeight() const;
+        Vec initCOM;
 
         std::vector<Ball*> nodes;
         std::vector<Piston*> muscles;
         std::vector<Piston*> bones;
+        NeuralNetwork NN;
 
         std::string genomeString;
 };

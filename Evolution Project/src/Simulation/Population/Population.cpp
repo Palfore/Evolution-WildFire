@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include "Creature.h"
 #include "Genome.h"
+#include "MultiThread.h"
 
-Population::Population(int numMembers) : population({}), history(), gen(0), viewingGenomes({}), displayingCreature(0,0,0), activeCreatureIndex(0), simStep(0) {
+Population::Population(int numMembers) : population({}), viewingGenomes({}), displayingCreature(nullptr), history(), gen(0), activeCreatureIndex(0), simStep(0) {
     for (int i = 0; i < numMembers; i++) {
-        Genome* g = new Genome(5,3,3);
+        Genome* g = new Genome(4, 3, 2, {8, 8});
         population.push_back(g);
         viewingGenomes.push_back(*g);
     }
@@ -16,14 +17,15 @@ Population::~Population() {
     for (auto * member: population) {
         delete member;
     }
+    delete displayingCreature;
 }
 
 void Population::draw() const {
-    displayingCreature.draw(simStep);
+    displayingCreature->draw();
 }
 
 void Population::nextStep() {
-    displayingCreature.update(simStep++);
+    displayingCreature->update(simStep++);
 }
 
 int Population::getSimStep() const {
@@ -59,7 +61,8 @@ void Population::prevCreature() {
 
 void Population::showCreature(int index) {
     activeCreatureIndex = index;
-    displayingCreature = Creature(viewingGenomes[activeCreatureIndex]);
+    delete displayingCreature;
+    displayingCreature = new Creature(viewingGenomes[activeCreatureIndex]);
     simStep = 0;
 }
 
@@ -76,7 +79,7 @@ void Population::updateViewingGenomes() {
 }
 
 Creature Population::getActiveCreature() const {
-    return displayingCreature;
+    return *displayingCreature;
 }
 
 double Population::getAvg() const {
