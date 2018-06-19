@@ -47,13 +47,31 @@ int randi(const int upper);
  */
 double pmRandf(const double bounds);
 
+/** @brief Returns a thread-safe double in the range [-maximal, -minimal] U [minimal, maximal].
+ * @param minimal The lowest absolute value bound.
+ * @param maximal The highest absolute value bound.
+ * @warning Unknown if range is inclusive.
+ * @todo Determine if range is inclusive.
+ * @return double A random number [-bounds, bounds).
+ */
+double pmRandf(const double minimal, const double maximal);
+
 /** @brief Returns a thread-safe int in the range [-bounds, bounds).
  * @param bounds The bounds of numbers generated.
  * @warning Unknown if range is inclusive.
  * @todo Determine if range is inclusive.
- * @return int A random number [-bounds, bounds).
+ * @return int A random number [-maximal, -minimal] U [minimal, maximal].
  */
 int pmRandi(const int bounds);
+
+/** @brief Returns a thread-safe int in the range [-maximal, -minimal] U [minimal, maximal].
+ * @param minimal The lowest absolute value bound.
+ * @param maximal The highest absolute value bound.
+ * @warning Unknown if range is inclusive.
+ * @todo Determine if range is inclusive.
+ * @return int A random number [-maximal, -minimal] U [minimal, maximal].
+ */
+int pmRandi(const int minimal, const int maximal);
 
 /** @brief Returns the number of connections that can be made with n nodes.
  * @details This permutation calculation simplfies and is returned as \f$ \frac{1}{2}n(n - 1) \f$ .
@@ -80,6 +98,10 @@ double euc(Vec a, Vec b);
  *
  */
 double euc2D(Vec a, Vec b);
+
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 bool approxEqual(double a, double b, double epsilon = MACHINE_EPSILON);
 

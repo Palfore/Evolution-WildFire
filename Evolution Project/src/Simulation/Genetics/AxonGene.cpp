@@ -31,7 +31,7 @@ std::string AxonGene::toString() const {
 
 #include "MyMath.h"
 void AxonGene::mutate(Genome& genome) {
-    if (randf(100) < 10) {
+    if (randf(100) < 1) {
         weight = pmRandf(1);
     }
     if (genome.fitness > 0) return;

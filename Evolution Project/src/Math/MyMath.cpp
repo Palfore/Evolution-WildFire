@@ -42,6 +42,14 @@ double pmRandf(const double bounds) {
     return 2 * (randf(bounds) - (0.5 * bounds));
 }
 
+double pmRandf(const double minimal, const double maximal) {
+    return 0; ///< @todo implement pmRandf(min, max)
+}
+
+int pmRandi(const int minimal, const int maximal) {
+    return 0;///< @todo implement pmRandi(min, max)
+}
+
 int comb(const int n) {
     return 0.5 * n * (n - 1);
 }

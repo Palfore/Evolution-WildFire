@@ -6,7 +6,7 @@
 
 Population::Population(int numMembers) : population({}), viewingGenomes({}), displayingCreature(nullptr), history(), gen(0), activeCreatureIndex(0), simStep(0) {
     for (int i = 0; i < numMembers; i++) {
-        Genome* g = new Genome(4, 3, 2, {8, 8});
+        Genome* g = new Genome(4, 4, 2, {8, 8, 8});
         population.push_back(g);
         viewingGenomes.push_back(*g);
     }

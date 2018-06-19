@@ -104,11 +104,11 @@ Vec Creature::getCOM() const {
 }
 
 Vec Creature::getCOG() const {
-    Vec COM = Vec(0,0,0);
+    Vec COG = Vec(0,0,0);
     for (auto const& node : this->nodes) {
-        COM += node->position;
+        COG += node->position;
     }
-    return COM;
+    return COG;
 }
 #include <limits>
 Vec Creature::getTop() const {
@@ -126,6 +126,14 @@ Vec Creature::getTop() const {
     return Vec(comX / mass, comY / mass, highestNode + 10);
 }
 
+Vec Creature::getTopNode() const {
+    Vec highestNode = Vec(0, 0, -std::numeric_limits<double>::max());
+    for (auto const& node : this->nodes) {
+        highestNode = node->position.z > highestNode.z ? node->position : highestNode;
+    }
+    return highestNode;
+}
+
 
 double Creature::getLowestBodyHeight() const {
     double minHeight = std::numeric_limits<double>::max();
@@ -137,8 +145,13 @@ double Creature::getLowestBodyHeight() const {
 }
 
 double Creature::getFitness() const {
-//    return euc2D(Vec(0,0,0), this->getCOM());
-    return 1.0/cosh(euc2D(this->getCOM(), moveTo));
+    return getFitness(this->getCOM());
+}
+
+
+double Creature::getFitness(Vec com) const {
+    return euc2D(this->initCOM, com);
+//    return 1.0/cosh(euc2D(com, moveTo));
 }
 
 #include "Shapes.h"
@@ -159,19 +172,27 @@ void Creature::drawBrain(bool drawLines) const {
     this->NN.draw(drawLines);
 }
 
-template <typename T> int sgn(T val) {
-    return (T(0) < val) - (val < T(0));
-}
 double Creature::update(int t) { // returns fitness update
     double fitness = 0;
     const double dt = 1.0;
+    const Vec com = getCOM();
 
-    if (t == 0) { // Try a moving target (small incememrnts)
-        initCOM.x = 75;
-        moveTo = Vec(0, 0, initCOM.x);
-    }
-    fitness = getFitness();
-
+//    if (t == 0) {
+//        initCOM.x = 75;
+//        moveTo.x = initCOM.x;//Vec(initCOM.x, 0, 0);
+//    }
+//    if (fabs(com.x - moveTo.x) < 5) { // Only if you get it do you get to try again
+//        initCOM.x += sgn<double>(com.x - moveTo.x) * (40 + randf(90)); // flip flop the direction
+//        moveTo.x = initCOM.x;//Vec(initCOM.x, 0, 0);
+//        fitness += 20;
+//    }
+//    if ((t < 2500) && (t % 100 == 0)) { // Encourage them to move for 2500, after that, they only get points for eating food.
+//                    // Hopefully they will learn to find the first food in 2500s and then associate that neuron approaching 0
+//                    // with food. #ClassicalConditioning.
+//        fitness += getFitness(com);
+//    }
+    if (t == 2000-1)
+    fitness += getFitness();
     for (auto const& node: this->nodes) {
         node->acceleration = Vec(0, 0, -0.0066);
     }
@@ -181,10 +202,10 @@ double Creature::update(int t) { // returns fitness update
         return (euc(muscle->getPosition1(), muscle->getPosition2())/muscle->initialLength - 1.0) / (1.2 - 1.0);
     });
 
-    const double a = acosh(10) / (this->moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
-    const double b = acosh(10) / (this->moveTo.y + 2); // find out why +0.1 works, but +2 doesnt.
-    const double distanceFactorX = tanh(0.2*(this->getCOM().x - this->moveTo.x)); //should be +/-(something) depending on direction => tanh
-    const double distanceFactorY = 1.0 / cosh(b*(this->getCOM().y - this->moveTo.y));
+//    const double a = acosh(10) / (this->moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
+//    const double b = acosh(10) / (this->moveTo.y + 2); // find out why +0.1 works, but +2 doesnt.
+    const double distanceFactorX = tanh(0.2*(com.x - this->moveTo.x)); //should be +/-(something) depending on direction => tanh
+//    const double distanceFactorY = 1.0 / cosh(b*(this->com.y - this->moveTo.y));
     musclePercentages.push_back(distanceFactorX);
 //    musclePercentages.push_back(distanceFactorY);
 
@@ -227,17 +248,16 @@ double Creature::update(int t) { // returns fitness update
     for (auto const& node: this->nodes) {
         /// Apply Constraints
         if (node->position.z < 1.05*node->radius) {
-            node->position.z = node->radius;
-
             node->velocity.x *= (1 - node->mass / NodeGene::MAX_MASS * 0.5 * dt) ;// * (isinf(x) || (x>100)? 1 : x / sqrt(1 + x*x));
             node->velocity.y *= (1 - node->mass / NodeGene::MAX_MASS * 0.5 * dt) ;// * (isinf(y) || (y>100)? 1 : y / sqrt(1 + y*y));
 
         }
-        if (node->position.z < node->radius) {
-            node->velocity.z *= (1 - node->mass / NodeGene::MAX_MASS * 0.05 * dt) ;
+        if (node->position.z < 1.01*node->radius) {
+            node->position.z = node->radius;
+            node->velocity.z *= (1 - (node->mass + 0.5) / (NodeGene::MAX_MASS+0.5) * 0.1 * dt); // +0.5, so no v.z*=0 nodes.
         }
 
-        node->velocity *= 1 - 0.02 * dt;
+        node->velocity *= 1 - 0.01 * dt;
 
 
         /// Apply Kinematics

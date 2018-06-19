@@ -16,6 +16,7 @@ void GFramework::loadTextures() {
         {Appearance::LION, glLoadTexture(dir + "download.png")},
         {Appearance::GAME_TITLE, glLoadTexture(dir + "title.png")},
         {Appearance::PALFORE, glLoadTexture(dir + "PalforeLogo.png")},
+        {Appearance::FACE, glLoadTexture(dir + "face.png")},
         {Appearance::TREE_TOP, glLoadTexture(dir + "treetop2.jpg")},
         {Appearance::BARK, glLoadTexture(dir + "bark.jpg")},
     };

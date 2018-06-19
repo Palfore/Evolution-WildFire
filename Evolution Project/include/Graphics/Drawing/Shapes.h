@@ -192,7 +192,7 @@ struct DrawSphere : DrawItem<A> {
      * @return
      *
      */
-    DrawSphere(double r) : DrawSphere(Vec(0,0,0), r) {}
+    DrawSphere(double r, double angle=0) : DrawSphere(Vec(0,0,0), r, angle) {}
 
     /** @brief Draws the sphere at a given position.
      * @param pos The center of the sphere.
@@ -200,16 +200,17 @@ struct DrawSphere : DrawItem<A> {
      * @return
      *
      */
-    DrawSphere(Vec pos, double r) : DrawItem<A>(dimension) {
-        draw(pos, r);
+    DrawSphere(Vec pos, double r, double angle=0) : DrawItem<A>(dimension) {
+        draw(pos, r, angle);
     }
-    private:void draw(Vec pos, double r) {
+    private:void draw(Vec pos, double r, double angle) {
         GLUquadric *qobj = gluNewQuadric();
 
         gluQuadricTexture(qobj,GL_TRUE);
 
         glPushMatrix();
             glTranslatef(pos.x, pos.y, pos.z);
+            glRotatef(angle, 0, 0, 1);
             gluSphere(qobj,r,20,20);
         glPopMatrix();
 

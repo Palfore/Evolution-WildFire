@@ -20,9 +20,9 @@ static bool drawGraph = false;
 static bool drawDistance = false;
 static bool drawBrain = true;
 static bool drawLines = false;
+#include "MyMath.h"
 
-
-static unsigned int numThreads = std::thread::hardware_concurrency() - 2 > 0 ? std::thread::hardware_concurrency() - 2 : 1;
+static unsigned int numThreads = 0;// std::thread::hardware_concurrency() - 2 > 0 ? std::thread::hardware_concurrency() - 2 : 1;
 static std::vector<MultiThread*> mt;
 
 static std::clock_t startTime;
@@ -46,17 +46,19 @@ static void drawing() {
     DrawSphere<Appearance::RED>(Vec(-350,0,0), 5);
 
 
-    DrawSphere<Appearance::BLACK>(Vec(pop.getActiveCreature().moveTo), 2.5);
-    const double a = acosh(10) / (pop.getActiveCreature().moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
+    DrawSphere<Appearance::BLACK>(Vec(pop.getActiveCreature().moveTo.x, pop.getActiveCreature().moveTo.y, 5), 2.5);
+    DrawSphere<Appearance::FACE>(pop.getActiveCreature().getTopNode() + Vec(0,0,3), 5, sgn<double>(pop.getActiveCreature().moveTo.x - pop.getActiveCreature().getCOM().x) * 90);
+
+//    const double a = acosh(10) / (pop.getActiveCreature().moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
 
     double X = pop.getActiveCreature().getCOM().x;
     for (double x = -X-10; x < X +10; x += 0.3) {
-        const double f = 50* tanh(0.15*(x - pop.getActiveCreature().moveTo.z)); //should be +/-(something) depending on direction => tanh
-        if (f > 0) {
-            DrawSphere<Appearance::SKY_BLUE>(Vec(x, 0, fabs(f)), 0.3);
-        } else {
-            DrawSphere<Appearance::RED>(Vec(x, 0, fabs(f)), 0.3);
-        }
+        //const double f = 50* tanh(0.15*(x - pop.getActiveCreature().moveTo.z)); //should be +/-(something) depending on direction => tanh
+//        if (f > 0) {
+            DrawSphere<Appearance::BLACK>(Vec(pop.getActiveCreature().moveTo.x, 0, 5), 2.5);
+//        } else {
+//            DrawSphere<Appearance::RED>(pop.getActiveCreature().moveTo, 0.3);
+//        }
     }
 
 
@@ -123,7 +125,7 @@ void Simulation::evolveMode() {
             numThreads += (unsigned) numThreads < std::thread::hardware_concurrency() ? 1 : 0;
         }));
         userFunctions->push_back(UserFunction(new UIchar('<'), [](){
-            numThreads -= numThreads > 1 ? 1 : 0;
+            numThreads -= numThreads >= 1 ? 1 : 0;
         }));
         userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_UP, 150), [](){
             gameSpeed++;

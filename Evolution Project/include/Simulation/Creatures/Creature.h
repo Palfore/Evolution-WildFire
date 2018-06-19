@@ -30,9 +30,11 @@ class Creature {
         void lowerToGround();
         Vec getCOM() const; // Center of Mass
         Vec getCOG() const; // Center of Geometry
-        Vec getTop() const; // Centralized Top of Creature
+        Vec getTop() const; // Centralized (COM) Top of Creature
+        Vec getTopNode() const; // Highest Node of Creature
 
-        double getFitness() const; // This should consider the initial COM.
+        double getFitness() const; // Somehow different measures of fitness should be possible or required
+        double getFitness(Vec com) const;
         std::string getGenomeString() const;
 
     private:

@@ -8,7 +8,7 @@
 class Creature;
 class MultiThread {
     public:
-        static constexpr int SIMULATION_TIME = 4000;
+        static constexpr int SIMULATION_TIME = 2000;
 
         std::vector<double> fitnesses;
         MultiThread() : fitnesses({}), t(), finished(false) {}
