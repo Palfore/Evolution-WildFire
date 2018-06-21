@@ -14,7 +14,7 @@
 #include "Creature.h"
 #include <thread>
 
-static Population pop(300);
+static Population pop(1000);
 static int gameSpeed = 6;
 static bool drawGraph = false;
 static bool drawDistance = false;
@@ -22,13 +22,22 @@ static bool drawBrain = true;
 static bool drawLines = false;
 #include "MyMath.h"
 
-static unsigned int numThreads = 0;// std::thread::hardware_concurrency() - 2 > 0 ? std::thread::hardware_concurrency() - 2 : 1;
+static constexpr int MIN_THREADS = 0; // No processing threads
+static const int MAX_THREADS = std::thread::hardware_concurrency();
+static constexpr int BACKGROUND_THREADS_REQUIRED = 2;
+static const int DEFAULT_THREADS = MAX_THREADS - BACKGROUND_THREADS_REQUIRED > 0 ? MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
+
+static constexpr int MAX_GAME_SPEED = 20;
+static constexpr int MIN_GAME_SPEED = 0; // No updating displayed creatures
+
+
+static unsigned int numThreads =  DEFAULT_THREADS;
 static std::vector<MultiThread*> mt;
 
 static std::clock_t startTime;
 static std::vector<double> times = {};
 
-static void drawing() {
+static void drawing(double fps) {
     const int r = 50;
     int bounds = 1000;
     for (int x = -bounds; x < bounds; x+=r) {
@@ -47,19 +56,7 @@ static void drawing() {
 
 
     DrawSphere<Appearance::BLACK>(Vec(pop.getActiveCreature().moveTo.x, pop.getActiveCreature().moveTo.y, 5), 2.5);
-    DrawSphere<Appearance::FACE>(pop.getActiveCreature().getTopNode() + Vec(0,0,3), 5, sgn<double>(pop.getActiveCreature().moveTo.x - pop.getActiveCreature().getCOM().x) * 90);
-
-//    const double a = acosh(10) / (pop.getActiveCreature().moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
-
-    double X = pop.getActiveCreature().getCOM().x;
-    for (double x = -X-10; x < X +10; x += 0.3) {
-        //const double f = 50* tanh(0.15*(x - pop.getActiveCreature().moveTo.z)); //should be +/-(something) depending on direction => tanh
-//        if (f > 0) {
-            DrawSphere<Appearance::BLACK>(Vec(pop.getActiveCreature().moveTo.x, 0, 5), 2.5);
-//        } else {
-//            DrawSphere<Appearance::RED>(pop.getActiveCreature().moveTo, 0.3);
-//        }
-    }
+    DrawSphere<Appearance::FACE>(pop.getActiveCreature().getTopNode() + Vec(0,0,3), 5, -sgn<double>(pop.getActiveCreature().moveTo.x - pop.getActiveCreature().getCOM().x) * 90);
 
 
     DrawSkybox(700);
@@ -74,13 +71,23 @@ static void drawing() {
     DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<int>(pop.getActiveCreature().getFitness()), pop.getActiveCreature().getTop());
     DrawString<Appearance::BLACK>("Generation " + utility::numToStr<int>(pop.gen), 0.01, 0.03, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("Creature: " + utility::numToStr<int>(pop.getMemberIndex()) +
-                                " / " + utility::numToStr<int>(pop.population.size()), 0.01, 0.05, by_percentage(), false, false);
+                                " / " + utility::numToStr<int>(pop.population.size()) +
+                                " (" + utility::numToStr<int>(pop.viewingGenomes.size()) + ')', 0.01, 0.05, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("Time " + utility::numToStr<int>(pop.getSimStep()), 0.01, 0.07, by_percentage(), false, false);
-    DrawString<Appearance::BLACK>("NumThreads " + utility::numToStr<int>(numThreads), 0.01, 0.09, by_percentage(), false, false);
+    DrawString<Appearance::BLACK>("NumThreads " + utility::numToStr<int>(numThreads) + " (" + utility::numToStr<int>(mt.size()) + ")", 0.01, 0.09, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("GameSpeed " + utility::numToStr<int>(gameSpeed), 0.01, 0.11, by_percentage(), false, false);
 
-    if (drawDistance) {
+    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
+    DrawString<Appearance::BLACK>("NumUserFuncs: " + utility::numToStr<int>(userFunctions->size()), 0.01, 0.13, by_percentage(), false, false);
+    DrawString<Appearance::BLACK>("FPS: " + utility::numToStr<double>(fps), 0.01, 0.15, by_percentage(), false, false);
+//    DrawString<Appearance::BLACK>("#s: n" + utility::numToStr<double>(pop.getActiveCreature().nodes.size()) + ", b" +
+//                                            utility::numToStr<double>(pop.getActiveCreature().bones.size()) + ", m" +
+//                                            utility::numToStr<double>(pop.getActiveCreature().muscles.size()) + ", N"
+//                                            utility::numToStr<double>(pop.getActiveCreature().NN..size()) + ", b" +
+//                                   ,0.01, 0.17, by_percentage(), false, false);
 
+    if (drawDistance) {
+        // Forget what this meant lol
     }
     if (drawGraph) {
         pop.history.graph();
@@ -91,7 +98,8 @@ static void drawing() {
 
 }
 #include "MyGlut.h"
-void Simulation::evolveMode() {
+#include <numeric>
+void Simulation::evolveMode(double fps) {
 
     static bool initialized = true;
     std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
@@ -122,16 +130,16 @@ void Simulation::evolveMode() {
             pop.history.writeToConsole();
         }));
         userFunctions->push_back(UserFunction(new UIchar('>'), [](){
-            numThreads += (unsigned) numThreads < std::thread::hardware_concurrency() ? 1 : 0;
+            numThreads += numThreads < MAX_THREADS ? 1 : 0;
         }));
         userFunctions->push_back(UserFunction(new UIchar('<'), [](){
-            numThreads -= numThreads >= 1 ? 1 : 0;
+            numThreads -= numThreads > MIN_THREADS ? 1 : 0;
         }));
         userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_UP, 150), [](){
-            gameSpeed++;
+            gameSpeed += gameSpeed < MAX_GAME_SPEED ? 1 : 0;
         }));
         userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_DOWN, 150), [](){
-            gameSpeed -= gameSpeed >= 0 ? 1 : 0;
+            gameSpeed -= gameSpeed > MIN_GAME_SPEED ? 1 : 0;
         }));
 
         userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Graph", &drawGraph, 0.0, 0.9, 0.2, 1, by_position()), [userFunctions](){
@@ -142,16 +150,18 @@ void Simulation::evolveMode() {
                 }));
                 for (unsigned int i = 0; i < userFunctions->size(); i++) {
                     if ((*userFunctions)[i].element->id == 2) {
-                        userFunctions->erase((*userFunctions).begin() + i);
-                    }
-                }
-            } else {
-                for (unsigned int i = 0; i < userFunctions->size(); i++) {
-                    if ((*userFunctions)[i].element->id == secondaryButtonIds) {
-                        userFunctions->erase((*userFunctions).begin() + i);
+                        userFunctions[i];
+                        userFunctions->erase((*userFunctions).begin() + i); // I dont think this deletes properlly
                     }
                 }
             }
+//else {
+//                for (unsigned int i = 0; i < userFunctions->size(); i++) {
+//                    if ((*userFunctions)[i].element->id == secondaryButtonIds) {
+//                        userFunctions->erase((*userFunctions).begin() + i);
+//                    }
+//                }
+//            }
             drawBrain = false;
         }));
         userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Brain", &drawBrain, 0.2, 0.9, 0.4, 1, by_position()), [userFunctions](){
@@ -175,9 +185,6 @@ void Simulation::evolveMode() {
             drawGraph = false;
         }));
     }
-
-
-    if (0) goto postThreading;
 
     if (numThreads > 0 && mt.empty()) { // initialize
         for (unsigned int i = 0; i < numThreads; i++) {
@@ -221,15 +228,13 @@ void Simulation::evolveMode() {
         }
         MultiThread::spawnChildren(mt, pop.getCreatures()); /// @todo Multi-threaded spawning is a bit laggy and noticable.
         startTime = std::clock();
-        if (0) goto d; // End early on this iteration because its expensive to spawn threads.
+        //return; // End early on this iteration because its expensive to spawn threads.
     }
 
-postThreading:
     for (int i = 0; i < gameSpeed; i++) {
         pop.nextStep();
     }
-d:
-    drawing();
+    drawing(fps);
 }
 
 

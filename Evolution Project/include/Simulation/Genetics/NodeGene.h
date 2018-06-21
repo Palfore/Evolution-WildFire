@@ -8,7 +8,7 @@ class NodeGene : public Gene {
     private:
         static constexpr double CAGE_SIZE = 50;
         static constexpr double MIN_NODE_DISTANCE = 10;
-        static constexpr bool twoD = true;
+        static constexpr bool twoD = false;
     public:
         static constexpr char symbol = 'n';
         static constexpr double MAX_MASS = 5.0;

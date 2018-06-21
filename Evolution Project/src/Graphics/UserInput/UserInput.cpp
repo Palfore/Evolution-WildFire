@@ -24,9 +24,9 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
         glutFullScreenToggle();
     }));
     /* Audio Test */
-    functions.push_back(UserFunction(new UIchar('.'), [this](){
-        GFramework::get->audio->playSound("gunShot.wav");
-    }));
+//    functions.push_back(UserFunction(new UIchar('.'), [this](){
+//        GFramework::get->audio->playSound("gunShot.wav");
+//    }));
     functions.push_back(UserFunction(new UIchar(GLUT_KEY_F9), [](){
         saveScreenShot();
         puts("Saved ScreenShot");
@@ -40,18 +40,18 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
     functions.push_back(UserFunction(new UIchar('8'), [](){
         LOG("Test warning message.", LogDegree::WARNING, LogType::GENERAL);
     }));
-    functions.push_back(UserFunction(new UIchar('+', 200), [this](){
-        GFramework::get->audio->volumeUp(5);
-        puts("Volume Up");
-    }));
-    functions.push_back(UserFunction(new UIchar('-', 200), [this](){
-        GFramework::get->audio->volumeDown(5);
-        puts("Volume Down");
-    }));
-    functions.push_back(UserFunction(new UIchar('*'), [this](){
-        GFramework::get->audio->toggleMute();
-        puts("Volume Muted");
-    }));
+//    functions.push_back(UserFunction(new UIchar('+', 200), [this](){
+//        GFramework::get->audio->volumeUp(5);
+//        puts("Volume Up");
+//    }));
+//    functions.push_back(UserFunction(new UIchar('-', 200), [this](){
+//        GFramework::get->audio->volumeDown(5);
+//        puts("Volume Down");
+//    }));
+//    functions.push_back(UserFunction(new UIchar('*'), [this](){
+//        GFramework::get->audio->toggleMute();
+//        puts("Volume Muted");
+//    }));
 }
 
 bool UserInput::isInputStringSubmitted() {

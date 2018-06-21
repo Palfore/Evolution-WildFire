@@ -24,7 +24,7 @@ Genome::Genome(int n, int m, int b, std::vector<unsigned int> sizes) : Genome() 
         this->genes[BoneGene::symbol].push_back(new BoneGene(this->genes[NodeGene::symbol].size(), *this));
     }
 
-    sizes.insert(sizes.begin(), m+1);
+    sizes.insert(sizes.begin(), m+2);
     sizes.push_back(m);
     for (unsigned int layer = 0; layer < sizes.size() - 1; layer++) {
         for (unsigned int i = 0; i < sizes[layer]; i++) {

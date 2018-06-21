@@ -14,6 +14,7 @@ bool MultiThread::isFinished() const {
 }
 
 #include "Vec.h"
+#include "iostream"
 void MultiThread::processCreatures(std::vector<Creature> creatures, std::vector<double> & fitnesses, bool & done) {
     for (auto& creature: creatures) {
         double fitness = 0;

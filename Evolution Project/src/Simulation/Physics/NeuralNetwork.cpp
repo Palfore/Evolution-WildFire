@@ -77,6 +77,7 @@ void NeuralNetwork::draw(bool drawAxons) const { // Draw connections of one neur
             } // +1 heres are being they are in the next layer over
         }
     }
+
     /* Draw Neurons */
     for (int i = 0; i < N + 1; i++) {
         double x = getX(i, N);
@@ -101,13 +102,12 @@ std::vector<double> NeuralNetwork::propagate(const std::vector<double>& inputs) 
         std::cout << inputs.size() << ',' << potentials[0].size() << '\n';
         exit(-12);
     };
-
     potentials[0] = inputs;
     for (unsigned int l = 1; l < layerSizes.size(); l++) {
         for (int j = 0; j < layerSizes[l]; j++) {
             potentials[l][j] = 0.0;
             for (int i = 0; i < layerSizes[l-1]; i++) {
-                potentials[l][j] += potentials[l-1][i] * w[l-1][i][j]; // all weights are 1
+                potentials[l][j] += potentials[l-1][i] * w[l-1][i][j];
             }
             potentials[l][j] = activationFunction(potentials[l][j]);
         }

@@ -24,10 +24,10 @@ namespace ConfigValueConverters {
         template <> int getValue_<int>(std::string value) {
             try {
                 return atof(value.c_str());
-            } catch(std::invalid_argument e) {
+            } catch(std::invalid_argument& e) {
                 LOG("Could not parse int for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
                 return -1;
-            } catch (std::out_of_range e) {
+            } catch (std::out_of_range& e) {
                 LOG("Int overflow for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
             }
         }
@@ -35,10 +35,10 @@ namespace ConfigValueConverters {
         template <> double getValue_<double>(std::string value) {
             try {
                 return atof(value.c_str());
-            } catch(std::invalid_argument e) {
+            } catch(std::invalid_argument& e) {
                 LOG("Could not parse double for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
                 return -1;
-            } catch (std::out_of_range e) {
+            } catch (std::out_of_range& e) {
                 LOG("Double overflow for " + value + ".", LogDegree::FATAL, LogType::CONFIG);
             }
         }

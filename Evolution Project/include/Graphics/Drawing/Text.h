@@ -25,7 +25,7 @@ struct DrawString : DrawItem<A> {
         }
         draw(s, x, y, centerX, centerY);
     }
-    DrawString(std::string s, Vec worldCoords, bool centerX=true, bool centerY=true) : DrawItem<A>(dimension) {
+    DrawString(std::string s, Vec worldCoords, bool centerX=true, bool centerY=true) : DrawItem<A>(dimension) { ///< @todo Fix that string appears at +/-.
         if (!Drawing::isColor(A)) {
             LOG("The Appearance of strings should be a color.", LogDegree::WARNING, LogType::GRAPHICS);
         }

@@ -14,7 +14,7 @@ enum class LogDegree : unsigned int {DEBUG, WARNING, FATAL};
 /** @brief Used to specify different types of logging message (ie: the reason for the log).
  * @see Logger::log
  */
-enum class LogType   : unsigned int {GENERAL, GRAPHICS, DISPLAY, INPUT, AUDIO, CONFIG, GENETIC};
+enum class LogType   : unsigned int {GENERAL, GRAPHICS, DISPLAY, AUDIO, CONFIG, GENETIC};
 
 
 /** @brief This class houses the logging functionality.

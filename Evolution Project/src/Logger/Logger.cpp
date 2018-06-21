@@ -98,7 +98,6 @@ std::string Logger::toString(LogType t) {
         case LogType::GENERAL:  return "GENERAL";
         case LogType::GRAPHICS: return "GRAPHICS";
         case LogType::DISPLAY:  return "DISPLAY";
-        case LogType::INPUT:    return "INPUT";
         case LogType::AUDIO:    return "AUDIO";
         case LogType::CONFIG:   return "CONFIG";
         case LogType::GENETIC:   return "GENETIC";

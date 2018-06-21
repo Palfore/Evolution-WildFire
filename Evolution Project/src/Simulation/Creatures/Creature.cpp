@@ -150,7 +150,8 @@ double Creature::getFitness() const {
 
 
 double Creature::getFitness(Vec com) const {
-    return euc2D(this->initCOM, com);
+    return (this->initCOM.x - com.x) - fabs(com.y);
+//    return euc2D(this->initCOM, com);
 //    return 1.0/cosh(euc2D(com, moveTo));
 }
 
@@ -176,6 +177,7 @@ double Creature::update(int t) { // returns fitness update
     double fitness = 0;
     const double dt = 1.0;
     const Vec com = getCOM();
+
 
 //    if (t == 0) {
 //        initCOM.x = 75;
@@ -203,11 +205,11 @@ double Creature::update(int t) { // returns fitness update
     });
 
 //    const double a = acosh(10) / (this->moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
-//    const double b = acosh(10) / (this->moveTo.y + 2); // find out why +0.1 works, but +2 doesnt.
+//    const double b = acosh(10) / (this->moveTo.y + 0.3); // find out why +0.1 works, but +2 doesnt.
     const double distanceFactorX = tanh(0.2*(com.x - this->moveTo.x)); //should be +/-(something) depending on direction => tanh
-//    const double distanceFactorY = 1.0 / cosh(b*(this->com.y - this->moveTo.y));
+    const double distanceFactorY = tanh(0.2*(com.y - this->moveTo.y));
     musclePercentages.push_back(distanceFactorX);
-//    musclePercentages.push_back(distanceFactorY);
+    musclePercentages.push_back(distanceFactorY);
 
     std::vector<double> desiredChanges = NN.propagate(musclePercentages);
 
@@ -219,12 +221,12 @@ double Creature::update(int t) { // returns fitness update
         static constexpr double L = acosh(10);
         double stretch = currLength / muscle->initialLength - 1;
         double factor = 1.0 / cosh(L/0.4 * stretch); // maxes at stretch=1, ie best power at normal length
-
+        double desiredLength = muscle->initialLength;
         double newFactor = (sgn<double>(stretch) * sgn<double>(factor) > 0 ? factor : 1); // Reduce movement capability if changing length away from init.
-        double desiredLength = currLength + 0.05 * desiredChanges[i] * newFactor;
+        desiredLength = currLength + 0.05 * desiredChanges[i] * newFactor;
         desiredLength *= exp(-0.01*(stretch)); // Low powered return to original length
 
-//        double desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * muscle->speed * (10* ((t) / dt))));
+//        desiredLength = muscle->initialLength * (1 + 0.2 * sin(0.005 * muscle->speed * (10* ((t) / dt))));
         double deviation     = desiredLength - currLength;
 
         Vec radVector = (muscle->getPosition1() - muscle->getPosition2());

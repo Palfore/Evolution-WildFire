@@ -7,9 +7,13 @@
 #include "Audio.h"
 #include "utility.h" // numToStr
 #include <iostream>
+#include "version.h"
 
-
-Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {LOG("Initialized Simulation.");}
+Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {
+    std::cout << "Compiled With GCC: " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' << __GNUC_PATCHLEVEL__ << " (" << __VERSION__ << ')' << '\n';
+    std::cout << "Running Version: " << AutoVersion::FULLVERSION_STRING << '\n';
+    LOG("Initialized Simulation.");
+}
 Simulation::~Simulation() {}
 
 #include "Creature.h"
@@ -31,7 +35,7 @@ void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps
     if (inputType == InputType::DEFAULT) {
         switch (this->gameMode) {
             case GameMode::MAIN_MENU: Simulation::mainMenuMode(); break;
-            case GameMode::EVOLVE: Simulation::evolveMode(); break;
+            case GameMode::EVOLVE: Simulation::evolveMode(fps); break;
             default:
                 LOG("Unknown GameMode.", LogDegree::FATAL, LogType::GENERAL);
                 break;
@@ -135,7 +139,7 @@ void Simulation::loadGameModeKeyboard() {
         case GameMode::MAIN_MENU: loadMainMenu(); break;
         case GameMode::EVOLVE: loadEvolve(); break;
         default:
-            LOG(UNKNOWN_GAME_MODE_MESSAGE, LogDegree::WARNING, LogType::INPUT);
+            LOG(UNKNOWN_GAME_MODE_MESSAGE, LogDegree::WARNING, LogType::GENERAL);
             break;
     }
 }

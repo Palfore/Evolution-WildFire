@@ -101,7 +101,7 @@ class GFramework {
     and put here.
  */
 struct Camera {
-    static double constexpr DEFAULT_T_SPEED = 80.0 / GFramework::FPS;  ///< The default translation speed.
+    static double constexpr DEFAULT_T_SPEED = 110.0 / GFramework::FPS;  ///< The default translation speed.
     static double constexpr DEFAULT_R_SPEED = 2.00 / GFramework::FPS; ///< The default rotation speed.
     static double constexpr DEFAULT_HEIGHT = 1.8;   ///< The default height of the camera (wrt z=0)
 

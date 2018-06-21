@@ -1,7 +1,7 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include "MyMath.h" // vec
 #include <map>
 
@@ -31,9 +31,9 @@ class Audio {
         void volumeUp(unsigned int amount);
         void volumeDown(unsigned int amount);
 
-        sf::Music music;
-        std::map<std::string, sf::SoundBuffer> soundBuffers; // Loaded at init
-        std::vector<sf::Sound> sounds;
+//        sf::Music music;
+//        std::map<std::string, sf::SoundBuffer> soundBuffers; // Loaded at init
+//        std::vector<sf::Sound> sounds;
 
         Audio(unsigned int volume_t);
         ~Audio();

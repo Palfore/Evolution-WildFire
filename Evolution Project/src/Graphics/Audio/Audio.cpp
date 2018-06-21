@@ -2,7 +2,8 @@
 #include "Logger.h"
 #include "Vec.h"
 
-Audio::Audio(unsigned int volume_t) : volume(volume_t), isMuted(false), music(), soundBuffers(), sounds()  {
+Audio::Audio(unsigned int volume_t) : volume(volume_t), isMuted(false)/*, music(), soundBuffers(), sounds() */ {
+    /*
     sf::Listener::setUpVector(0, 0, 1);
     if (!music.openFromFile(std::string(AUDIO_DIRECTORY) + "Sunday_Spirit.wav")) {
         LOG(COULD_NOT_LOAD_MUSIC_MESSAGE + std::string("Sunday_Spirit.wav") + '.', LogDegree::WARNING, LogType::AUDIO);
@@ -17,6 +18,7 @@ Audio::Audio(unsigned int volume_t) : volume(volume_t), isMuted(false), music(),
     }
     music.setVolume(this->volume);
     music.play();
+    */
 }
 
 void Audio::volumeUp(unsigned int amount) {
@@ -36,17 +38,17 @@ void Audio::toggleMute() {
 }
 
 void Audio::updateVolume() {
-    int level = isMuted ? 0 : this->volume;
-    this->music.setVolume(level);
-    for (sf::Sound &sound : this->sounds) {
-        sound.setVolume(level);
-    }
+//    int level = isMuted ? 0 : this->volume;
+//    this->music.setVolume(level);
+//    for (sf::Sound &sound : this->sounds) {
+//        sound.setVolume(level);
+//    }
 }
 
 Audio::~Audio() {
-    music.stop();
-    soundBuffers.clear();
-    sounds.clear();
+//    music.stop();
+//    soundBuffers.clear();
+//    sounds.clear();
 
 }
 
@@ -54,13 +56,18 @@ void Audio::playSound(std::string soundFile) {playSound(soundFile, 0, 0, 0);}
 void Audio::playSound(std::string soundFile, double x, double y, double z) {playSound(soundFile, Vec(x, y, z));}
 void Audio::playSound(std::string soundFile, Vec position) {
     if (!this->isMuted) {
-        sounds.push_back(sf::Sound());
+            if (soundFile == "") {
+                if (position.x < 0) {
 
-        sounds[sounds.size() - 1].setMinDistance(10);
-        sounds[sounds.size() - 1].setAttenuation(2);
-        sounds[sounds.size() - 1].setPosition(position.x, position.y, position.z);
-        sounds[sounds.size() - 1].setBuffer(soundBuffers.at(soundFile));
-        sounds[sounds.size() - 1].play(); // sounds should be a map, with all the sounds loaded, then play is called on desired sound. (?)
+                }
+            }
+//        sounds.push_back(sf::Sound());
+//
+//        sounds[sounds.size() - 1].setMinDistance(10);
+//        sounds[sounds.size() - 1].setAttenuation(2);
+//        sounds[sounds.size() - 1].setPosition(position.x, position.y, position.z);
+//        sounds[sounds.size() - 1].setBuffer(soundBuffers.at(soundFile));
+//        sounds[sounds.size() - 1].play(); // sounds should be a map, with all the sounds loaded, then play is called on desired sound. (?)
                                         // Then no need to clean up, since all sounds stay loaded, but instead of adding it everytime you want to play
                                         // You just replay it.
                                         // IE a Sound should be a filename, SoundBuffer, and a Sound.

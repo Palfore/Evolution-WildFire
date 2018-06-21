@@ -30,7 +30,7 @@ class Simulation {
         void loadEvolve();
 
         void mainMenuMode();
-        void evolveMode();
+        void evolveMode(double fps);
 };
 
 #endif // SIMULATION_H

@@ -34,7 +34,7 @@ Vec Piston::getPosition2() const {
 }
 
 void Piston::draw() const {
-    if (this->speed < 0.0000001) {
+    if (fabs(this->speed) < 0.000000000001) { ///< @todo Speed==0 doesnt properly determine bone vs muscle
         DrawCylinder<Appearance::WHITE>(b1->position, b2->position, b1->radius / 2.0);
     } else {
         DrawCylinder<Appearance::RED>(b1->position, b2->position, b1->radius / 2.0);

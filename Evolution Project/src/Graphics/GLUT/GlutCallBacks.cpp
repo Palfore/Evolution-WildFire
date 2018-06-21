@@ -1,11 +1,13 @@
 #include "glutCallBacks.h"
 #include "GFramework.h" // Glut functions
-#include <SFML/Audio.hpp> //sf::Listener::setPosition, sf::Listener::setDirection
+//#include <SFML/Audio.hpp> //sf::Listener::setPosition, sf::Listener::setDirection
 #include "Simulation.h"
 
 #include <chrono>
 #include <iostream>
 #include <thread>
+
+
 namespace glutCB {
     void changeSize(int w, int h) {
         double windowRatio = w / static_cast<double>(h); // window aspect ratio
@@ -19,39 +21,45 @@ namespace glutCB {
     void renderScene() {
         /* Run Simulation */
         if (!GFramework::get->display) { // Run asap
-            GFramework::get->simulation->run(&GFramework::get->userInput.functions, 1);
+            GFramework::get->simulation->run(&GFramework::get->userInput.functions, -1);
         } else {
             static auto getTime = [](){  // in seconds
                 auto time = std::chrono::system_clock::now().time_since_epoch();
                 auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(time).count();
                 return microseconds / 1000000.0;
             };
-//            static auto avg = [](std::vector<double> values) {
-//                double sum = 0.0;
-//                for (double value : values) {
-//                    sum += value;
-//                }
-//                return sum / double(values.size());
-//            };
+
+            /* Calculate Frame Rate */
+            static unsigned int frame = 0;
+            static int time = 0;
+            static int timebase = 0;
+            static double fps = -1;
+            static constexpr int sampleTime = 1000;
+            frame++;
+            time=glutGet(GLUT_ELAPSED_TIME);
+            if (time - timebase > sampleTime) {
+                fps = frame*1000/static_cast<double>(time-timebase);
+                timebase = time;
+                frame = 0;
+            }
 
 
-            ////////////////////////////////////////
-            static double lastFrameTime = 0; // This assumes that the background time is negligable.
 
             double start = getTime();
+            GFramework::get->simulation->run(&GFramework::get->userInput.functions, fps);
 
-            GFramework::get->simulation->run(&GFramework::get->userInput.functions, lastFrameTime);
-            std::this_thread::sleep_for(std::chrono::milliseconds((int) 10));
-
-            double fps = GFramework::FPS;
+//            std::this_thread::sleep_for(std::chrono::milliseconds((int) 20)); // This makes the multithread drop seem like less
+                                                                              // Also the below doesnt work well enough to limit to FPS
+            /* Limit FPS */
+            static double lastFrameTime = 0; // This assumes that the background time is negligable.
+            double fps1 = GFramework::FPS;
             double stop = getTime();
-            if ((1/fps - lastFrameTime) > 0) {
+            if ((1/fps1 - lastFrameTime) > 0) {
                 std::this_thread::sleep_for(std::chrono::milliseconds((int) (
-                    (1/fps) - lastFrameTime
+                    ((1/fps1) - lastFrameTime)*2 // 2 is to slow it down more
                 )));
             }
             lastFrameTime = stop - start;
-            //printf("%f %f %f\n", 1/fps, lastFrameTime, (1/fps - lastFrameTime)*fps);
         }
     }
 
@@ -70,8 +78,8 @@ namespace glutCB {
 
         /* Update Audio */
 //        GFramework::get->audio.clearStoppedSounds();
-        sf::Listener::setPosition(GFramework::get->camera->pos.x, GFramework::get->camera->pos.y, GFramework::get->camera->pos.z);
-        sf::Listener::setDirection(GFramework::get->camera->dir.x, GFramework::get->camera->dir.y, GFramework::get->camera->dir.z);
+//        sf::Listener::setPosition(GFramework::get->camera->pos.x, GFramework::get->camera->pos.y, GFramework::get->camera->pos.z);
+//        sf::Listener::setDirection(GFramework::get->camera->dir.x, GFramework::get->camera->dir.y, GFramework::get->camera->dir.z);
 
         /* Update Position */// Note: Not in orthogonal directions
         // Move 'Forward / Backwards'

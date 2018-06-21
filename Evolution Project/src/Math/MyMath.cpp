@@ -43,11 +43,11 @@ double pmRandf(const double bounds) {
 }
 
 double pmRandf(const double minimal, const double maximal) {
-    return 0; ///< @todo implement pmRandf(min, max)
+    return minimal > maximal; ///< @todo implement pmRandf(min, max)
 }
 
 int pmRandi(const int minimal, const int maximal) {
-    return 0;///< @todo implement pmRandi(min, max)
+    return minimal > maximal;///< @todo implement pmRandi(min, max)
 }
 
 int comb(const int n) {

@@ -32,7 +32,7 @@ void Drawing::changeColor(Appearance C) {
     if (!Drawing::isColor(C)) LOG(INVALID_COLOR_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     try {
         Drawing::changeColor(GFramework::get->colorMap.at(C));
-    } catch (std::out_of_range) {
+    } catch (std::out_of_range& e) {
         LOG(UNKNOWN_APPROVED_COLOR_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     }
 }
@@ -45,7 +45,7 @@ void Drawing::changeTexture(Appearance T) {
     if (!Drawing::isTexture(T)) LOG(INVALID_TEXTURE_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     try {
         Drawing::changeTexture(GFramework::get->textureMap.at(T));
-    } catch (std::out_of_range) {
+    } catch (std::out_of_range& e) {
         LOG(UNKNOWN_APPROVED_TEXTURE_MESSAGE, LogDegree::WARNING, LogType::GRAPHICS);
     }
 }

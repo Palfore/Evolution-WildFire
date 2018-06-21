@@ -11,6 +11,7 @@ Tex glLoadTexture(std::string fileName) {
                  SOIL_LOAD_AUTO,
                  SOIL_CREATE_NEW_ID,
                  SOIL_FLAG_INVERT_Y);
+    return 1;
 }
 
 void saveScreenShot() {

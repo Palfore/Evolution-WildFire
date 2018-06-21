@@ -13,7 +13,9 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-fomit-frame-pointer" />
 					<Add option="-fexpensive-optimizations" />
+					<Add option="-flto" />
 					<Add option="-Wnon-virtual-dtor" />
 					<Add option="-Wshadow" />
 					<Add option="-Winit-self" />
@@ -35,24 +37,12 @@
 					<Add option="-Wfatal-errors" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add directory="include/Graphics" />
-					<Add directory="include/Math" />
-					<Add directory="include/Simulation" />
-					<Add directory="include/Logger" />
-					<Add directory="include" />
-					<Add directory="libraries/SOIL/src" />
-					<Add directory="include/Graphics/Drawing" />
-					<Add directory="include/Graphics/UserInput" />
-					<Add directory="include/Graphics/Audio" />
-					<Add directory="include/Config" />
-					<Add directory="include/Simulation/Genetics" />
-					<Add directory="include/Simulation/Physics" />
-					<Add directory="include/Simulation/Creatures" />
-					<Add directory="include/Simulation/Population" />
-					<Add directory="include/Graphics/GUI" />
+					<Add option="-march=native" />
 				</Compiler>
 				<Linker>
 					<Add option="-O3" />
+					<Add option="-flto" />
+					<Add option="-s" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -61,46 +51,40 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Compiler>
-					<Add directory="include/Graphics" />
-					<Add directory="include/Math" />
-					<Add directory="include/Simulation" />
-					<Add directory="include/Logger" />
-					<Add directory="include" />
-					<Add directory="libraries/SOIL/src" />
-					<Add directory="include/Graphics/Drawing" />
-					<Add directory="include/Graphics/UserInput" />
-					<Add directory="include/Graphics/Audio" />
-					<Add directory="include/Config" />
-					<Add directory="include/Simulation/Genetics" />
-					<Add directory="include/Simulation/Physics" />
-					<Add directory="include/Simulation/Creatures" />
-					<Add directory="include/Simulation/Population" />
-					<Add directory="include/Graphics/GUI" />
-				</Compiler>
-				<Linker>
-					<Add option="-O3" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
+			<Add option="-m64" />
 			<Add option="-Iinclude" />
-			<Add option="-isystemlibraries\SFML-2.4.2\include" />
-			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include" />
+			<Add option="-isysteminclude\Graphics\GLUT\freeglut" />
+			<Add option="-std=c++2a" />
+			<Add directory="include/Graphics" />
+			<Add directory="include/Math" />
+			<Add directory="include/Simulation" />
+			<Add directory="include/Logger" />
+			<Add directory="include" />
+			<Add directory="include/Graphics/Drawing" />
+			<Add directory="include/Graphics/UserInput" />
+			<Add directory="include/Graphics/Audio" />
+			<Add directory="include/Config" />
+			<Add directory="include/Simulation/Genetics" />
+			<Add directory="include/Simulation/Physics" />
+			<Add directory="include/Simulation/Creatures" />
+			<Add directory="include/Simulation/Population" />
+			<Add directory="include/Graphics/GUI" />
+			<Add directory="include/Graphics/GLUT" />
 		</Compiler>
 		<Linker>
+			<Add option="-m64" />
 			<Add option="-lopengl32" />
-			<Add library="libraries/SOIL/lib/libSOIL.a" />
+			<Add library="libraries/SOIL/SOIL.a" />
 			<Add library="opengl32" />
 			<Add library="glu32" />
 			<Add library="winmm" />
 			<Add library="gdi32" />
 			<Add library="freeglut" />
-			<Add library="libraries/SFML-2.4.2/lib/libsfml-audio.a" />
-			<Add library="libraries/SFML-2.4.2/lib/libsfml-system.a" />
-			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
-			<Add directory="libraries/SFML-2.4.2/lib" />
+			<Add directory="libraries/SOIL" />
+			<Add directory="libraries/freeglut" />
 		</Linker>
 		<Unit filename="assets/config.config" />
 		<Unit filename="assets/logger.log" />
@@ -111,9 +95,9 @@
 		<Unit filename="include/Graphics/Drawing/Shapes.h" />
 		<Unit filename="include/Graphics/Drawing/Text.h" />
 		<Unit filename="include/Graphics/GFramework.h" />
+		<Unit filename="include/Graphics/GLUT/GlutCallBacks.h" />
+		<Unit filename="include/Graphics/GLUT/MyGlut.h" />
 		<Unit filename="include/Graphics/GUI/Button.h" />
-		<Unit filename="include/Graphics/GlutCallBacks.h" />
-		<Unit filename="include/Graphics/MyGlut.h" />
 		<Unit filename="include/Graphics/UserInput/UserFunction.h" />
 		<Unit filename="include/Graphics/UserInput/UserInput.h" />
 		<Unit filename="include/Logger/Logger.h" />
@@ -146,11 +130,11 @@
 		<Unit filename="src/Graphics/Drawing/Shapes.cpp" />
 		<Unit filename="src/Graphics/Drawing/Text.cpp" />
 		<Unit filename="src/Graphics/GFramework.cpp" />
+		<Unit filename="src/Graphics/GLUT/GlutCallBacks.cpp" />
+		<Unit filename="src/Graphics/GLUT/MyGlut.cpp" />
 		<Unit filename="src/Graphics/GUI/Button.cpp" />
-		<Unit filename="src/Graphics/GlutCallBacks.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadColors.cpp" />
 		<Unit filename="src/Graphics/LoadingResources/LoadTextures.cpp" />
-		<Unit filename="src/Graphics/MyGlut.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserFunction.cpp" />
 		<Unit filename="src/Graphics/UserInput/UserInput.cpp" />
 		<Unit filename="src/Logger/Logger.cpp" />
