@@ -7,8 +7,8 @@ void UIElement::affectState(int mx, int my, CALL_TYPE type) {if (mx==my||type==C
 
 UserFunction::UserFunction(UIElement* ele, Action action_t) : element(ele), action(action_t), release([](){}) {}
 UserFunction::UserFunction(UIElement* ele, Action action_t, Action release_t) : element(ele), action(action_t), release(release_t) {}
-UserFunction::~UserFunction() {}
-UserFunction& UserFunction::operator=(UserFunction other) {
-    std::swap(element, other.element);
+UserFunction::~UserFunction() {/* Don't delete element because element doesnt have copy operator. Must handle freeing outside class. (laziness) */}
+UserFunction& UserFunction::operator=(const UserFunction& other) {
+    element = other.element;
     return *this;
 }

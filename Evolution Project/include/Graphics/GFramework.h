@@ -34,6 +34,7 @@ struct Mouse {
 /** @brief This class holds all the functions required for a 3D simulator to be run.
     @details It includes camera, audio, user input amoung other things. This class implements
     the singleton pattern and as a result only one instance is ever allowed.
+    @todo This class is too big, it shouldn't have audio, or camera (?). And they shouldnt be pointers.
  */
 class GFramework {
     public:
@@ -113,8 +114,76 @@ struct Camera {
     Vec ang;  ///< The angle around the z axis, starting at +x. (I think)
     Vec del;  ///< The next frame rotation of the camera.
 
-    Camera() : translationSpeed(DEFAULT_T_SPEED), rotationSpeed(DEFAULT_R_SPEED),
-                        pos(0, -40, DEFAULT_HEIGHT), mov(0, 0, 0), dir(0, 1, 0), ang(0,0,0), del(0,0,0) {};
+    Camera() : translationSpeed(0), rotationSpeed(0), pos(0,0,0), mov(0,0,0), dir(0,0,0), ang(0,0,0), del(0,0,0) {
+        reset();
+    };
+    ~Camera() {}
+    void reset() {
+        translationSpeed = DEFAULT_T_SPEED;
+        rotationSpeed    = DEFAULT_R_SPEED;
+        pos = Vec(0, -40, DEFAULT_HEIGHT);
+        mov = Vec(0, 0, 0);
+        dir = Vec(0, 1, 0);
+        ang = Vec(0,0,0);
+        del = Vec(0,0,0);
+    }
+    void cinematicCamera() {
+        cinematicCamera(Vec(0,0,0));
+    }
+    void cinematicCamera(const Vec& lookat) {
+        static int step = 0;
+
+        double SPEED = 10.0;
+        double speed = SPEED * 1 / 2000.0;
+        static double arr[3] = {0.5, 1.0, 1.5};
+
+        double static theta = 0.0; // 0 - 2pi
+        double static phi = 0.0;
+        double static r = 200;
+
+        double static thetaDot = 1.0 / 1000.0;
+        double static phiDot = 1.0 / 1000.0;
+        double static rDot = 1.0 / 1000.0;
+
+        /* Change Speeds Randomly */
+        if (randf(100) < (0.1)) {
+            int shift = rand() % 3;
+            arr[0] = arr[(shift + 0) % 3];
+            arr[1] = arr[(shift + 1) % 3];
+            arr[2] = arr[(shift + 2) % 3];
+        }
+
+        theta += 3*thetaDot * arr[0];
+        phi += 3*phiDot * arr[1];
+        r += 3*rDot * arr[2];
+
+        if (phi > 3.14159/2.0) {
+            phiDot = -fabs(phiDot);
+            phi = 3.14159/2.0 - 0.001;
+        } else if (phi < 0.1745) {
+            phiDot = fabs(phiDot);
+            phi = 0.1745 + 0.0001;
+        }
+        if (theta > 2*3.14159) {
+            thetaDot = -fabs(thetaDot);
+            theta = 2*3.14159 - 0.001;
+        } else if (theta < 0) {
+            thetaDot = fabs(thetaDot);
+            theta = 0.001;
+        }
+
+        /* Move and Look at New Position */
+        this->pos.x = lookat.x + r*cos(theta)*sin(phi);
+        this->pos.y = lookat.y + r*sin(theta)*sin(phi);
+        this->pos.z = lookat.z + r*cos(phi);
+
+        this->dir.x = lookat.x - this->pos.x + 50 * sinf(step * speed);
+        this->dir.y = lookat.y - this->pos.y + 50 * sinf(step * speed);
+        this->dir.z = lookat.z - this->pos.z + 50 * sinf(step * speed) + 20;
+
+        step = (step + 1) % 1'000'000;
+    }
+
 };
 
 #endif // GFramework_H

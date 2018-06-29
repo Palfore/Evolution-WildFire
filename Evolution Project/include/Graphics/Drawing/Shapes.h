@@ -6,7 +6,7 @@
 #include "GFramework.h"
 
 
-/** @brief Draw a 2D rectangle. (T/C)
+/** @brief Draw a 2D Line. (T/C)
  * @tparam A (Textured/Colored) The appearance.
  * @todo Create a constructor which specifies the center, width and height.
  */
@@ -206,7 +206,11 @@ struct DrawSphere : DrawItem<A> {
     private:void draw(Vec pos, double r, double angle) {
         GLUquadric *qobj = gluNewQuadric();
 
-        gluQuadricTexture(qobj,GL_TRUE);
+        if (Drawing::isTexture(A)) {
+            gluQuadricTexture(qobj,GL_TRUE);
+        } else {
+            gluQuadricTexture(qobj,GL_FALSE);
+        }
 
         glPushMatrix();
             glTranslatef(pos.x, pos.y, pos.z);
@@ -215,12 +219,6 @@ struct DrawSphere : DrawItem<A> {
         glPopMatrix();
 
         gluDeleteQuadric(qobj);
-        gluQuadricTexture(qobj,GL_FALSE);
-
-//        glPushMatrix();
-//            glTranslated(pos.x, pos.y, pos.z);
-//            glutSolidSphere(r, 20, 20);
-//        glPopMatrix();
     }
 };
 
@@ -249,7 +247,12 @@ struct DrawCylinder : DrawItem<A> {
     private:void draw(Vec pos1, Vec pos2, float radius) {
           //http://lifeofaprogrammergeek.blogspot.ca/2008/07/rendering-cylinder-between-two-points.html
         GLUquadricObj *quadric = gluNewQuadric();
-        gluQuadricTexture(quadric,GL_TRUE);
+
+        if (Drawing::isTexture(A)) {
+            gluQuadricTexture(quadric,GL_TRUE);
+        } else {
+            gluQuadricTexture(quadric,GL_FALSE);
+        }
         gluQuadricNormals(quadric, GLU_SMOOTH);
         int subdivisions = 10;
         float vx = pos2.x-pos1.x;
@@ -274,9 +277,6 @@ struct DrawCylinder : DrawItem<A> {
         gluQuadricOrientation(quadric,GLU_OUTSIDE);
         gluCylinder(quadric, radius, radius, v, subdivisions, 1);
 
-
-
-
         //draw the first cap
         gluQuadricOrientation(quadric,GLU_INSIDE);
         gluDisk( quadric, 0.0, radius, subdivisions, 1);
@@ -286,10 +286,8 @@ struct DrawCylinder : DrawItem<A> {
         gluQuadricOrientation(quadric,GLU_OUTSIDE);
         gluDisk( quadric, 0.0, radius, subdivisions, 1);
         glPopMatrix();
-          gluDeleteQuadric(quadric);
 
-        gluQuadricTexture(quadric,GL_FALSE);
-
+        gluDeleteQuadric(quadric);
     }
 };
 

@@ -10,27 +10,34 @@ UserInput::UserInput() : inputString(""), functions({}) {
 }
 
 UserInput::~UserInput() {
-    //dtor
+    while (!functions.empty()) {
+        delete functions.back().element;
+        functions.pop_back();
+    }
 }
+
+void UserInput::draw() const {
+    for (const auto& f : functions) {
+        f.draw();
+    }
+}
+
 #include <iostream>
 void UserInput::setToDefault() { // Functions that all gamemodes should have
-    for (auto &f : functions) {
-        delete f.element;
+    while (!functions.empty()) {
+        delete functions.back().element;
+        functions.pop_back();
     }
-    functions = {};
 
     functions.push_back(UserFunction(new UIchar(ESC), [](){NORMAL_EXIT();}));
-    functions.push_back(UserFunction(new UIchar(TAB), [this](){
+    functions.push_back(UserFunction(new UIchar(TAB), [](){
         glutFullScreenToggle();
     }));
-    /* Audio Test */
-//    functions.push_back(UserFunction(new UIchar('.'), [this](){
-//        GFramework::get->audio->playSound("gunShot.wav");
-//    }));
     functions.push_back(UserFunction(new UIchar(GLUT_KEY_F9), [](){
         saveScreenShot();
         puts("Saved ScreenShot");
     }));
+
     functions.push_back(UserFunction(new UIchar('0'), [](){
         LOG("Test debug message.", LogDegree::DEBUG, LogType::GENERAL);
     }));
@@ -40,15 +47,21 @@ void UserInput::setToDefault() { // Functions that all gamemodes should have
     functions.push_back(UserFunction(new UIchar('8'), [](){
         LOG("Test warning message.", LogDegree::WARNING, LogType::GENERAL);
     }));
-//    functions.push_back(UserFunction(new UIchar('+', 200), [this](){
+
+    /* Audio Test */
+//    functions.push_back(UserFunction(new UIchar('.'), [](){
+//        GFramework::get->audio->playSound("gunShot.wav");
+//    }));
+
+//    functions.push_back(UserFunction(new UIchar('+', 200), [](){
 //        GFramework::get->audio->volumeUp(5);
 //        puts("Volume Up");
 //    }));
-//    functions.push_back(UserFunction(new UIchar('-', 200), [this](){
+//    functions.push_back(UserFunction(new UIchar('-', 200), [](){
 //        GFramework::get->audio->volumeDown(5);
 //        puts("Volume Down");
 //    }));
-//    functions.push_back(UserFunction(new UIchar('*'), [this](){
+//    functions.push_back(UserFunction(new UIchar('*'), [](){
 //        GFramework::get->audio->toggleMute();
 //        puts("Volume Muted");
 //    }));

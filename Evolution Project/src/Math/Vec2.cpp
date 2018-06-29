@@ -47,6 +47,11 @@ Vec2::~Vec2() {
 
 }
 
+std::ostream &operator<<(std::ostream& stream, const Vec2& obj) {
+    stream << '(' << obj.x << ", " << obj.y << ')';
+    return stream;
+}
+
 // Return the corresponding unit vector
 Vec2 Vec2::getUnit() const {
     double lengthVector = length();

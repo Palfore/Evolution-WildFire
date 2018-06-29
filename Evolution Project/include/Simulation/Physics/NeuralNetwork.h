@@ -3,7 +3,7 @@
 
 #include "AxonGene.h"
 
-class NeuralNetwork {
+class NeuralNetwork { ///< @todo There are two representations of weights, this should be reduced to one.
     public:
         NeuralNetwork(std::vector<AxonGene*> axons);
         NeuralNetwork(const NeuralNetwork& other) : weights(other.weights), layerSizes(other.layerSizes), potentials(other.potentials), w(other.w) {}

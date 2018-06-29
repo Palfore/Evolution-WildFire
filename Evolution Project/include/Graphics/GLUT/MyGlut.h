@@ -2,6 +2,8 @@
  * @brief This file contains some useful extension for glut.
  * @details Specifically SOIL and texture wrappers which make certain tasks much easier.
  */
+#ifndef MYGLUT_H_INCLUDED
+#define MYGLUT_H_INCLUDED
 
 #ifdef __APPLE__
 #include <GLUT/freeglut.h>
@@ -9,12 +11,10 @@
 #include <freeglut.h>
 #endif
 
-#ifndef MYGLUT_H_INCLUDED
-#define MYGLUT_H_INCLUDED
+#include <string>
 
 class Vec;
 class Vec2;
-#include <string>
 
 typedef GLuint Tex; ///< Used to refer to textures (used in the SOIL library).
 

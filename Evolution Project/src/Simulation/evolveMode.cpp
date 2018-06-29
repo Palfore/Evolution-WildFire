@@ -14,27 +14,29 @@
 #include "Creature.h"
 #include <thread>
 
-static Population pop(1000);
+static Population pop(4*256);
 static int gameSpeed = 6;
 static bool drawGraph = false;
-static bool drawDistance = false;
-static bool drawBrain = true;
+static bool drawCOMTrails = false;
+static bool drawNodeTrails = false;
+static bool drawBrain = false;
 static bool drawLines = false;
+static bool cinematic = false;
 #include "MyMath.h"
 
 static constexpr int MIN_THREADS = 0; // No processing threads
-static const int MAX_THREADS = std::thread::hardware_concurrency();
+static const     int MAX_THREADS = std::thread::hardware_concurrency();
 static constexpr int BACKGROUND_THREADS_REQUIRED = 2;
-static const int DEFAULT_THREADS = MAX_THREADS - BACKGROUND_THREADS_REQUIRED > 0 ? MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
+static const     int DEFAULT_THREADS = MAX_THREADS - BACKGROUND_THREADS_REQUIRED > 0 ? MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
 
 static constexpr int MAX_GAME_SPEED = 20;
 static constexpr int MIN_GAME_SPEED = 0; // No updating displayed creatures
 
 
-static unsigned int numThreads =  DEFAULT_THREADS;
-static std::vector<MultiThread*> mt;
+static int numThreads = DEFAULT_THREADS;
+static Threader threader(0, pop.getBodies());
 
-static std::clock_t startTime;
+static auto startTime = std::chrono::high_resolution_clock::now();
 static std::vector<double> times = {};
 
 static void drawing(double fps) {
@@ -55,8 +57,9 @@ static void drawing(double fps) {
     DrawSphere<Appearance::RED>(Vec(-350,0,0), 5);
 
 
-    DrawSphere<Appearance::BLACK>(Vec(pop.getActiveCreature().moveTo.x, pop.getActiveCreature().moveTo.y, 5), 2.5);
-    DrawSphere<Appearance::FACE>(pop.getActiveCreature().getTopNode() + Vec(0,0,3), 5, -sgn<double>(pop.getActiveCreature().moveTo.x - pop.getActiveCreature().getCOM().x) * 90);
+    DrawSphere<Appearance::FOOD>(Vec(pop.getActiveCreature().body.moveTo.x, pop.getActiveCreature().body.moveTo.y, 10), 10);
+    DrawSphere<Appearance::FACE>(pop.getActiveCreature().getHead() + Vec(0,0,4), 5,
+                                  -sgn<double>(pop.getActiveCreature().body.moveTo.x - pop.getActiveCreature().body.com.x) * 90);
 
 
     DrawSkybox(700);
@@ -66,182 +69,173 @@ static void drawing(double fps) {
     DrawSphere<Appearance::TREE_TOP>(tree + Vec(0,0,50), 25);
 
     pop.draw();
-    /////////////////////////////////////////// 2D Drawing ///////////////////////////////////////////////////
+    pop.getActiveCreature().drawTrails(drawNodeTrails, drawCOMTrails);
 
-    DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<int>(pop.getActiveCreature().getFitness()), pop.getActiveCreature().getTop());
+    /////////////////////////////////////////// 2D Drawing ///////////////////////////////////////////////////
+    DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<int>(pop.getActiveCreature().fitness.getFitness(FitnessCollector::TOTAL_DISTANCE)), pop.getActiveCreature().body.getTop());
     DrawString<Appearance::BLACK>("Generation " + utility::numToStr<int>(pop.gen), 0.01, 0.03, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("Creature: " + utility::numToStr<int>(pop.getMemberIndex()) +
                                 " / " + utility::numToStr<int>(pop.population.size()) +
                                 " (" + utility::numToStr<int>(pop.viewingGenomes.size()) + ')', 0.01, 0.05, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("Time " + utility::numToStr<int>(pop.getSimStep()), 0.01, 0.07, by_percentage(), false, false);
-    DrawString<Appearance::BLACK>("NumThreads " + utility::numToStr<int>(numThreads) + " (" + utility::numToStr<int>(mt.size()) + ")", 0.01, 0.09, by_percentage(), false, false);
+    DrawString<Appearance::BLACK>("NumThreads " + utility::numToStr<int>(numThreads) + " (" + utility::numToStr<int>(threader.size()) + ")", 0.01, 0.09, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("GameSpeed " + utility::numToStr<int>(gameSpeed), 0.01, 0.11, by_percentage(), false, false);
 
-    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
-    DrawString<Appearance::BLACK>("NumUserFuncs: " + utility::numToStr<int>(userFunctions->size()), 0.01, 0.13, by_percentage(), false, false);
+    DrawString<Appearance::BLACK>("NumUserFuncs: " + utility::numToStr<int>(GFramework::get->userInput.functions.size()), 0.01, 0.13, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("FPS: " + utility::numToStr<double>(fps), 0.01, 0.15, by_percentage(), false, false);
-//    DrawString<Appearance::BLACK>("#s: n" + utility::numToStr<double>(pop.getActiveCreature().nodes.size()) + ", b" +
-//                                            utility::numToStr<double>(pop.getActiveCreature().bones.size()) + ", m" +
-//                                            utility::numToStr<double>(pop.getActiveCreature().muscles.size()) + ", N"
-//                                            utility::numToStr<double>(pop.getActiveCreature().NN..size()) + ", b" +
-//                                   ,0.01, 0.17, by_percentage(), false, false);
+    double inc = 0.02;
+    double place = 0.15 + inc;
 
-    if (drawDistance) {
-        // Forget what this meant lol
+    for (auto const& name: pop.getActiveCreature().phylogeny.getPhylogenyDict()) {
+        DrawString<Appearance::BLACK>(name[0] + ": " +  name[1], 0.01, place+=inc, by_percentage(), false, false);
     }
+
+    pop.getActiveCreature().drawNodeData();
+
+    //// Overlays ////
     if (drawGraph) {
         pop.history.graph();
     }
     if (drawBrain) {
         pop.getActiveCreature().drawBrain(drawLines);
     }
-
 }
-#include "MyGlut.h"
-#include <numeric>
+
 void Simulation::evolveMode(double fps) {
+    static int doneGeneration = 0;
+    bool throttleFPS = true;
 
-    static bool initialized = true;
-    std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
-    if (initialized) {
-        delete GFramework::get->camera;
-        GFramework::get->camera= new Camera(); // reset camera
-
-        initialized = false;
-        userFunctions->push_back(UserFunction(new UIchar('p'), [](){
-            pop.printCurrentGenome();
-        }));
-        userFunctions->push_back(UserFunction(new UIchar('o'), [](){
-            pop.showCreature(0);
-        }));
-        userFunctions->push_back(UserFunction(new UIchar('O'), [](){
-            pop.updateViewingGenomes();
-        }));
-        userFunctions->push_back(UserFunction(new UIchar('[', 300), [](){
-            pop.prevCreature();
-        }));
-        userFunctions->push_back(UserFunction(new UIchar(' '), [](){
-            pop.resetCreature();
-        }));
-        userFunctions->push_back(UserFunction(new UIchar(']', 300), [](){
-            pop.nextCreature();
-        }));
-        userFunctions->push_back(UserFunction(new UIchar(' '), [](){
-            pop.history.writeToConsole();
-        }));
-        userFunctions->push_back(UserFunction(new UIchar('>'), [](){
-            numThreads += numThreads < MAX_THREADS ? 1 : 0;
-        }));
-        userFunctions->push_back(UserFunction(new UIchar('<'), [](){
-            numThreads -= numThreads > MIN_THREADS ? 1 : 0;
-        }));
-        userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_UP, 150), [](){
-            gameSpeed += gameSpeed < MAX_GAME_SPEED ? 1 : 0;
-        }));
-        userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_DOWN, 150), [](){
-            gameSpeed -= gameSpeed > MIN_GAME_SPEED ? 1 : 0;
-        }));
-
-        userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Graph", &drawGraph, 0.0, 0.9, 0.2, 1, by_position()), [userFunctions](){
-            int secondaryButtonIds = 1;
-            if (drawGraph) {
-                userFunctions->push_back(UserFunction(new Button<Appearance::GREEN>("DrawGraph", 0.9, 0.1, 0.95, 0.15, by_position(), secondaryButtonIds), [](){
-
-                }));
-                for (unsigned int i = 0; i < userFunctions->size(); i++) {
-                    if ((*userFunctions)[i].element->id == 2) {
-                        userFunctions[i];
-                        userFunctions->erase((*userFunctions).begin() + i); // I dont think this deletes properlly
-                    }
-                }
-            }
-//else {
-//                for (unsigned int i = 0; i < userFunctions->size(); i++) {
-//                    if ((*userFunctions)[i].element->id == secondaryButtonIds) {
-//                        userFunctions->erase((*userFunctions).begin() + i);
-//                    }
-//                }
-//            }
-            drawBrain = false;
-        }));
-        userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Brain", &drawBrain, 0.2, 0.9, 0.4, 1, by_position()), [userFunctions](){
-            int secondaryButtonIds = 2;
-            if (drawBrain) {
-                userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Draw Axons", &drawLines, 0.9, 0.1, 0.97, 0.15, by_position(), secondaryButtonIds), [](){
-
-                }));
-                for (unsigned int i = 0; i < userFunctions->size(); i++) {
-                    if ((*userFunctions)[i].element->id == 1) {
-                        userFunctions->erase((*userFunctions).begin() + i);
-                    }
-                }
-            } else {
-                for (unsigned int i = 0; i < userFunctions->size(); i++) {
-                    if ((*userFunctions)[i].element->id == secondaryButtonIds) {
-                        userFunctions->erase((*userFunctions).begin() + i);
-                    }
-                }
-            }
-            drawGraph = false;
-        }));
+    if (cinematic) {
+        GFramework::get->camera->cinematicCamera(Vec(pop.getActiveCreature().body.com.x, pop.getActiveCreature().body.com.y, 0));
+    }
+    switch(doneGeneration) {
+        case 10: pop.sortPop(); break;
+        case 9:  pop.recordHistory();break;
+        case 8:  break;
+        case 7:  pop.select(); break;
+        case 6:  break;
+        case 5:  pop.mutate(); pop.gen++; break;
+        case 4:  break;
+        case 3:  break;
+        case 2:  break;
+        case 1:  threader.spawnThreads(pop.getBodies()); throttleFPS = false; break;
+        default: doneGeneration = 0;
     }
 
-    if (numThreads > 0 && mt.empty()) { // initialize
-        for (unsigned int i = 0; i < numThreads; i++) {
-            mt.push_back(new MultiThread());
-        }
-
-        try {
-            MultiThread::spawnChildren(mt, pop.getCreatures());
-        } catch (std::bad_alloc const& ext) {
-            // With ~10000 complex creatures, memory usage spikes to over 2GB, causing a crash.
-            LOG("There is not enough memory to spawn new threads.", LogDegree::FATAL);
-        }
-        startTime = std::clock();
+    if (doneGeneration > 0) {
+        doneGeneration--;
+    } else if (threader.canProcess()) {
+        pop.updateFitnesses(threader.getFitnesses(pop.population.size()));
+        doneGeneration = 10;
     }
+    threader.update(numThreads);
 
-    if (numThreads > 0 && all_of(mt.cbegin(), mt.cend(), [](const MultiThread * m){return m->isFinished();})) { // done generation
-        double finishedTime = (std::clock() - startTime) / (double)(CLOCKS_PER_SEC);
-        times.push_back(finishedTime);
-        double average = std::accumulate(times.begin(), times.end(), 0.0) / times.size();
-        startTime = std::clock();
-
-        pop.getThreadedFitnesses(mt);
-        pop.sortPop();
-        pop.recordHistory();
-        pop.select(); // These two can be combined
-        pop.mutate();
-        pop.gen++;
-
-        /// Start Next Generation
-        std::cout<< "Gen: " << pop.gen << " <f>: " << pop.getAvg() << " max(f): " << pop.population[0]->fitness << " in [" << finishedTime << "s (" << average << "s)] "
-                                        << "ProcessingTime: " << (std::clock() - startTime) / (double)(CLOCKS_PER_SEC) << "s\n" ;
-
-        if (mt.size() != numThreads) {
-            for (auto &p: mt) {
-                delete p;
-            }
-            mt.clear();
-            for (unsigned int i = 0; i < numThreads; i++) {
-                mt.push_back(new MultiThread());
-            }
-        }
-        MultiThread::spawnChildren(mt, pop.getCreatures()); /// @todo Multi-threaded spawning is a bit laggy and noticable.
-        startTime = std::clock();
-        //return; // End early on this iteration because its expensive to spawn threads.
-    }
 
     for (int i = 0; i < gameSpeed; i++) {
         pop.nextStep();
     }
     drawing(fps);
+
+
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto elaspedTime = std::chrono::duration<double>(endTime - startTime).count();
+    startTime = endTime;
+    if (throttleFPS) {
+        double FPS = 50.0;
+        int x = (1.0/FPS - elaspedTime) * 1'000;
+        std::this_thread::sleep_for(std::chrono::milliseconds(x));
+    }
 }
 
 
 
 void Simulation::loadEvolve() {
+    GFramework::get->camera->reset();
     Camera *camera = GLOBAL->camera;
     std::vector<UserFunction> *userFunctions = &GFramework::get->userInput.functions;
+
+    /* Game Controls */
+    userFunctions->push_back(UserFunction(new UIchar('p'), [](){
+        pop.printCurrentGenome();
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('o'), [](){
+        pop.showCreature(0);
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('O'), [](){
+        pop.updateViewingGenomes();
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('[', 150), [](){
+        pop.prevCreature();
+    }));
+    userFunctions->push_back(UserFunction(new UIchar(' '), [](){
+        pop.resetCreature();
+    }));
+    userFunctions->push_back(UserFunction(new UIchar(']', 150), [](){
+        pop.nextCreature();
+    }));
+    userFunctions->push_back(UserFunction(new UIchar(' '), [](){
+        pop.history.writeToConsole();
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('>'), [](){
+        numThreads += numThreads < MAX_THREADS ? 1 : 0;
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('<'), [](){
+        numThreads -= numThreads > MIN_THREADS ? 1 : 0;
+    }));
+    userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_UP, 150), [](){
+        gameSpeed += gameSpeed < MAX_GAME_SPEED ? 1 : 0;
+    }));
+    userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_PAGE_DOWN, 150), [](){
+        gameSpeed -= gameSpeed > MIN_GAME_SPEED ? 1 : 0;
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('v'), [](){
+        Phylogeny::scientificNames ^= true;
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('c'), [](){
+        cinematic ^= true;
+    }));
+
+    userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("COM Trail", &drawCOMTrails, 0.9, 0.9, 1.0, 1, by_position()), [userFunctions](){
+
+    }));
+    userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Node Trails", &drawNodeTrails, 0.9, 0.8, 1.0, 0.9, by_position()), [userFunctions](){
+
+    }));
+
+    userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Graph", &drawGraph, 0.0, 0.9, 0.2, 1, by_position()), [userFunctions](){
+        if (drawGraph) {
+    //            userFunctions->push_back(UserFunction(new Button<Appearance::GREEN>("DrawGraph", 0.9, 0.1, 0.95, 0.15, by_position(), secondaryButtonIds), [](){
+//            }));
+            for (unsigned int i = 0; i < userFunctions->size(); i++) { ///< @todo Make this clearing more general. Infact, make radio button class. Or maybe on call this on release
+                if ((*userFunctions)[i].element->id == 2) {
+                    userFunctions->erase((*userFunctions).begin() + i);
+                }
+            }
+        }
+        drawBrain = false;
+    }));
+    userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Brain", &drawBrain, 0.2, 0.9, 0.4, 1, by_position()), [userFunctions](){
+        int secondaryButtonIds = 2;
+        if (drawBrain) {
+            userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Draw Axons", &drawLines, 0.9, 0.1, 0.97, 0.15, by_position(), secondaryButtonIds), [](){
+
+            }));
+            for (unsigned int i = 0; i < userFunctions->size(); i++) {
+                if ((*userFunctions)[i].element->id == 1) {
+                    userFunctions->erase((*userFunctions).begin() + i);
+                }
+            }
+        } else {
+            for (unsigned int i = 0; i < userFunctions->size(); i++) {
+                if ((*userFunctions)[i].element->id == secondaryButtonIds) {
+                    userFunctions->erase((*userFunctions).begin() + i);
+                }
+            }
+        }
+        drawGraph = false;
+    }));
+
+
 
     /* Camera Controls */
     userFunctions->push_back(UserFunction(new UIchar(GLUT_KEY_LEFT, -1),

@@ -32,10 +32,10 @@ GFramework::~GFramework() {
     delete simulation;
     delete audio;
     delete camera;
+    LOG("Cleaning up GFramework"); // Apparently this is never called now
 }
 
 void GFramework::startup() {
-//    GFramework::get->userInput.setToDefault();
     LOG("Initializing Simulation");
     simulation->init();
     LOG("Starting up glutmainloop.");

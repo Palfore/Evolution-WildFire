@@ -7,6 +7,7 @@
 
 ///< @todo Fill population with sorted, unmutated creatures only.
 class Creature;
+class Body;
 class MultiThread;
 class Population { // is this becoming a God class?
     public:
@@ -15,7 +16,7 @@ class Population { // is this becoming a God class?
         operator=(const Population& other) = delete;
         virtual ~Population();
 
-        // Why not just store the strings instead of genomes?
+        // Why not just store the strings instead of genomes? (They are huge, so it is expensive!)
         std::vector<Genome*> population;     ///< The set of genomes currently evolving.
         std::vector<Genome> viewingGenomes;  ///< The set of genomes currently being looked at.
         Creature * displayingCreature;       ///< The creature which is shown to the user. Future expansion might make this a vector
@@ -43,11 +44,12 @@ class Population { // is this becoming a God class?
         void updateViewingGenomes();
 
         int getMemberIndex() const;
-        Creature getActiveCreature() const;
+        const Creature& getActiveCreature() const;
 
         /// Processing Population
-        std::vector<Creature> getCreatures() const;
+        std::vector<Body> getBodies() const;
         void getThreadedFitnesses(const std::vector<MultiThread*>& threads);
+        void updateFitnesses(const std::vector<double>& fitnesses);
         void sortPop();
         void select();
         void mutate();

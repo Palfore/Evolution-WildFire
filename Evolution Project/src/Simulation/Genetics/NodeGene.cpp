@@ -39,7 +39,7 @@ Gene* NodeGene::clone() const {
 }
 
 void NodeGene::mutate(Genome& genome) {
-    int c = 10;
+    int c = 6;
     suffleNodes(genome, c);
     shiftNodes(genome, c);
     suffleStats(genome, c);

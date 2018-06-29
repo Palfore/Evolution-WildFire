@@ -6,6 +6,10 @@
 #include <iostream>
 #include <algorithm>
 namespace utility {
+    std::string toTitle(std::string str) {
+        return std::string(1, toupper(str[0])) + str.substr(1);
+    }
+
     std::string toUpper(std::string str) {
         std::transform(str.begin(), str.end(),str.begin(), ::toupper);
         return str;

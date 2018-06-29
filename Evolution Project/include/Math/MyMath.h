@@ -8,6 +8,7 @@ constexpr double PI = 3.1415926535897932384626;
 constexpr double MACHINE_EPSILON = std::numeric_limits<double>::epsilon();
 
 class Vec;
+class Vec2;
 
 /** @brief Returns a thread-safe double in the range [lower, upper).
  * @param lower The lower-bound of numbers generated.
@@ -73,13 +74,31 @@ int pmRandi(const int bounds);
  */
 int pmRandi(const int minimal, const int maximal);
 
+
+
+
+Vec RandfR2(const double rmin, const double rmax);
+Vec RandfR3(const double rmin, const double rmax);
+
+
 /** @brief Returns the number of connections that can be made with n nodes.
- * @details This permutation calculation simplfies and is returned as \f$ \frac{1}{2}n(n - 1) \f$ .
+ * @details This permutation calculation simplfies for this problem and is returned as \f$ \frac{1}{2}n(n - 1) \f$ .
  * @param n The number of nodes.
  * @return int The number of combinations.
  *
  */
-int comb(const int n);
+int comb(int n);
+
+/** @brief Returns the number of connections that can be made with n nodes at compile time.
+ * @details This permutation calculation simplfies for this problem and is returned as \f$ \frac{1}{2}n(n - 1) \f$ .
+ * @tparam n The number of nodes.
+ * @return int The number of combinations.
+ *
+ */
+template<int n>
+constexpr int comb() {
+    return 0.5 * n * (n - 1);
+}
 
 /** @brief Returns the Euclidean distance between two vectors.
  * @details This is computed as \f$ d = \sqrt{ (a.x - b.x)^2 + (a.y - b.y)^2 + (a.z - b.z)^2 } \f$ .
@@ -89,6 +108,15 @@ int comb(const int n);
  *
  */
 double euc(Vec a, Vec b);
+
+/** @brief Returns the Euclidean distance between two vectors.
+ * @details This is computed as \f$ d = \sqrt{ (a.x - b.x)^2 + (a.y - b.y)^2 } \f$ .
+ * @param a One of the vectors.
+ * @param b Another vector.
+ * @return double The Euclidean distance.
+ *
+ */
+double euc(Vec2 a, Vec2 b);
 
 /** @brief Returns the Euclidean distance - ignoring the z componenet - between two vectors.
  * @details This is computed as \f$ d = \sqrt{ (a.x - b.x)^2 + (a.y - b.y)^2} \f$ .

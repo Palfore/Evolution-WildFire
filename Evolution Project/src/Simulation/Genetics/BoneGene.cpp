@@ -10,7 +10,7 @@ BoneGene::BoneGene(int a, int b): BoneGene(Connection(a, b)) {}
 BoneGene::BoneGene(Connection c): connection(c) {}
 BoneGene::BoneGene(const BoneGene& other) : Gene(other), connection(other.connection) {}
 
-BoneGene::BoneGene(std::string representation) : connection(-1, -1){
+BoneGene::BoneGene(std::string representation) : connection(-1, -1) {
     std::vector<std::string> values = utility::split<std::vector>(representation, ",");
     this->connection = Connection(utility::strToNum<int>(values[0]),
                                     utility::strToNum<int>(values[1]));

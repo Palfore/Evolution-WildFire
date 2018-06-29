@@ -24,7 +24,7 @@ enum Appearance{CUSTOM, MAROON, DARK_RED, BROWN, FIREBRICK, CRIMSON, RED, TOMATO
 /* enum Textures */ BUTTON,
             SKYBOX_PX, SKYBOX_PY, SKYBOX_PZ, SKYBOX_MX, SKYBOX_MY, SKYBOX_MZ,
             LION, PALFORE, FACE,
-            GRASS, TREE_TOP, BARK,
+            GRASS, TREE_TOP, BARK, FOOD,
             GAME_TITLE, LAST_TEXTURE__};
 
 class Drawing {
@@ -170,6 +170,7 @@ class DrawItem {
                 LOG(INVALID_APPEARANCE_MESSAGE, LogDegree::FATAL, LogType::GRAPHICS);
             }
         }
+        ~DrawItem() {}
 };
 
 #endif // DRAW_H

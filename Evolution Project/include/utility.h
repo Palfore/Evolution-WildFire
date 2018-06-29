@@ -14,6 +14,14 @@
  *
  */
 namespace utility {
+    /** @brief Converts a std::string to title case.
+     *
+     * @param str std::string The string to convert the case of.
+     * @return std::string The string represented in title case.
+     *
+     */
+    std::string toTitle(std::string str);
+
     /** @brief Converts a std::string to upper case.
      *
      * @param str std::string The string to convert the case of.
@@ -60,7 +68,7 @@ namespace utility {
      * @tparam T The number type (eg: float, double, int, etc.)
      * @param Number The value to be converted to a string.
      * @return A string representation of a number.
-     *
+     * @deprecated This was implemented to fix a compiler bug "to_string not a member of std". Since updated to gcc 8.1.0 this is no longer an issue.
      */
     template <typename T> // fix to compiler bug > to_string not a member of std
     std::string numToStr (T Number) {
@@ -69,6 +77,12 @@ namespace utility {
         return ss.str();
     }
 
+    /** @brief Returns a string as its number representation.
+     *
+     * @tparam T The number type (eg: float, double, int, etc.)
+     * @param Number The value to be converted to type T.
+     * @return T The number.
+     */
     template<typename T>
     T strToNum(const std::string& numberAsString) {
         T valor;

@@ -31,6 +31,7 @@
 #include <cmath>
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 /**
  * This class represents a 2D vector.
@@ -149,6 +150,7 @@ struct Vec2 {
         friend Vec2 operator*(const Vec2& vector1, const Vec2& Vec2);
         friend Vec2 operator/(const Vec2& vector, double number);
         friend Vec2 operator/(const Vec2& vector1, const Vec2& Vec2);
+        friend std::ostream &operator<<(std::ostream&, const Vec2&);
 };
 
 // Set the vector to zero

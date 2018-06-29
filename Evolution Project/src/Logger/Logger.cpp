@@ -56,7 +56,7 @@ void Logger::log(int line, std::string file, std::string func, std::string msg, 
 
 void Logger::normalExit(int line, std::string file, std::string func) {
     log(line, file, func, PROGRAM_EXIT_MESSAGE, LogDegree::DEBUG, LogType::GENERAL);
-    exit(EXIT_SUCCESS);
+    glutLeaveMainLoop();
 }
 
 std::string Logger::getTimeStamp() {

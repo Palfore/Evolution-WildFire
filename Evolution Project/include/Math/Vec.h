@@ -31,6 +31,7 @@
 #include <cmath>
 #include <cassert>
 #include <algorithm>
+#include <istream>
 
 // Class Vec
 /**
@@ -162,6 +163,7 @@ struct Vec {
         friend Vec operator*(const Vec& vector1, const Vec& Vec2);
         friend Vec operator/(const Vec& vector, double number);
         friend Vec operator/(const Vec& vector1, const Vec& Vec2);
+        friend std::ostream &operator<<(std::ostream&, const Vec&);
 };
 
 // Set the vector to zero

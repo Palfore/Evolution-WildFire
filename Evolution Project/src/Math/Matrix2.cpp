@@ -56,6 +56,12 @@ Matrix2::Matrix2(const Matrix2& matrix) {
                  matrix.mRows[1][0], matrix.mRows[1][1]);
 }
 
+std::ostream &operator<<(std::ostream& stream, const Matrix2& matrix) {
+    stream << '[' << matrix.mRows[0].x << ", " << matrix.mRows[0].y << '\n'
+           << ' ' << matrix.mRows[1].x << ", " << matrix.mRows[1].y << ']';
+    return stream;
+}
+
 // Assignment operator
 Matrix2& Matrix2::operator=(const Matrix2& matrix) {
 

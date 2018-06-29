@@ -24,7 +24,7 @@ Genome::Genome(int n, int m, int b, std::vector<unsigned int> sizes) : Genome() 
         this->genes[BoneGene::symbol].push_back(new BoneGene(this->genes[NodeGene::symbol].size(), *this));
     }
 
-    sizes.insert(sizes.begin(), m+2);
+    sizes.insert(sizes.begin(), m + 2);
     sizes.push_back(m);
     for (unsigned int layer = 0; layer < sizes.size() - 1; layer++) {
         for (unsigned int i = 0; i < sizes[layer]; i++) {
@@ -52,13 +52,11 @@ Genome& Genome::operator=(Genome other) {
 
 
 Genome::Genome(std::string genomeString) : Genome() { //NewGeneEditHere
-
     std::deque<std::string> geneStrings = utility::split<std::deque>(genomeString, GENE_DELIMITER);
     std::string metaData = geneStrings[0];
     geneStrings.pop_front();
 
     for (auto const& gene : geneStrings) {
-
         std::vector<std::string> headAndValues = utility::split<std::vector>(gene, VALUE_DELIMITER, 1);
         char head = headAndValues[0][0];
         switch(head) {
@@ -113,14 +111,14 @@ void Genome::mutate() {
     }
 }
 
-void Genome::addNodes(double chance) { // todo: Add connections to new nodes
+void Genome::addNodes(double chance) { ///< @todo: Add connections to new nodes
     if (randf(100) < chance) {
         this->genes[NodeGene::symbol].push_back(new NodeGene(*this));
 
     }
 }
 
-void Genome::removeNodes(double chance) { // todo: remove connection from removed nodes
+void Genome::removeNodes(double chance) { ///< @todo: remove connection from removed nodes
     int len = this->getGenes<NodeGene>().size();
     if (len == 1) return; // Can't remove last node
 

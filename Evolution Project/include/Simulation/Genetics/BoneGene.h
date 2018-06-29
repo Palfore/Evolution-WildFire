@@ -3,13 +3,7 @@
 
 #include <string>
 #include "Gene.h"
-struct Connection {
-    int a;
-    int b;
-    Connection(int a_t, int b_t): a(a_t), b(b_t){};
-    Connection(): a(-1), b(-1){};
-    Connection(const Connection &c): a(c.a), b(c.b){};
-};
+#include "Connection.h"
 
 class BoneGene : public Gene {
     public:

@@ -30,9 +30,8 @@ Simulation::~Simulation() {}
 void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps) {
     GFramework::get->readyDrawing();
 
-    if (userFunctions->size() > fps) {} // warning supression
-    // should pass userFunctions to methods
-    if (inputType == InputType::DEFAULT) {
+    if (userFunctions != nullptr) {}
+    if (inputType == InputType::DEFAULT) { // should pass userFunctions to methods
         switch (this->gameMode) {
             case GameMode::MAIN_MENU: Simulation::mainMenuMode(); break;
             case GameMode::EVOLVE: Simulation::evolveMode(fps); break;
@@ -80,7 +79,7 @@ void Simulation::setInputTypeKeyboard() {
 //            loadGameModeKeyboard();
 //            break;
 //        case InputType::BLOCKING_MESSAGE:
-//            userFunctions->push_back(UserFunction(ENTER, [this](){
+//            userFunctions->push_back(UserFunction(ENTER, [&](){
 //                this->setInputType(InputType::DEFAULT); // Unlock Input
 //            }));
 //            break;

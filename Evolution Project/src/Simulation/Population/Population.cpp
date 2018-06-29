@@ -6,7 +6,13 @@
 
 Population::Population(int numMembers) : population({}), viewingGenomes({}), displayingCreature(nullptr), history(), gen(0), activeCreatureIndex(0), simStep(0) {
     for (int i = 0; i < numMembers; i++) {
-        Genome* g = new Genome(5, 10, 0, {12,12,12});
+        constexpr int n = 5;
+        constexpr int m = comb<n>();
+        constexpr int b = 0;
+        const std::vector<unsigned int> N = {12, 12, 8, 8, 6, 6};
+        static_assert(comb<n>() >= m + b, "Too many connections.");
+
+        Genome* g = new Genome(n, m, b, N); ///< Comb should be a static check
         population.push_back(g);
         viewingGenomes.push_back(*g);
     }
@@ -26,20 +32,22 @@ void Population::draw() const {
 
 void Population::nextStep() {
     displayingCreature->update(simStep++);
+    if (simStep > 1'000'000'000) simStep = 0; // Prevent Overflow
 }
 
 int Population::getSimStep() const {
     return simStep;
 }
 
-std::vector<Creature> Population::getCreatures() const {
-    std::vector<Creature> creatures;
-    creatures.reserve(this->population.size());
+std::vector<Body> Population::getBodies() const {
+    std::vector<Body> bodies;
+    bodies.reserve(this->population.size());
     for (const auto& genome: this->population) {
-        creatures.push_back(Creature(*genome));
+        bodies.push_back(Body(*genome));
     }
-    return creatures;
+    return bodies;
 }
+
 
 void Population::printCurrentGenome() const {
     std::cout << this->population[activeCreatureIndex]->toString() << '\n';
@@ -78,7 +86,7 @@ void Population::updateViewingGenomes() {
     showCreature(0);
 }
 
-Creature Population::getActiveCreature() const {
+const Creature& Population::getActiveCreature() const {
     return *displayingCreature;
 }
 
@@ -107,6 +115,12 @@ void Population::getThreadedFitnesses(const std::vector<MultiThread*>& threads) 
         for (unsigned int j = 0; j < f.size(); j++) {
             this->population[c++]->fitness = f[j];
         }
+    }
+}
+
+void Population::updateFitnesses(const std::vector<double>& fitnesses) {
+    for (unsigned int i = 0; i < fitnesses.size(); i++) {
+        this->population[i]->fitness = fitnesses[i];
     }
 }
 

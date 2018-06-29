@@ -12,15 +12,10 @@ class UserInput {
         std::string inputString;
         std::vector<UserFunction> functions;
 
-        void draw() {
-            for (const auto& f : functions) {
-                f.draw();
-            }
-        }
-
         UserInput();
         ~UserInput();
 
+        void draw() const;
         void setToDefault();
         bool isInputStringSubmitted();
         void submitInputString();

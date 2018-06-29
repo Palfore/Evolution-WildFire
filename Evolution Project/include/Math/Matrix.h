@@ -149,6 +149,9 @@ class Matrix {
 
         /// Overloaded operator to read/write element of the matrix.
         Vec& operator[](int row);
+
+        /// Overloaded operator to print matrix.
+        friend std::ostream &operator<<(std::ostream&, const Matrix&);
 };
 
 // Method to set all the values in the matrix

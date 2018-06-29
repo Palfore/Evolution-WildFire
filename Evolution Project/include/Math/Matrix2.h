@@ -141,6 +141,8 @@ class Matrix2 {
 
         /// Overloaded operator to read/write element of the matrix.
         Vec2& operator[](int row);
+
+        friend std::ostream &operator<<(std::ostream&, const Matrix2&);
 };
 
 // Method to set all the values in the matrix

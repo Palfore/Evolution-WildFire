@@ -5,6 +5,7 @@
 #include <thread>
 
 #include "Vec.h"
+#include "Vec2.h"
 
 
 
@@ -42,15 +43,33 @@ double pmRandf(const double bounds) {
     return 2 * (randf(bounds) - (0.5 * bounds));
 }
 
+Vec RandfR2(const double rmin, const double rmax) {
+    const double r = randf(rmin, rmax);
+    const double theta = randf(0, 2*PI);
+    return Vec(r*cos(theta), r*sin(theta), 0);
+}
+
+Vec RandfR3(const double rmin, const double rmax) {
+    const double r = randf(rmin, rmax);
+    const double theta = randf(0, 2*PI);
+    const double phi = randf(0, 2*PI);
+    const double sinPhi = sin(phi);
+    return Vec(r*cos(theta)*sinPhi, r*sin(theta)*sinPhi, r*cos(phi));
+}
+
 double pmRandf(const double minimal, const double maximal) {
-    return minimal > maximal; ///< @todo implement pmRandf(min, max)
+    const double bound = maximal - minimal;
+    double x = pmRandf(bound);
+    return x + sgn(x)*minimal;
 }
 
 int pmRandi(const int minimal, const int maximal) {
-    return minimal > maximal;///< @todo implement pmRandi(min, max)
+    const int bound = maximal - minimal;
+    int x = pmRandi(bound);
+    return x + sgn(x)*minimal;
 }
 
-int comb(const int n) {
+int comb(int n) {
     return 0.5 * n * (n - 1);
 }
 
@@ -63,6 +82,13 @@ double euc(Vec a, Vec b) {
     double y = (a.y - b.y);
     double z = (a.z - b.z);
     double square = (x * x) + (y * y) + (z * z);
+    return sqrtf(square);
+}
+
+double euc(Vec2 a, Vec2 b) {
+    double x = (a.x - b.x);
+    double y = (a.y - b.y);
+    double square = (x * x) + (y * y);
     return sqrtf(square);
 }
 

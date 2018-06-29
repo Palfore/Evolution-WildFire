@@ -8,6 +8,7 @@
 #define asd <<", "<<
 #define zxc "\n"
 
+///< @todo Somewhere in the network cannot handle 0 outputs. Or layers of 0 size.
 NeuralNetwork::NeuralNetwork(std::vector<AxonGene*> axons) : weights({}), layerSizes({}), potentials({}), w({}) {
     int numLayers = -1;
     for (const AxonGene* axonGene: axons) {
@@ -74,20 +75,21 @@ void NeuralNetwork::draw(bool drawAxons) const { // Draw connections of one neur
                     DrawLine<Appearance::RED>(getX(weights[i][j].layer  , N), getY(weights[i][j].a, layerSizes[weights[i][j].layer  ]),
                                               getX(weights[i][j].layer+1, N), getY(weights[i][j].b, layerSizes[weights[i][j].layer+1]));
                 }
-            } // +1 heres are being they are in the next layer over
+            } // +1 here^ are because they are in the next layer over
         }
     }
 
     /* Draw Neurons */
     for (int i = 0; i < N + 1; i++) {
+        const double scale = std::min(((B - A) / static_cast<double>(N + 2) + A) / layerSizes[i], 0.025);
         double x = getX(i, N);
         for (int j = 0; j < layerSizes[i]; j++) {
             double y = getY(j, layerSizes[i]);
-            DrawCircle<Appearance::WHEAT>(x, y, 0.025);
+            DrawCircle<Appearance::WHEAT>(x, y, scale);
             if (potentials[i][j] > 0) {
-                DrawCircle<Appearance::BLUE>(x, y, 0.025 * potentials[i][j]);
+                DrawCircle<Appearance::BLUE>(x, y, scale * potentials[i][j]);
             } else {
-                DrawCircle<Appearance::RED>(x, y, -0.025 * potentials[i][j]);
+                DrawCircle<Appearance::RED>(x, y, -scale * potentials[i][j]);
             }
         }
     }
@@ -100,7 +102,7 @@ double NeuralNetwork::activationFunction(double x) {
 std::vector<double> NeuralNetwork::propagate(const std::vector<double>& inputs) {
     if (inputs.size() != potentials[0].size()) {
         std::cout << inputs.size() << ',' << potentials[0].size() << '\n';
-        exit(-12);
+        LOG("Network input did not match its topology.");
     };
     potentials[0] = inputs;
     for (unsigned int l = 1; l < layerSizes.size(); l++) {

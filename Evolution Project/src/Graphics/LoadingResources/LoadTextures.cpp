@@ -19,6 +19,7 @@ void GFramework::loadTextures() {
         {Appearance::FACE, glLoadTexture(dir + "face.png")},
         {Appearance::TREE_TOP, glLoadTexture(dir + "treetop2.jpg")},
         {Appearance::BARK, glLoadTexture(dir + "bark.jpg")},
+        {Appearance::FOOD, glLoadTexture(dir + "chocolait.jpg")},
     };
     for (auto const& t : textureMap) {
         if (!t.second) LOG("Could not load texture #" + utility::numToStr<int>(t.first) + ".", LogDegree::FATAL, LogType::GRAPHICS);

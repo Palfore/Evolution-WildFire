@@ -9,10 +9,10 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = Evolution Project
+PROJECT_NAME           = Evolution WildFire
 PROJECT_NUMBER         = 1.40.2997
-PROJECT_BRIEF          =
-PROJECT_LOGO           =
+PROJECT_BRIEF          = "A 3D Evolution Simulator"
+PROJECT_LOGO           = ../assets/Images/logo.png
 OUTPUT_DIRECTORY       =
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
@@ -95,66 +95,11 @@ WARN_LOGFILE            = "C:\Users\nisma\Documents\GitHub\Evolution-Project\Evo
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = \
-	"..\include\version.h" \
-	"..\include\Simulation\Creatures\Creature.h" \
-	"..\include\Simulation\Genetics\NodeGene.h" \
-	"..\src\Graphics\GUI\Button.cpp" \
-	"..\include\Graphics\MyGlut.h" \
-	"..\include\Simulation\Physics\Ball.h" \
-	"..\src\Simulation\evolveMode.cpp" \
-	"..\include\Simulation\Genetics\Gene.h" \
-	"..\src\Config\Config.cpp" \
-	"..\include\Simulation\Genetics\MuscleGene.h" \
-	"..\src\Simulation\Physics\Ball.cpp" \
-	"..\src\Graphics\GlutCallBacks.cpp" \
-	"..\src\Graphics\Drawing\Draw.cpp" \
-	"..\src\Graphics\Drawing\Shapes.cpp" \
-	"..\src\Simulation\Population\Population.cpp" \
-	"..\src\Graphics\LoadingResources\LoadColors.cpp" \
-	"..\src\Simulation\Genetics\BoneGene.cpp" \
-	"..\src\Simulation\Genetics\Gene.cpp" \
-	"..\src\Math\MyMath.cpp" \
-	"..\src\utility.cpp" \
-	"..\include\Graphics\Audio\Audio.h" \
-	"..\src\Simulation\Creatures\Creature.cpp" \
-	"..\include\Graphics\Drawing\Objects.h" \
-	"..\src\Graphics\Audio\Audio.cpp" \
-	"..\src\Graphics\MyGlut.cpp" \
-	"..\include\utility.h" \
-	"..\src\Graphics\Drawing\Text.cpp" \
-	"..\src\Simulation\Genetics\Genome.cpp" \
-	"..\include\Graphics\GFramework.h" \
-	"..\src\Graphics\LoadingResources\LoadTextures.cpp" \
-	"..\include\Graphics\GUI\Button.h" \
-	"..\src\Simulation\Genetics\NodeGene.cpp" \
-	"..\include\Graphics\Drawing\Shapes.h" \
-	"..\src\Graphics\UserInput\UserInput.cpp" \
-	"..\src\Simulation\Physics\Piston.cpp" \
-	"..\include\Graphics\Drawing\Text.h" \
-	"..\include\Config\Config.h" \
-	"..\src\Simulation\mainMenuMode.cpp" \
-	"..\include\Simulation\Genetics\BoneGene.h" \
-	"..\src\Logger\Logger.cpp" \
-	"..\src\Graphics\UserInput\UserFunction.cpp" \
-	"..\include\Graphics\UserInput\UserFunction.h" \
-	"..\src\Simulation\Genetics\MuscleGene.cpp" \
-	"..\include\Graphics\Drawing\Draw.h" \
-	"..\src\main.cpp" \
-	"..\include\Logger\Logger.h" \
-	"..\include\Simulation\Population\Population.h" \
-	"..\src\Graphics\GFramework.cpp" \
-	"..\include\Graphics\GlutCallBacks.h" \
-	"..\include\Simulation\Simulation.h" \
-	"..\src\Graphics\Drawing\Objects.cpp" \
-	"..\include\Graphics\UserInput\UserInput.h" \
-	"..\include\Simulation\Physics\Piston.h" \
-	"..\src\Simulation\Simulation.cpp" \
-	"..\include\Math\MyMath.h" \
-	"..\include\Simulation\Genetics\Genome.h" 
+INPUT                  = ..\src\ \
+						 ..\include\
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
-RECURSIVE              = NO
+RECURSIVE              = YES
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       =

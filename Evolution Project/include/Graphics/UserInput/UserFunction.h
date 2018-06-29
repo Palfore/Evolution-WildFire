@@ -108,7 +108,7 @@ struct UserFunction {
         element->draw();
     }
 
-    UserFunction& operator=(UserFunction other);
+    UserFunction& operator=(const UserFunction& other);
     UserFunction(const UserFunction& other) : element(other.element), action(other.action), release(other.release) {};
 
     UserFunction(UIElement* ele, Action action_t);

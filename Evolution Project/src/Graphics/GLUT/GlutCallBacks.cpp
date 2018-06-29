@@ -23,12 +23,6 @@ namespace glutCB {
         if (!GFramework::get->display) { // Run asap
             GFramework::get->simulation->run(&GFramework::get->userInput.functions, -1);
         } else {
-            static auto getTime = [](){  // in seconds
-                auto time = std::chrono::system_clock::now().time_since_epoch();
-                auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(time).count();
-                return microseconds / 1000000.0;
-            };
-
             /* Calculate Frame Rate */
             static unsigned int frame = 0;
             static int time = 0;
@@ -45,21 +39,27 @@ namespace glutCB {
 
 
 
-            double start = getTime();
+//            double start = getTime();
             GFramework::get->simulation->run(&GFramework::get->userInput.functions, fps);
 
 //            std::this_thread::sleep_for(std::chrono::milliseconds((int) 20)); // This makes the multithread drop seem like less
                                                                               // Also the below doesnt work well enough to limit to FPS
-            /* Limit FPS */
-            static double lastFrameTime = 0; // This assumes that the background time is negligable.
-            double fps1 = GFramework::FPS;
-            double stop = getTime();
-            if ((1/fps1 - lastFrameTime) > 0) {
-                std::this_thread::sleep_for(std::chrono::milliseconds((int) (
-                    ((1/fps1) - lastFrameTime)*2 // 2 is to slow it down more
-                )));
-            }
-            lastFrameTime = stop - start;
+
+//            static auto getTime = [](){  // in seconds
+//                auto time = std::chrono::system_clock::now().time_since_epoch();
+//                auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(time).count();
+//                return microseconds / 1000000.0;
+//            };
+//            /* Limit FPS */
+//            static double lastFrameTime = 0; // This assumes that the background time is negligable.
+//            double fps1 = GFramework::FPS;
+//            double stop = getTime();
+//            if ((1/fps1 - lastFrameTime) > 0) {
+//                std::this_thread::sleep_for(std::chrono::milliseconds((int) (
+//                    ((1/fps1) - lastFrameTime)*2 // 2 is to slow it down more
+//                )));
+//            }
+//            lastFrameTime = stop - start;
         }
     }
 
@@ -139,7 +139,6 @@ namespace glutCB {
         }
         GFramework::get->mouse.x = x;
         GFramework::get->mouse.y = y;
-//        std::cout << x << ',' << y << '\n';
         GFramework::get->camera->del.setToZero(); // Prevent motion after mouse release (if used to move camera)
     }
 
