@@ -41,6 +41,7 @@
 					<Add directory="include/Tests" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation/Physics" />
+					<Add directory="include/Simulation/Population" />
 				</Compiler>
 				<Linker>
 					<Add option="-O3" />
@@ -58,6 +59,7 @@
 					<Add directory="include/Tests" />
 					<Add directory="include/Math" />
 					<Add directory="include/Simulation/Physics" />
+					<Add directory="include/Simulation/Population" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -81,6 +83,7 @@
 			<Add directory="include/Simulation/Population" />
 			<Add directory="include/Graphics/GUI" />
 			<Add directory="include/Graphics/GLUT" />
+			<Add directory="include/Simulation/Genetics/Genes" />
 		</Compiler>
 		<Linker>
 			<Add option="-m64" />
@@ -116,21 +119,30 @@
 		<Unit filename="include/Math/Vec.h" />
 		<Unit filename="include/Math/Vec2.h" />
 		<Unit filename="include/Simulation/Creatures/Creature.h" />
+		<Unit filename="include/Simulation/Creatures/Cuboid.h" />
+		<Unit filename="include/Simulation/Creatures/Factory.h" />
 		<Unit filename="include/Simulation/Creatures/Phylogeny.h" />
+		<Unit filename="include/Simulation/Creatures/StickBall.h" />
 		<Unit filename="include/Simulation/Creatures/Trail.h" />
-		<Unit filename="include/Simulation/Genetics/AxonGene.h" />
-		<Unit filename="include/Simulation/Genetics/BoneGene.h" />
-		<Unit filename="include/Simulation/Genetics/Gene.h" />
+		<Unit filename="include/Simulation/Genetics/GeneMapping.h" />
+		<Unit filename="include/Simulation/Genetics/Genes/AxonGene.h" />
+		<Unit filename="include/Simulation/Genetics/Genes/BoneGene.h" />
+		<Unit filename="include/Simulation/Genetics/Genes/CubeGene.h" />
+		<Unit filename="include/Simulation/Genetics/Genes/Gene.h" />
+		<Unit filename="include/Simulation/Genetics/Genes/MuscleGene.h" />
+		<Unit filename="include/Simulation/Genetics/Genes/NodeGene.h" />
 		<Unit filename="include/Simulation/Genetics/Genome.h" />
-		<Unit filename="include/Simulation/Genetics/MuscleGene.h" />
-		<Unit filename="include/Simulation/Genetics/NodeGene.h" />
 		<Unit filename="include/Simulation/Physics/Ball.h" />
 		<Unit filename="include/Simulation/Physics/Body.h" />
+		<Unit filename="include/Simulation/Physics/Component.h" />
+		<Unit filename="include/Simulation/Physics/Cube.h" />
+		<Unit filename="include/Simulation/Physics/Fitness.h" />
 		<Unit filename="include/Simulation/Physics/NeuralNetwork.h" />
 		<Unit filename="include/Simulation/Physics/Piston.h" />
 		<Unit filename="include/Simulation/Population/History.h" />
 		<Unit filename="include/Simulation/Population/MultiThread.h" />
 		<Unit filename="include/Simulation/Population/Population.h" />
+		<Unit filename="include/Simulation/Population/Viewer.h" />
 		<Unit filename="include/Simulation/Simulation.h" />
 		<Unit filename="include/Tests/TestSuite.h" />
 		<Unit filename="include/utility.h" />
@@ -157,21 +169,30 @@
 		<Unit filename="src/Math/Vec.cpp" />
 		<Unit filename="src/Math/Vec2.cpp" />
 		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
+		<Unit filename="src/Simulation/Creatures/Cuboid.cpp" />
+		<Unit filename="src/Simulation/Creatures/Factory.cpp" />
 		<Unit filename="src/Simulation/Creatures/Phylogeny.cpp" />
+		<Unit filename="src/Simulation/Creatures/StickBall.cpp" />
 		<Unit filename="src/Simulation/Creatures/Trail.cpp" />
-		<Unit filename="src/Simulation/Genetics/AxonGene.cpp" />
-		<Unit filename="src/Simulation/Genetics/BoneGene.cpp" />
-		<Unit filename="src/Simulation/Genetics/Gene.cpp" />
+		<Unit filename="src/Simulation/Genetics/GeneMapping.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genes/AxonGene.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genes/BoneGene.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genes/CubeGene.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genes/Gene.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genes/MuscleGene.cpp" />
+		<Unit filename="src/Simulation/Genetics/Genes/NodeGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Genome.cpp" />
-		<Unit filename="src/Simulation/Genetics/MuscleGene.cpp" />
-		<Unit filename="src/Simulation/Genetics/NodeGene.cpp" />
 		<Unit filename="src/Simulation/Physics/Ball.cpp" />
 		<Unit filename="src/Simulation/Physics/Body.cpp" />
+		<Unit filename="src/Simulation/Physics/Component.cpp" />
+		<Unit filename="src/Simulation/Physics/Cube.cpp" />
+		<Unit filename="src/Simulation/Physics/Fitness.cpp" />
 		<Unit filename="src/Simulation/Physics/NeuralNetwork.cpp" />
 		<Unit filename="src/Simulation/Physics/Piston.cpp" />
 		<Unit filename="src/Simulation/Population/History.cpp" />
 		<Unit filename="src/Simulation/Population/MultiThread.cpp" />
 		<Unit filename="src/Simulation/Population/Population.cpp" />
+		<Unit filename="src/Simulation/Population/Viewer.cpp" />
 		<Unit filename="src/Simulation/Simulation.cpp" />
 		<Unit filename="src/Simulation/evolveMode.cpp" />
 		<Unit filename="src/Simulation/mainMenuMode.cpp" />

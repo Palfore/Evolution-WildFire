@@ -1,37 +1,14 @@
 #include "Genome.h"
 
-#include "NodeGene.h"
-#include "MuscleGene.h"
-#include "BoneGene.h"
-#include "AxonGene.h" //NewGeneEditHere
+#include "GeneMapping.h"
 #include "Logger.h"
 #include "utility.h"
 
 #include <deque>
 
-Genome::Genome() : fitness(0), genes({{NodeGene::symbol, {}}, {MuscleGene::symbol, {}}, {BoneGene::symbol, {}}, {AxonGene::symbol, {}}}) {} //NewGeneEditHere
-Genome::Genome(int n, int m, int b, std::vector<unsigned int> sizes) : Genome() {
-    if (m + b > comb(n)) LOG("Too many connections for valid creature", LogDegree::FATAL, LogType::GENETIC);
-    if (n < 0) LOG("Creature created with 0 nodes.", LogDegree::FATAL, LogType::GENETIC);
-
-    for (int i = 0; i < n; i++) {
-        this->genes[NodeGene::symbol].push_back(new NodeGene(*this));
-    }
-    for (int i = 0; i < m; i++) {
-        this->genes[MuscleGene::symbol].push_back(new MuscleGene(this->genes[NodeGene::symbol].size(), *this));
-    }
-    for (int i = 0; i < b; i++) {
-        this->genes[BoneGene::symbol].push_back(new BoneGene(this->genes[NodeGene::symbol].size(), *this));
-    }
-
-    sizes.insert(sizes.begin(), m + 2);
-    sizes.push_back(m);
-    for (unsigned int layer = 0; layer < sizes.size() - 1; layer++) {
-        for (unsigned int i = 0; i < sizes[layer]; i++) {
-            for (unsigned int j = 0; j < sizes[layer+1]; j++) {
-                this->genes[AxonGene::symbol].push_back(new AxonGene(i, j, layer, pmRandf(1)));
-            }
-        }
+Genome::Genome() : fitness(0), genes({}) {
+    for (auto const& [geneSymbol, _] : GeneConstructors()) {
+        this->genes.insert({geneSymbol, {}});
     }
 }
 
@@ -49,9 +26,7 @@ Genome& Genome::operator=(Genome other) {
     return *this;
 }
 
-
-
-Genome::Genome(std::string genomeString) : Genome() { //NewGeneEditHere
+Genome::Genome(const std::string genomeString) : Genome() {
     std::deque<std::string> geneStrings = utility::split<std::deque>(genomeString, GENE_DELIMITER);
     std::string metaData = geneStrings[0];
     geneStrings.pop_front();
@@ -59,24 +34,10 @@ Genome::Genome(std::string genomeString) : Genome() { //NewGeneEditHere
     for (auto const& gene : geneStrings) {
         std::vector<std::string> headAndValues = utility::split<std::vector>(gene, VALUE_DELIMITER, 1);
         char head = headAndValues[0][0];
-        switch(head) {
-            case NodeGene::symbol:
-                this->genes[NodeGene::symbol].push_back(new NodeGene(headAndValues[1]));
-                break;
-            case MuscleGene::symbol:
-                this->genes[MuscleGene::symbol].push_back(new MuscleGene(headAndValues[1]));
-                break;
-            case BoneGene::symbol:
-                this->genes[BoneGene::symbol].push_back(new BoneGene(headAndValues[1]));
-                break;
-            case AxonGene::symbol:
-                this->genes[AxonGene::symbol].push_back(new AxonGene(headAndValues[1]));
-                break;
-            default:
-                LOG("Genome(std::string) parsed invalid string:(" + std::string(1, headAndValues[0][0]) + ")", LogDegree::FATAL, LogType::GENETIC);
-        }
-    }
 
+        auto geneGenerator = GeneConstructors().find(head)->second;
+        this->genes[head].push_back( geneGenerator(headAndValues[1]));
+    }
 }
 
 Genome::~Genome() {
@@ -87,7 +48,9 @@ Genome::~Genome() {
     }
 }
 
-
+void Genome::addGene(Gene* gene) {
+    this->genes[gene->getSymbol()].push_back(gene);
+}
 
 
 std::string Genome::toString() const {
@@ -106,7 +69,11 @@ void Genome::mutate() {
 //    addNodes(100);
 //    removeNodes(0);
 
+
     for (auto * gene: this->getGenes<NodeGene>()) {
+        gene->mutate(*this);
+    }
+    for (auto * gene: this->getGenes<AxonGene>()) {
         gene->mutate(*this);
     }
 }

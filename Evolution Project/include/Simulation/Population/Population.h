@@ -1,25 +1,23 @@
 #ifndef POPULATION_H
 #define POPULATION_H
 
-#include <vector>
-//#include "Creature.h"
 #include "History.h"
+#include "Genome.h"
+#include <vector>
 
 ///< @todo Fill population with sorted, unmutated creatures only.
-class Creature;
 class Body;
 class MultiThread;
-class Population { // is this becoming a God class?
+#include "Factory.h"
+
+class Population {
     public:
-        Population(int numMembers);
+        Population(int numMembers, const Factory creatureFactory);
         Population(const Population& other) = delete;
         operator=(const Population& other) = delete;
         virtual ~Population();
 
-        // Why not just store the strings instead of genomes? (They are huge, so it is expensive!)
         std::vector<Genome*> population;     ///< The set of genomes currently evolving.
-        std::vector<Genome> viewingGenomes;  ///< The set of genomes currently being looked at.
-        Creature * displayingCreature;       ///< The creature which is shown to the user. Future expansion might make this a vector
         History history;                     ///< The data collected at various geneations.
         int gen;                             ///< The current number of generations that have evolved.
 
@@ -28,26 +26,8 @@ class Population { // is this becoming a God class?
         void recordHistory();
         void printHistory();
 
-        /// Getting Details
-        void printCurrentGenome() const;
-        void printGenome(int index) const;  // todo: print best, wosrt, average (one closest to average fitness)
-
-        /// Handling Current Creature
-        void draw() const;
-        void nextStep();
-        int getSimStep() const;
-
-        void nextCreature();
-        void prevCreature();
-        void showCreature(int index); // todo: show best, show worst, show average, etc
-        void resetCreature();
-        void updateViewingGenomes();
-
-        int getMemberIndex() const;
-        const Creature& getActiveCreature() const;
-
         /// Processing Population
-        std::vector<Body> getBodies() const;
+        std::vector<Body*> getBodies() const;
         void getThreadedFitnesses(const std::vector<MultiThread*>& threads);
         void updateFitnesses(const std::vector<double>& fitnesses);
         void sortPop();
@@ -55,8 +35,8 @@ class Population { // is this becoming a God class?
         void mutate();
 
     private:
-        int activeCreatureIndex;
-        int simStep;
+        const Factory factory;
+
 };
 
 #endif // POPULATION_H

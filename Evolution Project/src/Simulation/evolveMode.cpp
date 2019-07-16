@@ -10,74 +10,69 @@
 #include "Genome.h"
 #include "Button.h"
 #include "MultiThread.h"
-
+#include "MyMath.h"
 #include "Creature.h"
-#include <thread>
+#include "Viewer.h"
 
-static Population pop(4*256);
+#include <thread>
+#include <math.h>
+
+#include "Cuboid.h"
+#include "StickBall.h"
+
+static constexpr int populationSize = 0.5*256;
+
 static int gameSpeed = 6;
 static bool drawGraph = false;
 static bool drawCOMTrails = false;
 static bool drawNodeTrails = false;
 static bool drawBrain = false;
 static bool drawLines = false;
-static bool cinematic = false;
-#include "MyMath.h"
-
-static constexpr int MIN_THREADS = 0; // No processing threads
-static const     int MAX_THREADS = std::thread::hardware_concurrency();
-static constexpr int BACKGROUND_THREADS_REQUIRED = 2;
-static const     int DEFAULT_THREADS = MAX_THREADS - BACKGROUND_THREADS_REQUIRED > 0 ? MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
 
 static constexpr int MAX_GAME_SPEED = 20;
 static constexpr int MIN_GAME_SPEED = 0; // No updating displayed creatures
-
-
+static constexpr int BACKGROUND_THREADS_REQUIRED = 2;
+static constexpr int MIN_THREADS = 0; // No processing threads
+static const     int MAX_THREADS = std::thread::hardware_concurrency();
+static const     int DEFAULT_THREADS = MAX_THREADS - BACKGROUND_THREADS_REQUIRED > 0 ? MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
 static int numThreads = DEFAULT_THREADS;
+
+#include "Factory.h"
+static const Factory creatureFactory("Cuboid");
+static Population pop(populationSize, creatureFactory);
+static Viewer viewer(pop.population, creatureFactory);
 static Threader threader(0, pop.getBodies());
 
-static auto startTime = std::chrono::high_resolution_clock::now();
-static std::vector<double> times = {};
-
-static void drawing(double fps) {
-    const int r = 50;
-    int bounds = 1000;
+static void drawing(double fps, bool cinematic) {
+    /* Environment */
+    DrawSkybox(1000);
+    const int r = 4*50;
+    int bounds = 4*1000;
     for (int x = -bounds; x < bounds; x+=r) {
         for (int y = -bounds; y < bounds;y += r) {
            DrawPlane<Appearance::GRASS>(Vec(x, y, 0), r/2);
         }
     }
 
-    DrawSphere<Appearance::SKY_BLUE>(Vec(-50,0,0), 5);
-    DrawSphere<Appearance::RED>(Vec(-100,0,0), 5);
-    DrawSphere<Appearance::RED>(Vec(-150,0,0), 5);
-    DrawSphere<Appearance::RED>(Vec(-200,0,0), 5);
-    DrawSphere<Appearance::RED>(Vec(-250,0,0), 5);
-    DrawSphere<Appearance::RED>(Vec(-300,0,0), 5);
-    DrawSphere<Appearance::RED>(Vec(-350,0,0), 5);
-
-
-    DrawSphere<Appearance::FOOD>(Vec(pop.getActiveCreature().body.moveTo.x, pop.getActiveCreature().body.moveTo.y, 10), 10);
-    DrawSphere<Appearance::FACE>(pop.getActiveCreature().getHead() + Vec(0,0,4), 5,
-                                  -sgn<double>(pop.getActiveCreature().body.moveTo.x - pop.getActiveCreature().body.com.x) * 90);
-
-
-    DrawSkybox(700);
-
+    /* Single Tree */
     auto tree = Vec(-50, 50, 0);
     DrawCylinder<Appearance::BARK>(tree, tree + Vec(0,0,50), 8);
     DrawSphere<Appearance::TREE_TOP>(tree + Vec(0,0,50), 25);
 
-    pop.draw();
-    pop.getActiveCreature().drawTrails(drawNodeTrails, drawCOMTrails);
+    /* Creature Details */
+    DrawSphere<Appearance::FOOD>(Vec(viewer.getActiveCreature().body->moveTo.x, viewer.getActiveCreature().body->moveTo.y, 10), 10);
+
+    viewer.draw();
+    viewer.getActiveCreature().drawTrails(drawNodeTrails, drawCOMTrails);
 
     /////////////////////////////////////////// 2D Drawing ///////////////////////////////////////////////////
-    DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<int>(pop.getActiveCreature().fitness.getFitness(FitnessCollector::TOTAL_DISTANCE)), pop.getActiveCreature().body.getTop());
+    if (cinematic) return;
+    DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<double>(viewer.getActiveCreature().fitness.getFitness(FitnessCollector::MOVE_TO)), viewer.getActiveCreature().body->getTop(10));
     DrawString<Appearance::BLACK>("Generation " + utility::numToStr<int>(pop.gen), 0.01, 0.03, by_percentage(), false, false);
-    DrawString<Appearance::BLACK>("Creature: " + utility::numToStr<int>(pop.getMemberIndex()) +
+    DrawString<Appearance::BLACK>("Creature: " + utility::numToStr<int>(viewer.getMemberIndex()) +
                                 " / " + utility::numToStr<int>(pop.population.size()) +
-                                " (" + utility::numToStr<int>(pop.viewingGenomes.size()) + ')', 0.01, 0.05, by_percentage(), false, false);
-    DrawString<Appearance::BLACK>("Time " + utility::numToStr<int>(pop.getSimStep()), 0.01, 0.07, by_percentage(), false, false);
+                                " (" + utility::numToStr<int>(pop.population.size()) + ')', 0.01, 0.05, by_percentage(), false, false);
+    DrawString<Appearance::BLACK>("Time " + utility::numToStr<int>(viewer.getSimStep()), 0.01, 0.07, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("NumThreads " + utility::numToStr<int>(numThreads) + " (" + utility::numToStr<int>(threader.size()) + ")", 0.01, 0.09, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("GameSpeed " + utility::numToStr<int>(gameSpeed), 0.01, 0.11, by_percentage(), false, false);
 
@@ -86,31 +81,38 @@ static void drawing(double fps) {
     double inc = 0.02;
     double place = 0.15 + inc;
 
-    for (auto const& name: pop.getActiveCreature().phylogeny.getPhylogenyDict()) {
+    for (auto const& name: viewer.getActiveCreature().phylogeny.getPhylogenyDict()) {
         DrawString<Appearance::BLACK>(name[0] + ": " +  name[1], 0.01, place+=inc, by_percentage(), false, false);
     }
 
-    pop.getActiveCreature().drawNodeData();
+    viewer.getActiveCreature().drawNodeData();
 
-    //// Overlays ////
+    /* Overlays */
     if (drawGraph) {
         pop.history.graph();
     }
     if (drawBrain) {
-        pop.getActiveCreature().drawBrain(drawLines);
+        viewer.getActiveCreature().drawBrain(drawLines);
     }
 }
 
 void Simulation::evolveMode(double fps) {
-    static int doneGeneration = 0;
+    static int processingGeneration = 0;
     bool throttleFPS = true;
 
-    if (cinematic) {
-        GFramework::get->camera->cinematicCamera(Vec(pop.getActiveCreature().body.com.x, pop.getActiveCreature().body.com.y, 0));
+    if (this->cinematic) {
+        GFramework::get->camera->cinematicCamera(Vec(
+            viewer.getActiveCreature().body->com.x,
+            viewer.getActiveCreature().body->com.y,
+            20)
+        );
     }
-    switch(doneGeneration) {
+
+    /* Switch cases are used to delay frames to decrease lag spikes due to
+        the following expensive operations. */
+    switch(processingGeneration) {
         case 10: pop.sortPop(); break;
-        case 9:  pop.recordHistory();break;
+        case 9:  pop.recordHistory(); break;
         case 8:  break;
         case 7:  pop.select(); break;
         case 6:  break;
@@ -119,24 +121,23 @@ void Simulation::evolveMode(double fps) {
         case 3:  break;
         case 2:  break;
         case 1:  threader.spawnThreads(pop.getBodies()); throttleFPS = false; break;
-        default: doneGeneration = 0;
+        default: break;
     }
 
-    if (doneGeneration > 0) {
-        doneGeneration--;
-    } else if (threader.canProcess()) {
+    processingGeneration = std::max(0, --processingGeneration);
+    if (!processingGeneration && threader.canProcess()) {
         pop.updateFitnesses(threader.getFitnesses(pop.population.size()));
-        doneGeneration = 10;
+        processingGeneration = 10;
     }
     threader.update(numThreads);
 
 
     for (int i = 0; i < gameSpeed; i++) {
-        pop.nextStep();
+        viewer.nextStep();
     }
-    drawing(fps);
+    drawing(fps, cinematic);
 
-
+    static auto startTime = std::chrono::high_resolution_clock::now();
     auto endTime = std::chrono::high_resolution_clock::now();
     auto elaspedTime = std::chrono::duration<double>(endTime - startTime).count();
     startTime = endTime;
@@ -156,22 +157,22 @@ void Simulation::loadEvolve() {
 
     /* Game Controls */
     userFunctions->push_back(UserFunction(new UIchar('p'), [](){
-        pop.printCurrentGenome();
+        viewer.printCurrentGenome();
     }));
     userFunctions->push_back(UserFunction(new UIchar('o'), [](){
-        pop.showCreature(0);
+        viewer.showCreature(0);
     }));
     userFunctions->push_back(UserFunction(new UIchar('O'), [](){
-        pop.updateViewingGenomes();
+        viewer.updateViewingGenomes(pop.population);
     }));
     userFunctions->push_back(UserFunction(new UIchar('[', 150), [](){
-        pop.prevCreature();
+        viewer.prevCreature();
     }));
     userFunctions->push_back(UserFunction(new UIchar(' '), [](){
-        pop.resetCreature();
+        viewer.resetCreature();
     }));
     userFunctions->push_back(UserFunction(new UIchar(']', 150), [](){
-        pop.nextCreature();
+        viewer.nextCreature();
     }));
     userFunctions->push_back(UserFunction(new UIchar(' '), [](){
         pop.history.writeToConsole();
@@ -191,8 +192,8 @@ void Simulation::loadEvolve() {
     userFunctions->push_back(UserFunction(new UIchar('v'), [](){
         Phylogeny::scientificNames ^= true;
     }));
-    userFunctions->push_back(UserFunction(new UIchar('c'), [](){
-        cinematic ^= true;
+    userFunctions->push_back(UserFunction(new UIchar('c'), [this](){
+        this->cinematic ^= true;
     }));
 
     userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("COM Trail", &drawCOMTrails, 0.9, 0.9, 1.0, 1, by_position()), [userFunctions](){

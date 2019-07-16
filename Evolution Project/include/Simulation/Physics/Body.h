@@ -3,48 +3,40 @@
 
 #include "NeuralNetwork.h"
 #include "Vec.h"
+
 class Genome;
 class Ball;
 class Piston;
+class Cube;
+
 class Body {
     public:
         Vec moveTo;
         Vec com;
-        double radius;
         Vec initCOM;
+        Vec prevCOM;
 
         Body(const Genome& g);
-        virtual ~Body();
-
         Body(const Body &other);
-        Body& operator=(Body other);
+        virtual ~Body() {};
 
-        void moveCOGTo(Vec to);
-        void moveCOMTo(Vec to);
-        void centerCOG();
+        /* Movers */
+        virtual Vec getCOM() const = 0;
+        virtual void moveCOMTo(Vec to) = 0;
+        virtual void lowerToGround() = 0;
         void centerCOM();
-        void lowerToGround();
 
-        void draw() const;
-        void drawBrain(bool drawAxons) const;
+        /* Getters */
+        virtual double getLowestBodyHeight() const = 0;
+        virtual Vec getTop(const double offset) const = 0; // Centralized (COM) Top of Creature
+        virtual std::string getGenomeString() const;
 
-        void update(int t);
+        /* Drawing */
+        virtual void draw() const = 0;
+        virtual void drawBrain(bool drawAxons) const;
 
-        Vec getCOG() const; // Center of Geometry
-        Vec getTop() const; // Centralized (COM) Top of Creature
-        Vec getNodePosition(int index) const;
-        int getTopNodeIndex() const; // Highest Node of Creature
-        std::vector<Vec> getNodePositions() const;
-
-        std::string getGenomeString() const;
-    private:
-        double getLowestBodyHeight() const;
-        Vec getCOM() const; // Center of Mass
-
-        std::vector<Ball*> nodes;
-        std::vector<Piston*> muscles;
-        std::vector<Piston*> bones;
-        NeuralNetwork NN;
+        /* Physics */
+        virtual void update(int t) = 0;
 };
 
 #endif // BODY_H

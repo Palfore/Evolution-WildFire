@@ -6,8 +6,14 @@
 #include <math.h>
 #include "MyMath.h"
 #include "Button.h"
+#include "Viewer.h"
 
-static Population pop(200);
+#include "StickBall.h"
+
+#include "Factory.h"
+static const Factory creatureFactory("StickBall");
+static Population pop(200, creatureFactory);
+static Viewer viewer(pop.population, creatureFactory);
 
 static void draw() {
     const int r = 50;
@@ -21,7 +27,7 @@ static void draw() {
     DrawCylinder<Appearance::BARK>(Vec(-50, 50, 0), Vec(-50, 50, 50), 8);
     DrawSphere<Appearance::TREE_TOP>(Vec(-50, 50, 50), 25);
     DrawSkybox(500);
-    pop.draw();
+    viewer.draw();
 
 //    DrawRectangle<Appearance::LION>(0.6, 0.5, 1, 0.9);
 
@@ -30,7 +36,7 @@ static void draw() {
 }
 
 void Simulation::mainMenuMode() {
-    pop.nextStep();
+    viewer.nextStep();
     draw();
     GFramework::get->camera->cinematicCamera();
 }

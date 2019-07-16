@@ -75,6 +75,11 @@ int pmRandi(const int bounds);
 int pmRandi(const int minimal, const int maximal);
 
 
+/** @brief Returns a thread-safe bool with the given probability.
+ * @param trueChance The probability that true should be returned.
+ * @return bool true with probability trueChange
+ */
+bool randb(const double trueChance);
 
 
 Vec RandfR2(const double rmin, const double rmax);

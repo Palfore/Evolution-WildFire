@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include "Shapes.h"
+#include "NodeGene.h"
 
 Ball::Ball(Vec pos) : Ball(pos, 1) {}
 Ball::Ball(Vec pos, double r) : Ball(pos, r, 1) {}

@@ -2,14 +2,16 @@
 #define BALL_H
 
 #include "MyMath.h"
-#include "NodeGene.h"
-class Ball {
+#include "Component.h"
+#include "Vec.h"
+
+class NodeGene;
+class Ball : public Component{
     public:
         Ball(Vec pos);
         Ball(Vec pos, double r_t);
         Ball(Vec pos, double r_t, double m_t);
         Ball(NodeGene nodeGene);
-
 
         virtual ~Ball();
 
@@ -19,8 +21,8 @@ class Ball {
         double radius;
         double mass;
 
-        void draw() const;
-        void update(int t);
+        void draw() const override;
+        void update(int t) override;
 };
 
 #endif // BALL_H

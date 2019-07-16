@@ -3,11 +3,12 @@
 
 #include <vector>
 #include "MyMath.h"
+#include "Component.h"
 
 class Ball;
 class MuscleGene;
 class Genome;
-class Piston {
+class Piston : public Component {
     public:
         Piston(MuscleGene muscleGene, std::vector<Ball*> nodes);
         Piston(int a, int b, const Ball* ball1, const Ball* ball2, double speed_t); // This is used to copy instead.
@@ -18,13 +19,14 @@ class Piston {
         const double initialLength;
         const double speed;
 
-        void draw() const;
-        void update(int t);
+        void draw() const override;
+        void update(int t) override;
 
         int getIndex1() const;
         int getIndex2() const;
         Vec getPosition1() const;
         Vec getPosition2() const;
+
     private:
         int a;
         int b;

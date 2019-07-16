@@ -50,7 +50,7 @@ class GFramework {
         bool display = true;              ///< Whether the scene is being shown to the user. (set to false for maximum speed)
 
         static double constexpr FPS = 60;                ///< Frames per second for the simulation to run at.
-        static int constexpr RENDERING_DISTANCE = 1500;  ///< How far objects should be rendered.
+        static int constexpr RENDERING_DISTANCE = 3000;  ///< How far objects should be rendered.
 
         std::map<enum Appearance, Tex> textureMap = {};  ///< Maps an appearance to a texture for drawing.
         std::map<enum Appearance, Vec> colorMap = {};    ///< Maps an appearance to a color for drawing.
@@ -130,20 +130,20 @@ struct Camera {
     void cinematicCamera() {
         cinematicCamera(Vec(0,0,0));
     }
-    void cinematicCamera(const Vec& lookat) {
+    void cinematicCamera(const Vec& lookat, const double distance=400) {
         static int step = 0;
 
         double SPEED = 10.0;
         double speed = SPEED * 1 / 2000.0;
         static double arr[3] = {0.5, 1.0, 1.5};
 
-        double static theta = 0.0; // 0 - 2pi
-        double static phi = 0.0;
-        double static r = 200;
+        static double theta = 0.0; // 0 - 2pi
+        static double phi = 0.0;
+        static double r = distance;
 
-        double static thetaDot = 1.0 / 1000.0;
-        double static phiDot = 1.0 / 1000.0;
-        double static rDot = 1.0 / 1000.0;
+        static double thetaDot = 1.0 / 1000.0;
+        static double phiDot = 1.0 / 1000.0;
+        static double rDot = 1.0 / 1000.0;
 
         /* Change Speeds Randomly */
         if (randf(100) < (0.1)) {

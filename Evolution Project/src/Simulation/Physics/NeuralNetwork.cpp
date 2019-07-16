@@ -4,12 +4,11 @@
 
 #include <iostream>
 
-#define qwe std::cout<<
-#define asd <<", "<<
-#define zxc "\n"
-
-///< @todo Somewhere in the network cannot handle 0 outputs. Or layers of 0 size.
+///< @todo Somewhere in the network cannot handle 0 outputs. Or layers of 0 size. Maybe 0 should default to sinusoidal muscles?
 NeuralNetwork::NeuralNetwork(std::vector<AxonGene*> axons) : weights({}), layerSizes({}), potentials({}), w({}) {
+    if (axons.size() == 0) {
+        throw std::invalid_argument("A network with 0 axons was requested, but this is not possible.");
+    }
     int numLayers = -1;
     for (const AxonGene* axonGene: axons) {
         while (this->weights.size() <= (unsigned) axonGene->layer) weights.push_back({});
@@ -29,8 +28,6 @@ NeuralNetwork::NeuralNetwork(std::vector<AxonGene*> axons) : weights({}), layerS
         if (i == 0) layerSizes.push_back(num1);
         layerSizes.push_back(num2);
     }
-
-
     for (unsigned int l = 0; l < layerSizes.size() - 1; l++) {
         w.push_back({});
         for (int i = 0; i < layerSizes[l]; i++) {
@@ -43,7 +40,6 @@ NeuralNetwork::NeuralNetwork(std::vector<AxonGene*> axons) : weights({}), layerS
     for (const AxonGene* axonGene: axons) {
         w[axonGene->layer][axonGene->a][axonGene->b] = axonGene->weight;
     }
-
     for (unsigned int l = 0; l < layerSizes.size(); l++) { // NumLayers
         potentials.push_back({});
         for (int i = 0; i < layerSizes[l]; i++) {
@@ -67,7 +63,12 @@ void NeuralNetwork::draw(bool drawAxons) const { // Draw connections of one neur
     if (drawAxons) {
         for (int i = 0; i < N; i++) { // Layers
             for (unsigned int j = 0; j < weights[i].size(); j++) { // Axons
-                glLineWidth(fabs(weights[i][j].weight) * 10);
+                double weight = weights[i][j].weight;
+                if (fabs(weight) < 0.001) {
+                    weight = 0.001;
+                    continue;
+                }
+                glLineWidth(fabs(weight) * 10);
                 if (weights[i][j].weight > 0) {
                     DrawLine<Appearance::SKY_BLUE>(getX(weights[i][j].layer  , N), getY(weights[i][j].a, layerSizes[weights[i][j].layer  ]),
                                               getX(weights[i][j].layer+1, N), getY(weights[i][j].b, layerSizes[weights[i][j].layer+1]));

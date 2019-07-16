@@ -10,14 +10,19 @@
 #include <iostream>
 #include <algorithm>
 
+#include "Vec.h"
+
+
 class Gene;
 class Genome {
     public:
-        Genome(int n, int m, int b, std::vector<unsigned int> N);
+        Genome();
         Genome(const Genome &obj);
-        Genome(std::string genomeString);
+        Genome(const std::string genomeString);
         Genome& operator=(Genome other);
         virtual ~Genome();
+
+        void addGene(Gene* gene);
 
         double fitness;
 
@@ -40,7 +45,6 @@ class Genome {
             return typedGenes;
         }
     private:
-        Genome();
         std::unordered_map<char, std::vector<Gene*>> genes;
         static constexpr char VALUE_DELIMITER = ',';
         static constexpr char GENE_DELIMITER = '|';

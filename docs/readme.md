@@ -1,28 +1,39 @@
 # Evolution WildFire
 
-Evolution WildFire is a 3D interactive evolution simulator. Creatures are created by randomly assembling a set of mechanical components. These creatures are then run through the Genetic Algorithm, where the strong survive, and the weak... well let's not worry about them. Hopes for this project include, neural network control for the activation of creature muscles, as well as creating a populated 3D world in which a user can control and manipulate their creature, evolving it as it collects resources and fights off other hungry creatures.  
+Evolution WildFire is an real-time interactive 3D evolution simulator. Mechanical, animal-like creatures evolve to be the best. The strong survive, and the weak... well let's not worry about them. The creatures are evolved one by one as they modify their morphologies and their brains to learn how to control their bodies well enough to make it to the next generation.
 
 ![3D Terrain with creature in center shot](https://github.com/Palfore/Evolution-Project/blob/master/docs/3D%20Terrain%20w%20Creature.jpg "Evolution WildFire")
 
-## Getting Started
+More specifically, a creature is made up of muscles, bones, and contact nodes that all contribute to the creature's structure and function. However for complex motion they need a sophisticated control mechanism that can evolve along with their bodies. Introduce the Neural Network. This handy structure evolves, using the Genetic Algorithm, along with the body and acts as its brain, actuating their muscles to acomplish their goal.
 
-A semi-major priority in this project is to keep dependencies managed. As in, you should be able to simply copy the project onto a local drive and run & it right away. Unfortunetly, some of these dependencies are too large to reasonably store along with the rest of the project.
+Now evolving random structures to walk around and chase after things sounds awesome (and it is) but it's also quite a difficult task. Neural Networks are a massive field and figuring out the right way to implement one, and the right way to train the creatures is actually a pretty difficult task. Thankfully, this walking problem has been solved in two dimensions fairly easily, but in three dimensions not so much. Walking in 3D isn't that bad but the idea of goal seeking, being able to turn around and move to different targets, well that is still in the works.
 
-### Prerequisites
-
-This project is built using [Codeblocks](http://www.codeblocks.org/) as the IDE. For other IDEs feel free to try to figure it out!
+The real-time aspect of this simulator makes use of multi-threading. You will play around in one instance which lets you explore all the different creatures, while all the evolution takes place in the background.
 
 ### Installing
 
-Once this is installed the only dependency that must be managed by the user is the openGL/freeglut library. The [installation of freeglut](http://wiki.codeblocks.org/index.php/Using_FreeGlut_with_Code::Blocks) is relatively simple. 
+A semi-major priority in this project is to keep dependencies managed. As in, you should be able to simply copy the project onto a local drive and run it right away.
 
-If you place CodeBlocks in a weird place, you may get some linking errors and you'll have to ensure that codeblocks links everything up properly given your paths.
+To run:
+	Windows is already compiled. Mac you will have to compile it yourself.
+	It has to be run from the directory with bin, assets, src, etc in it (rather than just click on the exe).
+	Open up the command prompt and cd into the "Evolution Project" directory and type bin\Debug\"Evolution Project.exe"
 
-Then you can just load up the Evolution Project.cbp and hit run (or rebuild then run). A nice main menu should appear. If not the assets/logger.log should tell you at what point it failed.
+To develop/compile:
+	From https://solarianprogrammer.com/2017/11/22/install-codeblocks-gcc-windows/
+	1) Go to http://www.codeblocks.org/downloads/26 and download codeblocks-17.12-setup.exe
+	2) Go to https://nuwen.net/mingw.html and download mingw-16.1.exe to C:\ (not downloads)
+	Then you can just load up the Evolution Project.cbp and hit run (or rebuild then run).
 
-## Running the tests
+### Working with the Code
 
-Awkward, no automated tests yet...
+evolveMode.cpp is the main driving file.
+The Population constructor defines the default creature generation.
+Creature::update and MultiThread::processCreatures define how the creatures are evolved (The ones the user sees and the ones in the background).
+The FitnessCollector fitbit map defines the possible evolution types (Work could be done here to figure out the best way reward system to evolve goal seeking)
+NodeGene has a setting for twoD creatures.
+NeuralNetwork.cpp (somewhat obviously) defines the (basic) neural network. A library should probably be used for more sophisticated networks.
+
 
 ## Built With
 
@@ -43,8 +54,7 @@ We use CodeBlock's built-in support for auto versioning.
 
 ## Authors
 
-* **Nawar Ismail** - *Initial work* - [Palfore](https://github.com/Palfore) - [PalforeProjects](https://palforeprojects.com)
-* **Tomer Rockman** - *Getting Started*
+* **Nawar Ismail** - [Palfore Github](https://github.com/Palfore) - [PalforeProjects Website](https://palforeprojects.com)
 
 <!--
 ## License
@@ -53,5 +63,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 -->
 ## Acknowledgments
 
-* Cary Huang (A.K.A) Carykh - Inspiration
-* Matt Demers - Encouragement and facilitated an academic persual of this topic
+* Cary Huang (A.K.A) [Carykh](https://www.youtube.com/user/carykh) - Inspiration

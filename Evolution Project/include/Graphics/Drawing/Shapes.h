@@ -135,13 +135,13 @@ struct DrawPlane : DrawItem<A> {
      * @param xAngle The angle in degrees of rotation about the x axis.
      * @warning This method will be replaced by specifying a normal vector.
      */
-    DrawPlane(double length, double xAngle) : DrawPlane(0,0,0, length, xAngle) {}
+    DrawPlane(double length, double xAngle) : DrawPlane(0, 0, 0, length, xAngle) {}
 
     /** @brief Draws a flat plane centered at the given position.
      * @param pos The center of the plane.
      * @param length The length of the plane.
      */
-    DrawPlane(Vec pos, double length) : DrawPlane(pos, length, 0) {}
+    DrawPlane(Vec pos, double length) : DrawPlane(pos, length, 0, 0) {}
 
     /** @brief Draws a flat plane centered at the given position.
      * @param x The x coordinate of the center.
@@ -167,16 +167,72 @@ struct DrawPlane : DrawItem<A> {
      * @param xAngle The angle in degrees of rotation about the x axis.
      * @warning This method will be replaced by specifying a normal vector.
      */
-    DrawPlane(Vec pos, double length, double xAngle) : DrawItem<A>(dimension) {
-        draw(pos, length, xAngle);
+    DrawPlane(Vec pos, double length, double xAngle, double yAngle) : DrawItem<A>(dimension) {
+        draw(pos, length, xAngle, yAngle);
     }
-    private:void draw(Vec pos, double length, double xAngle) {
+
+    private:void draw(Vec pos, double length, double xAngle=0, double yAngle=0) {
         glBegin(GL_QUADS);
-            glTexVert3f(0, 0, pos.x + -length * cos(xAngle), pos.y + -length, pos.z +  length * sin(xAngle));
-            glTexVert3f(0, 1, pos.x + -length * cos(xAngle), pos.y +  length, pos.z +  length * sin(xAngle));
-            glTexVert3f(1, 1, pos.x +  length * cos(xAngle), pos.y +  length, pos.z + -length * sin(xAngle));
-            glTexVert3f(1, 0, pos.x +  length * cos(xAngle), pos.y + -length, pos.z + -length * sin(xAngle));
+            glTexVert3f(0, 0, pos.x + -length * cos(xAngle), pos.y + -length * cos(yAngle), pos.z +  length * sin(xAngle) * sin(yAngle));
+            glTexVert3f(0, 1, pos.x + -length * cos(xAngle), pos.y +  length * cos(yAngle), pos.z +  length * sin(xAngle) * sin(yAngle));
+            glTexVert3f(1, 1, pos.x +  length * cos(xAngle), pos.y +  length * cos(yAngle), pos.z + -length * sin(xAngle) * sin(yAngle));
+            glTexVert3f(1, 0, pos.x +  length * cos(xAngle), pos.y + -length * cos(yAngle), pos.z + -length * sin(xAngle) * sin(yAngle));
         glEnd();
+    }
+};
+
+/** @brief Draw a Cube. (T/C)
+ * @tparam A (Textured/Colored) The appearance of the Cube.
+ */
+template <Appearance A>
+struct DrawCube : DrawItem<A> {
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
+
+    /** @brief Draws a flat plane centered at the given position.
+     * @param pos The center of the plane.
+     * @param length The length of the plane.
+     * @param xAngle The angle in degrees of rotation about the x axis.
+     * @warning This method will be replaced by specifying a normal vector.
+     */
+    DrawCube(Vec pos, double length) : DrawItem<A>(dimension) {
+        draw(pos, length);
+    }
+
+    private:void draw(Vec pos, double length) {
+        double l = length / 2;
+        glBegin(GL_QUADS);
+            glTexVert3f(0, 0, pos.x + -l, pos.y + -l, pos.z - l);
+            glTexVert3f(0, 1, pos.x + -l, pos.y +  l, pos.z - l);
+            glTexVert3f(1, 1, pos.x +  l, pos.y +  l, pos.z - l);
+            glTexVert3f(1, 0, pos.x +  l, pos.y + -l, pos.z - l);
+
+            glTexVert3f(0, 0, pos.x + -l, pos.y + -l, pos.z + l);
+            glTexVert3f(0, 1, pos.x + -l, pos.y +  l, pos.z + l);
+            glTexVert3f(1, 1, pos.x +  l, pos.y +  l, pos.z + l);
+            glTexVert3f(1, 0, pos.x +  l, pos.y + -l, pos.z + l);
+
+            glTexVert3f(1, 0, pos.x + l, pos.y - l, pos.z - l);
+            glTexVert3f(1, 1, pos.x + l, pos.y - l, pos.z + l);
+            glTexVert3f(0, 0, pos.x + l, pos.y + l, pos.z + l);
+            glTexVert3f(0, 1, pos.x + l, pos.y + l, pos.z - l);
+
+            glTexVert3f(1, 0, pos.x - l, pos.y - l, pos.z - l);
+            glTexVert3f(1, 1, pos.x - l, pos.y - l, pos.z + l);
+            glTexVert3f(0, 0, pos.x - l, pos.y + l, pos.z + l);
+            glTexVert3f(0, 1, pos.x - l, pos.y + l, pos.z - l);
+
+            glTexVert3f(1, 0, pos.x - l, pos.y + l, pos.z - l);
+            glTexVert3f(1, 1, pos.x - l, pos.y + l, pos.z + l);
+            glTexVert3f(0, 0, pos.x + l, pos.y + l, pos.z + l);
+            glTexVert3f(0, 1, pos.x + l, pos.y + l, pos.z - l);
+
+            glTexVert3f(1, 0, pos.x - l, pos.y - l, pos.z - l);
+            glTexVert3f(1, 1, pos.x - l, pos.y - l, pos.z + l);
+            glTexVert3f(0, 0, pos.x + l, pos.y - l, pos.z + l);
+            glTexVert3f(0, 1, pos.x + l, pos.y - l, pos.z - l);
+        glEnd();
+
+
     }
 };
 
@@ -292,4 +348,49 @@ struct DrawCylinder : DrawItem<A> {
 };
 
 
+/** @brief Draw a 3D cylinder. (T/C)
+ * @tparam A (Textured/Colored) The appearance of the cylinder.
+ */
+template <Appearance A>
+struct DrawRing : DrawItem<A> {
+    static Drawing::Dimension constexpr dimension = static_cast<Drawing::Dimension>(3);
+
+    /** @brief Draws the cylinder.
+     * @param pos1 The starting position.
+     * @param pos2 The ending position.
+     * @param radius The radius of the cylinder.
+     * @return
+     *
+     */
+    DrawRing(Vec pos, double radius, double thickness) : DrawItem<A>(dimension) {
+        draw(pos, radius, thickness);
+    }
+    private:void draw(Vec pos, double radius, double thickness) {
+        int N = 100;
+        for (int i = 0; i < N; i++) {
+            double angle = i * 2 * PI / N;
+            Vec p = pos + radius * Vec(cos(angle), sin(angle), 0);
+            Vec dp = radius*sin(PI/N) * Vec(cos(PI/2 + angle), sin(PI/2 + angle), 0);
+            DrawCylinder<A>(p-dp, p+dp, thickness);
+        }
+
+    }
+};
+
+
 #endif // SHAPES_CPP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

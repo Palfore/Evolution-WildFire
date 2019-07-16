@@ -9,19 +9,19 @@
 class Body;
 class MultiThread {
     public:
-        static constexpr int SIMULATION_TIME = 6000; ///< @todo Move this a better place.
+        static constexpr int SIMULATION_TIME = 15'000/2; ///< @todo Move this a better place.
 
         std::vector<double> fitnesses;
         MultiThread() : fitnesses({}), t(), finished(false) {}
 
         bool isFinished() const;
-        static void spawnChildren(std::vector<MultiThread*>& mt, const std::vector<Body>& creatures);
+        static void spawnChildren(std::vector<MultiThread*>& mt, const std::vector<Body*>& creatures);
 
     private:
         std::thread t;
         bool finished;
-        static void processCreatures(const std::vector<Body>& bodies, std::vector<double> & fitnesses, bool & done);
-        void spawn(std::function<void(const std::vector<Body>&, std::vector<double> &, bool &)> f, const std::vector<Body>& creatures);
+        static void processCreatures(const std::vector<Body*>& bodies, std::vector<double> & fitnesses, bool & done);
+        void spawn(std::function<void(const std::vector<Body*>&, std::vector<double> &, bool &)> f, const std::vector<Body*>& creatures);
 
 };
 
@@ -31,7 +31,7 @@ class Threader {
 public:
     std::vector<MultiThread*> mt; // Dynamic since on exit, statically allocated references get deleted.
 
-    Threader(int num, const std::vector<Body>& bodies) : mt({}), isDone(true) {
+    Threader(int num, const std::vector<Body*>& bodies) : mt({}), isDone(true) {
         updateThreadCount(num);
         for (int i = 0; i < num; i++) {
             try {
@@ -78,7 +78,7 @@ public:
         return false;
     }
 
-    void spawnThreads(const std::vector<Body>& bodies) {
+    void spawnThreads(const std::vector<Body*>& bodies) {
         MultiThread::spawnChildren(mt, bodies);
         isDone = false;
     }

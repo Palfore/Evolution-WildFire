@@ -14,7 +14,7 @@ private:
 
     std::deque<Vec> trail;
 public:
-    static int constexpr SAMPLING_FREQUENCY = 5; // Record every n frames
+    static int constexpr SAMPLING_FREQUENCY = 20; // Record every n frames
 
     Trail();
     virtual ~Trail();

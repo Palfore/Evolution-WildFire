@@ -1,7 +1,7 @@
 #include "Phylogeny.h"
 #include "utility.h"
 #include "Genome.h"
-#include "BoneGene.h" // Connection
+#include "BoneGene.h"
 #include "MuscleGene.h"
 #include "NodeGene.h"
 #include "AxonGene.h"

@@ -9,14 +9,16 @@ class Simulation {
     public:
         GameMode gameMode;
         InputType inputType;
+        bool cinematic;
+
+        Simulation();
+        ~Simulation();
 
         void run(std::vector<UserFunction> *userFunctions, const double fps);
         void init();
         void setGameMode(GameMode g);
         void setInputType(InputType t);
 
-        Simulation();
-        ~Simulation();
     private:
         static constexpr GameMode INITIAL_GAME_MODE = GameMode::MAIN_MENU;
         static constexpr InputType INITIAL_INPUT_TYPE = InputType::DEFAULT;

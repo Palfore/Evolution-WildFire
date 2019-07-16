@@ -69,6 +69,10 @@ int pmRandi(const int minimal, const int maximal) {
     return x + sgn(x)*minimal;
 }
 
+bool randb(const double trueChance) {
+    return randf(100) < trueChance;
+}
+
 int comb(int n) {
     return 0.5 * n * (n - 1);
 }

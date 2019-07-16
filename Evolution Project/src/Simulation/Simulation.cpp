@@ -9,7 +9,7 @@
 #include <iostream>
 #include "version.h"
 
-Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE) {
+Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE), cinematic(false) {
     std::cout << "Compiled With GCC: " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' << __GNUC_PATCHLEVEL__ << " (" << __VERSION__ << ')' << '\n';
     std::cout << "Running Version: " << AutoVersion::FULLVERSION_STRING << '\n';
     LOG("Initialized Simulation.");
@@ -26,7 +26,7 @@ Simulation::~Simulation() {}
 #include "Population.h"
 #include "NodeGene.h"
 #include "Shapes.h"
-#include "MainMenu.h"
+
 void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps) {
     GFramework::get->readyDrawing();
 
@@ -50,8 +50,9 @@ void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps
         DrawString<Appearance::BLACK>("A warning has been logged. Press ENTER to continue.", 0.5, 0.5, by_percentage());
     }
 
-
-    GFramework::get->userInput.draw();
+    if (!this->cinematic) {
+        GFramework::get->userInput.draw();
+    }
     GFramework::get->showScene();
 }
 

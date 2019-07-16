@@ -4,90 +4,26 @@
 #include "Genome.h"
 #include "MultiThread.h"
 
-Population::Population(int numMembers) : population({}), viewingGenomes({}), displayingCreature(nullptr), history(), gen(0), activeCreatureIndex(0), simStep(0) {
+Population::Population(int numMembers, const Factory factory_t) : population({}), history(), gen(0), factory(factory_t) {
     for (int i = 0; i < numMembers; i++) {
-        constexpr int n = 5;
-        constexpr int m = comb<n>();
-        constexpr int b = 0;
-        const std::vector<unsigned int> N = {12, 12, 8, 8, 6, 6};
-        static_assert(comb<n>() >= m + b, "Too many connections.");
-
-        Genome* g = new Genome(n, m, b, N); ///< Comb should be a static check
+        Genome* g = factory.createGenome();
         population.push_back(g);
-        viewingGenomes.push_back(*g);
     }
-    showCreature(0);
 }
 
 Population::~Population() {
     for (auto * member: population) {
         delete member;
     }
-    delete displayingCreature;
 }
 
-void Population::draw() const {
-    displayingCreature->draw();
-}
-
-void Population::nextStep() {
-    displayingCreature->update(simStep++);
-    if (simStep > 1'000'000'000) simStep = 0; // Prevent Overflow
-}
-
-int Population::getSimStep() const {
-    return simStep;
-}
-
-std::vector<Body> Population::getBodies() const {
-    std::vector<Body> bodies;
+std::vector<Body*> Population::getBodies() const {
+    std::vector<Body*> bodies;
     bodies.reserve(this->population.size());
     for (const auto& genome: this->population) {
-        bodies.push_back(Body(*genome));
+        bodies.push_back(factory.createBody(*genome));
     }
     return bodies;
-}
-
-
-void Population::printCurrentGenome() const {
-    std::cout << this->population[activeCreatureIndex]->toString() << '\n';
-}
-
-void Population::printGenome(int index) const {
-    std::cout << this->population[index]->toString() << '\n';
-}
-
-void Population::nextCreature() {
-    int index = (this->activeCreatureIndex + 1) % this->population.size();
-    showCreature(index);
-}
-
-void Population::prevCreature() {
-    int index = (this->activeCreatureIndex - 1) >= 0 ? this->activeCreatureIndex - 1 :  this->population.size() - 1;
-    showCreature(index);
-}
-
-void Population::showCreature(int index) {
-    activeCreatureIndex = index;
-    delete displayingCreature;
-    displayingCreature = new Creature(viewingGenomes[activeCreatureIndex]);
-    simStep = 0;
-}
-
-void Population::resetCreature() {
-    showCreature(this->activeCreatureIndex);
-}
-
-void Population::updateViewingGenomes() {
-    viewingGenomes.clear();
-    for (const auto& genome: this->population) {
-        viewingGenomes.push_back(*genome);
-    }
-    showCreature(0);
-}
-
-const Creature& Population::getActiveCreature() const {
-    return *displayingCreature;
 }
 
 double Population::getAvg() const {
@@ -98,11 +34,9 @@ double Population::getAvg() const {
     return sum / this->population.size();
 }
 
-
 void Population::recordHistory() {
     history.addPoint(population, gen);
 }
-
 
 void Population::printHistory() {
     history.writeToConsole();
@@ -132,7 +66,7 @@ void Population::sortPop() {
 
 void Population::select() {
     for (unsigned int i = 0; i < this->population.size() / 2; i++) {
-        delete this->population[i + this->population.size() / 2]; // Use smart pointers for population manager [future]
+        delete this->population[i + this->population.size() / 2];
         this->population[i + this->population.size() / 2] = new Genome(*this->population[i]);
     }
 }
@@ -142,14 +76,6 @@ void Population::mutate() {
         population[i]->mutate();
     }
 }
-
-
-int Population::getMemberIndex() const {
-    return activeCreatureIndex;
-}
-
-
-
 
 
 
