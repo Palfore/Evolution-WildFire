@@ -4,7 +4,7 @@
 #include "Genome.h"
 #include "MultiThread.h"
 
-Population::Population(int numMembers, const Factory factory_t) : population({}), history(), gen(0), factory(factory_t) {
+Population::Population(int numMembers, const Factory& factory_t) : population({}), history(), gen(0), factory(factory_t) {
     for (int i = 0; i < numMembers; i++) {
         Genome* g = factory.createGenome();
         population.push_back(g);
@@ -17,11 +17,11 @@ Population::~Population() {
     }
 }
 
-std::vector<Body*> Population::getBodies() const {
-    std::vector<Body*> bodies;
+std::vector<Creature*> Population::getBodies() const {
+    std::vector<Creature*> bodies;
     bodies.reserve(this->population.size());
     for (const auto& genome: this->population) {
-        bodies.push_back(factory.createBody(*genome));
+        bodies.push_back(factory.createCreature(*genome));
     }
     return bodies;
 }

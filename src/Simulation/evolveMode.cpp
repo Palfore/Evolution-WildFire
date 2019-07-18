@@ -19,13 +19,14 @@
 
 #include "Cuboid.h"
 #include "StickBall.h"
+#include "Vec2.h"
 
 static constexpr int populationSize = 0.5*256;
 
 static int gameSpeed = 6;
 static bool drawGraph = false;
 static bool drawCOMTrails = false;
-static bool drawNodeTrails = false;
+static bool drawDebug = false;
 static bool drawBrain = false;
 static bool drawLines = false;
 
@@ -46,13 +47,67 @@ static Threader threader(0, pop.getBodies());
 static void drawing(double fps, bool cinematic) {
     /* Environment */
     DrawSkybox(1000);
-    const int r = 4*50;
-    int bounds = 4*1000;
-    for (int x = -bounds; x < bounds; x+=r) {
-        for (int y = -bounds; y < bounds;y += r) {
-           DrawPlane<Appearance::GRASS>(Vec(x, y, 0), r/2);
+
+    static const auto f = [](double x, double y) {
+        double k = 0.05;
+        return 20*sin(k*x)*cos(k*y) * exp(cos(k*x));
+    };
+
+    const double r = 5;
+    double bounds = 400;
+    static std::map<Vec2, double> ground = {};
+    if (ground.empty()) {
+        for (double x = -bounds; x <= bounds; x+=r) {
+            for (double y = -bounds; y <= bounds; y+=r) {
+                const double l = r / 2;
+                ground.insert({Vec2(x - l, y - l), f(x-l, y-l)});
+                ground.insert({Vec2(x - l, y + l), f(x-l, y+l)});
+                ground.insert({Vec2(x + l, y + l), f(x+l, y+l)});
+                ground.insert({Vec2(x + l, y - l), f(x+l, y-l)});
+            }
         }
     }
+
+    GLfloat lightPos[] = { 1000, 1000, 500, 0.5f }; //x and y are the cursor's position
+    DrawSphere<Appearance::WHITE>(Vec(lightPos[0], lightPos[1], lightPos[2]), 20);
+    Drawing::changeColor(Appearance::WHITE);
+    glEnable(GL_TEXTURE_2D);
+    Drawing::changeTexture(Appearance::GRASS);
+
+
+    glShadeModel(GL_SMOOTH);
+    GLfloat diffuseLight[] = {0.9f, 0.9f, 0.9f, 1.0f};
+    glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+    glBegin(GL_QUADS);
+    for (double x = -bounds; x <= bounds; x+=r) {
+        for (double y = -bounds; y <= bounds; y+=r) {
+            const double l = r / 2;
+            auto g = [](double x_, double y_){
+                return ground[Vec2(x_, y_)];
+            };
+
+            Vec P1 = Vec(x -  l, y -  l, g(x-l, y-l));
+            Vec P2 = Vec(x -  l, y +  l, g(x-l, y+l));
+            Vec P3 = Vec(x +  l, y +  l, g(x+l, y+l));
+            Vec P4 = Vec(x +  l, y -  l, g(x+l, y-l));
+
+            Vec a = P1 - P2;
+            Vec b = P3 - P2;
+            Vec N = a.cross(b).getUnit();
+            glNormal3d(N.x, N.y, N.z);
+            glTexVert3f(0, 0, P1);
+            glTexVert3f(0, 1, P2);
+            glTexVert3f(1, 1, P3);
+            glTexVert3f(1, 0, P4);
+        }
+    }
+    glEnd();
 
     /* Single Tree */
     auto tree = Vec(-50, 50, 0);
@@ -63,7 +118,7 @@ static void drawing(double fps, bool cinematic) {
     DrawSphere<Appearance::FOOD>(Vec(viewer.getActiveCreature().body->moveTo.x, viewer.getActiveCreature().body->moveTo.y, 10), 10);
 
     viewer.draw();
-    viewer.getActiveCreature().drawTrails(drawNodeTrails, drawCOMTrails);
+    viewer.getActiveCreature().drawTrails(drawCOMTrails);
 
     /////////////////////////////////////////// 2D Drawing ///////////////////////////////////////////////////
     if (cinematic) return;
@@ -85,7 +140,7 @@ static void drawing(double fps, bool cinematic) {
         DrawString<Appearance::BLACK>(name[0] + ": " +  name[1], 0.01, place+=inc, by_percentage(), false, false);
     }
 
-    viewer.getActiveCreature().drawNodeData();
+    viewer.getActiveCreature().drawDebug(drawDebug);
 
     /* Overlays */
     if (drawGraph) {
@@ -124,13 +179,12 @@ void Simulation::evolveMode(double fps) {
         default: break;
     }
 
-    processingGeneration = std::max(0, --processingGeneration);
-    if (!processingGeneration && threader.canProcess()) {
+    processingGeneration = std::max(0, processingGeneration);
+    if (!processingGeneration-- && threader.canProcess()) {
         pop.updateFitnesses(threader.getFitnesses(pop.population.size()));
         processingGeneration = 10;
     }
     threader.update(numThreads);
-
 
     for (int i = 0; i < gameSpeed; i++) {
         viewer.nextStep();
@@ -159,8 +213,44 @@ void Simulation::loadEvolve() {
     userFunctions->push_back(UserFunction(new UIchar('p'), [](){
         viewer.printCurrentGenome();
     }));
+    userFunctions->push_back(UserFunction(new WindowPress(), [userFunctions](){
+        for (const auto& f: *userFunctions) {
+            if (f.element->isClickable()) {
+                if (f.element->callFunction == CALL_TYPE::ACTION) {
+                    return;
+                }
+            }
+        }
+        GLdouble modelview[16];
+        GLdouble projection[16];
+        GLint viewport[4];
+
+        Drawing::enable3D(true);
+            glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+            glGetDoublev(GL_PROJECTION_MATRIX, projection);
+            glGetIntegerv(GL_VIEWPORT, viewport);
+        Drawing::enable2D();
+
+        auto mouse = GFramework::get->mouse;
+        double height = GFramework::get->windowSize.y;
+        GLdouble x0, y0, z0;
+        GLdouble x1, y1, z1;
+        gluUnProject(mouse.x, height-mouse.y, 0, modelview, projection, viewport, &x0, &y0, &z0);
+        gluUnProject(mouse.x, height-mouse.y, 1, modelview, projection, viewport, &x1, &y1, &z1);
+
+        Vec u0 = Vec(x0, y0, z0);
+        Vec u1 = Vec(x1, y1, z1);
+        Vec u  = (u1 - u0).getUnit();
+        double r = (0 - u0.z) / u.z;
+
+        Vec s = u0 + u*r;
+        viewer.getActiveCreature().body->moveTo = s;
+    }));
     userFunctions->push_back(UserFunction(new UIchar('o'), [](){
         viewer.showCreature(0);
+    }));
+    userFunctions->push_back(UserFunction(new UIchar('b'), [](){
+        GFramework::get->camera->reset();
     }));
     userFunctions->push_back(UserFunction(new UIchar('O'), [](){
         viewer.updateViewingGenomes(pop.population);
@@ -197,9 +287,6 @@ void Simulation::loadEvolve() {
     }));
 
     userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("COM Trail", &drawCOMTrails, 0.9, 0.9, 1.0, 1, by_position()), [userFunctions](){
-
-    }));
-    userFunctions->push_back(UserFunction(new Checkbox<Appearance::GREEN>("Node Trails", &drawNodeTrails, 0.9, 0.8, 1.0, 0.9, by_position()), [userFunctions](){
 
     }));
 

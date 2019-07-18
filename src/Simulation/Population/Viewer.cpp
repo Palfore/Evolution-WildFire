@@ -2,11 +2,66 @@
 #include "Genome.h"
 #include "Creature.h"
 #include "Logger.h"
+#include "Shapes.h"
 
 #include "Factory.h"
 
-Viewer::Viewer(std::vector<Genome*> population, const Factory factory): displayingCreature(nullptr), viewingGenomes({}), activeCreatureIndex(0), simStep(0), factory(factory) {
+
+
+CreatureViewer::CreatureViewer(const std::string& g, Creature* b) : CreatureViewer(Genome(g), b) {}
+CreatureViewer::CreatureViewer(const Genome& genome, Creature* b) : body(b), phylogeny(genome), fitness(), COMTrail() {
+    body->moveTo = Vec(pmRandf(100, 200), 0*pmRandf(70, 100), 0);
+}
+
+CreatureViewer::CreatureViewer(const CreatureViewer &other) :
+    body(other.body), phylogeny(other.phylogeny), fitness(other.fitness), COMTrail(other.COMTrail) {
+}
+
+CreatureViewer::~CreatureViewer() {
+    delete body;
+}
+
+CreatureViewer& CreatureViewer::operator=(CreatureViewer& other) {
+    std::swap(COMTrail, other.COMTrail);
+    std::swap(fitness, fitness);
+    std::swap(body, other.body);
+    return *this;
+}
+
+void CreatureViewer::draw() const {
+    body->draw();
+    DrawRing<Appearance::WHITE>(Vec(body->com.x, body->com.y, 0), 10, 0.5);
+}
+
+void CreatureViewer::drawBrain(bool drawLines) const {
+    body->drawBrain(drawLines);
+}
+
+void CreatureViewer::drawDebug(bool doDraw) const {
+    body->drawDebug(doDraw);
+}
+
+void CreatureViewer::drawTrails(bool drawCOMTrails) const {
+    if (drawCOMTrails) {
+        COMTrail.draw();
+    }
+}
+
+void CreatureViewer::update(int t) { // returns fitness update
+    if (t % Trail::SAMPLING_FREQUENCY == 0) {
+       COMTrail.addPoint(body->com);
+    }
+    body->update(t);
+    fitness.postUpdate(FitnessCollector::MOVE_TO, *body);
+}
+
+
+Viewer::Viewer(std::vector<Genome*> population, const Factory& factory_t): factory(factory_t), displayingCreature(nullptr), viewingGenomes({}), activeCreatureIndex(0), simStep(0) {
 	this->updateViewingGenomes(population);
+}
+
+Viewer::~Viewer() {
+    delete this->displayingCreature;
 }
 
 void Viewer::draw() const {
@@ -44,9 +99,9 @@ void Viewer::showCreature(int index) {
     activeCreatureIndex = index;
     delete displayingCreature;
     try {
-    	displayingCreature = new Creature(
+    	displayingCreature = new CreatureViewer(
             viewingGenomes[activeCreatureIndex],
-            this->factory.createBody(viewingGenomes[activeCreatureIndex])
+            this->factory.createCreature(viewingGenomes[activeCreatureIndex])
         );
 	} catch (const std::exception& e) {
 		LOG(e.what(), LogDegree::FATAL, LogType::GENETIC);
@@ -66,12 +121,11 @@ void Viewer::updateViewingGenomes(std::vector<Genome*> population) {
     showCreature(0);
 }
 
-const Creature& Viewer::getActiveCreature() const {
+const CreatureViewer& Viewer::getActiveCreature() const {
     return *displayingCreature;
 }
 
 int Viewer::getMemberIndex() const {
     return activeCreatureIndex;
 }
-
 

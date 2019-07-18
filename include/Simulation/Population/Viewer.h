@@ -5,37 +5,66 @@
 class Genome;
 class Creature;
 #include "Factory.h"
+#include "Phylogeny.h"
+#include "Fitness.h"
+#include "Trail.h"
 
-struct Viewer {
-    Viewer(std::vector<Genome*> population, const Factory factory);
-    Viewer(const Viewer& other) = delete;
-    operator=(const Viewer& other) = delete;
+class CreatureViewer {
+    public:
+        Creature* body;
+        Phylogeny phylogeny;
+        FitnessCollector fitness;
 
-	Creature * displayingCreature;       ///< The creature which is shown to the user. Future expansion might make this a vector
+        CreatureViewer(const Genome& g, Creature* b);
+        CreatureViewer(const std::string& g, Creature* b);
+        CreatureViewer(const CreatureViewer &other);
+        ~CreatureViewer();
+        CreatureViewer& operator=(CreatureViewer& other);
 
-	/// Getting Details
-    void printCurrentGenome() const;
-    void printGenome(int index) const;  // todo: print best, wosrt, average (one closest to average fitness)
+        void draw() const;
+        void drawBrain(bool drawAxons) const;
+        void drawTrails(bool drawCOMTrails) const;
+        void drawDebug(bool doDraw) const;
 
-    /// Handling Current Creature
-    void draw() const;
-    void nextStep();
-    int getSimStep() const;
+        void update(int t);
 
-    void nextCreature();
-    void prevCreature();
-    void showCreature(int index); // todo: show best, show worst, show average, etc
-    void resetCreature();
-    void updateViewingGenomes(std::vector<Genome*> population);
+    private:
+        Trail COMTrail;
+};
 
-    int getMemberIndex() const;
-    const Creature& getActiveCreature() const;
+class Viewer {
+    public:
+        Viewer(std::vector<Genome*> population, const Factory& factory);
+        Viewer(const Viewer& other) = delete;
+        ~Viewer();
+        operator=(const Viewer& other) = delete;
 
-private:
-    const Factory factory;
-    std::vector<Genome> viewingGenomes;
-    int activeCreatureIndex;
-    int simStep;
+        /// Displayed Creature Methods
+        void draw() const;
+        void nextStep();
+        int getSimStep() const;
+        void printCurrentGenome() const;
+        void printGenome(int index) const;
+
+        /// Updating Displayed Creature
+        void nextCreature();
+        void prevCreature();
+        void showCreature(int index);
+        void resetCreature();
+
+        /// Updating Genomes
+        void updateViewingGenomes(std::vector<Genome*> population);
+
+        /// Getters
+        int getMemberIndex() const;
+        const CreatureViewer& getActiveCreature() const;
+
+    private:
+        const Factory& factory;
+    	CreatureViewer* displayingCreature;
+        std::vector<Genome> viewingGenomes;
+        int activeCreatureIndex;
+        int simStep;
 };
 
 #endif // VIEWER_H

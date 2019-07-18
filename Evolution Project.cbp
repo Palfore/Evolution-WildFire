@@ -15,6 +15,7 @@
 				<Compiler>
 					<Add option="-fomit-frame-pointer" />
 					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
 					<Add option="-Wnon-virtual-dtor" />
 					<Add option="-Wshadow" />
 					<Add option="-Winit-self" />
@@ -170,7 +171,6 @@
 		<Unit filename="src/Math/Vec2.cpp" />
 		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
 		<Unit filename="src/Simulation/Creatures/Cuboid.cpp" />
-		<Unit filename="src/Simulation/Creatures/Factory.cpp" />
 		<Unit filename="src/Simulation/Creatures/Phylogeny.cpp" />
 		<Unit filename="src/Simulation/Creatures/StickBall.cpp" />
 		<Unit filename="src/Simulation/Creatures/Trail.cpp" />

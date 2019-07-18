@@ -5,13 +5,13 @@
 #include <map>
 
 #include <functional>
-#include "Body.h"
+#include "Creature.h"
 
-typedef std::function<void(double*, Body&)> oneBodyFunc;
+typedef std::function<void(double*, Creature&)> oneCreatureFunc;
 
 class FitnessTop {
     public:
-        virtual void call(double*, Body&) {}
+        virtual void call(double*, Creature&) {}
         double fitness;
         virtual ~FitnessTop() {}
 
@@ -19,13 +19,13 @@ class FitnessTop {
         FitnessTop() : fitness(0) {}
 };
 
-class OneBodyFitness : public FitnessTop {
+class OneCreatureFitness : public FitnessTop {
     public:
-        oneBodyFunc post;
-        void call(double* f, Body& body) override {
+        oneCreatureFunc post;
+        void call(double* f, Creature& body) override {
             post(f, body);
         }
-        OneBodyFitness(oneBodyFunc func) : post(func) {}
+        OneCreatureFitness(oneCreatureFunc func) : post(func) {}
 };
 
 class FitnessCollector {
@@ -38,11 +38,11 @@ public:
     };
 
     std::unordered_map<FitnessType, FitnessTop*> fitbit = {
-        {TOTAL_DISTANCE      , new OneBodyFitness([](double* f, Body& body) {
+        {TOTAL_DISTANCE      , new OneCreatureFitness([](double* f, Creature& body) {
                                             body.moveTo = Vec(10000, 10000, 0);
                                             *f = euc2D(body.com, body.initCOM);
                                        })},
-        {MOVE_TO              , new OneBodyFitness([](double* f, Body& body) {
+        {MOVE_TO              , new OneCreatureFitness([](double* f, Creature& body) {
                                             Vec p = body.moveTo - body.com;
                                             p.z = 0;
                                             Vec r_hat = p / p.length();
@@ -55,7 +55,7 @@ public:
                                                 // body.moveTo *= -1;//+= Vec(pmRandf(100, 200), 0, 0);
                                             }
                                         })},
-        {STRAIGHT_LINE        , new OneBodyFitness([](double*f, Body& body) {
+        {STRAIGHT_LINE        , new OneCreatureFitness([](double*f, Creature& body) {
                                             body.moveTo = Vec(10000, 10000, 0);
                                             *f = body.com.x - body.initCOM.x - 0.00001*(body.com.y * body.com.y);
                                         })},
@@ -72,7 +72,7 @@ public:
     FitnessCollector() {};
     ~FitnessCollector() {};
 
-    void postUpdate(FitnessType fitnessType, Body& body) {
+    void postUpdate(FitnessType fitnessType, Creature& body) {
         fitbit.at(fitnessType)->call(&fitbit.at(fitnessType)->fitness, body);
     }
 

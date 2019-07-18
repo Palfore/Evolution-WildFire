@@ -7,10 +7,35 @@
 
 struct by_position{};
 struct by_dims{};
+
+class WindowPress : public UIElement {
+    public:
+        WindowPress(int ID=-1) : UIElement(ID) {}
+
+        void affectState(int, int, CALL_TYPE type) override {
+            switch(type) {
+                case CALL_TYPE::NONE: break;
+                case CALL_TYPE::ACTION: callFunction = type; break;
+                case CALL_TYPE::RELEASE: callFunction = type; break;
+                default: break;
+            }
+        }
+
+        void update() override {
+
+        }
+};
+
+
+
 ///< @todo Move Button class into UserInput folder.
 template <Appearance A>
 class Button : public UIElement { // only handles left clicks
     public:
+        bool isClickable() override {
+            return true;
+        }
+
         void affectState(int mx, int my, CALL_TYPE type) override {
             hovering = false;
             if (this->isIn(mx, my)) {

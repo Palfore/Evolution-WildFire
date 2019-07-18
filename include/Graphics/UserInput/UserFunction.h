@@ -26,8 +26,13 @@ class UIElement {
         virtual void affectState(int mx, int my, CALL_TYPE type);
         virtual void update() = 0;
         virtual void draw() const {}
-    protected:
+
+        virtual bool isClickable() {
+            return false;
+        }
+
         CALL_TYPE callFunction;
+    protected:
 
 };
 

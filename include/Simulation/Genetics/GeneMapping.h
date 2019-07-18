@@ -12,24 +12,20 @@
 #include <functional>
 #include <unordered_map>
 
-using geneMap = const std::unordered_map<char, const std::function<Gene*(const std::string)>>;
-static geneMap GeneConstructors() {
-    const std::unordered_map<char, const std::function<Gene*(const std::string)>> m = {{
-        NodeGene::symbol, [](const std::string representation) {
-            return new NodeGene(representation);
-        }},{
-        MuscleGene::symbol, [](const std::string representation) {
-            return new MuscleGene(representation);
-        }},{
-        BoneGene::symbol, [](const std::string representation) {
-            return new BoneGene(representation);
-        }},{
-        CubeGene::symbol, [](const std::string representation) {
-            return new CubeGene(representation);
-        }},{
-        AxonGene::symbol, [](const std::string representation) {
-            return new AxonGene(representation);
-        }},
-    };
-    return m;
-}
+const std::unordered_map<char, const std::function<Gene*(const std::string)>> GENE_MAP = {{
+    NodeGene::symbol, [](const std::string representation) {
+        return new NodeGene(representation);
+    }},{
+    MuscleGene::symbol, [](const std::string representation) {
+        return new MuscleGene(representation);
+    }},{
+    BoneGene::symbol, [](const std::string representation) {
+        return new BoneGene(representation);
+    }},{
+    CubeGene::symbol, [](const std::string representation) {
+        return new CubeGene(representation);
+    }},{
+    AxonGene::symbol, [](const std::string representation) {
+        return new AxonGene(representation);
+    }},
+};

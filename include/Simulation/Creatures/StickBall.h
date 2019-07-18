@@ -1,16 +1,17 @@
 #ifndef STICKBALL_H
 #define STICKBALL_H
 
-#include "Body.h"
+#include "Creature.h"
 #include <vector>
 
 class Genome;
-class StickBall : public Body {
+class StickBall : public Creature {
 	public:
 		static Genome* createGenome(int n=5, int m=comb<5>(), int b=0, std::vector<unsigned int> sizes={16});
 
 	    StickBall(const Genome& g);
 	    StickBall(const StickBall &other);
+	    operator=(const StickBall &other) = delete;
 	    virtual ~StickBall();
 
 	    void moveCOMTo(Vec to) override;

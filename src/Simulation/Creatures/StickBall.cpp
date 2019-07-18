@@ -13,6 +13,17 @@
 
 #include <limits>
 
+static Vec* get_head_location(const std::vector<Ball*>& nodes) {
+    Vec* head = &nodes[0]->position;
+    double minZ = -std::numeric_limits<double>::max();
+    for (const auto& node: nodes) {
+        double nodeZ = node->position.z;
+        head = nodeZ > minZ ? &node->position : head;
+        minZ = nodeZ > minZ ? nodeZ : minZ;
+    }
+    return head;
+}
+
 Genome* StickBall::createGenome(int n, int m, int b, std::vector<unsigned int> sizes) {
     if (m + b > comb(n)) LOG("Too many connections for valid creature", LogDegree::FATAL, LogType::GENETIC);
     if (n < 0) LOG("Creature created with 0 nodes.", LogDegree::FATAL, LogType::GENETIC);
@@ -41,7 +52,7 @@ Genome* StickBall::createGenome(int n, int m, int b, std::vector<unsigned int> s
 }
 
 
-StickBall::StickBall(const Genome& genome) : Body(genome), head(nullptr), nodes({}), muscles({}), bones({}), NN(genome.getGenes<AxonGene>()) {
+StickBall::StickBall(const Genome& genome) : Creature(genome), head(nullptr), nodes({}), muscles({}), bones({}), NN(genome.getGenes<AxonGene>()) {
     for (auto const& gene: genome.getGenes<NodeGene>()) {
         this->nodes.push_back(new Ball(*gene));
     }
@@ -52,14 +63,7 @@ StickBall::StickBall(const Genome& genome) : Body(genome), head(nullptr), nodes(
         this->bones.push_back(new Piston(*static_cast<MuscleGene*>(gene), this->nodes));
     }
 
-    /* Determine Head Node */
-    double minZ = -std::numeric_limits<double>::max();
-    for (const auto& node: this->nodes) {
-        double nodeZ = node->position.z;
-        this->head = nodeZ > minZ ? &node->position : this->head;
-        minZ = nodeZ > minZ ? nodeZ : minZ;
-    }
-
+    this->head = get_head_location(this->nodes);
     lowerToGround();
     centerCOM();
     com = prevCOM = initCOM = getCOM();
@@ -79,7 +83,7 @@ StickBall::~StickBall() {
 }
 
 
-StickBall::StickBall(const StickBall &other) : Body(other), nodes({}), muscles({}), bones({}), NN(other.NN) {
+StickBall::StickBall(const StickBall &other) : Creature(other), head(nullptr), nodes({}), muscles({}), bones({}), NN(other.NN) {
     for (auto const& node: other.nodes) {
         this->nodes.push_back(new Ball(*node));
     }
@@ -91,6 +95,7 @@ StickBall::StickBall(const StickBall &other) : Body(other), nodes({}), muscles({
         this->bones.push_back(new Piston(bone->getIndex1(), bone->getIndex2(),
                                             this->nodes[bone->getIndex1()], this->nodes[bone->getIndex2()], bone->speed));
     }
+    this->head = get_head_location(this->nodes);
 }
 
 void StickBall::draw() const {
@@ -262,7 +267,7 @@ void StickBall::update(int t) {
 
 
 std::string StickBall::getGenomeString() const {
-    std::string genomeString = Body::getGenomeString();
+    std::string genomeString = Creature::getGenomeString();
     for (auto const& node : this->nodes) {
         genomeString += Gene::toStringFormat(std::vector<std::string>({std::string(1, NodeGene::symbol),
             utility::numToStr<double>(node->position.x),

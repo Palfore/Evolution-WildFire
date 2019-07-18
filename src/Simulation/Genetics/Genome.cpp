@@ -7,7 +7,7 @@
 #include <deque>
 
 Genome::Genome() : fitness(0), genes({}) {
-    for (auto const& [geneSymbol, _] : GeneConstructors()) {
+    for (auto const& [geneSymbol, _] : GENE_MAP) {
         this->genes.insert({geneSymbol, {}});
     }
 }
@@ -35,7 +35,7 @@ Genome::Genome(const std::string genomeString) : Genome() {
         std::vector<std::string> headAndValues = utility::split<std::vector>(gene, VALUE_DELIMITER, 1);
         char head = headAndValues[0][0];
 
-        auto geneGenerator = GeneConstructors().find(head)->second;
+        auto geneGenerator = GENE_MAP.find(head)->second;
         this->genes[head].push_back( geneGenerator(headAndValues[1]));
     }
 }

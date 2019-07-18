@@ -1,8 +1,9 @@
 #include "MultiThread.h"
 
 #include "Creature.h"
+#include "Fitness.h"
 
-void MultiThread::spawn(std::function<void(const std::vector<Body*>&, std::vector<double> &, bool &)> f, const std::vector<Body*>& creatures) {
+void MultiThread::spawn(std::function<void(const std::vector<Creature*>&, std::vector<double> &, bool &)> f, const std::vector<Creature*>& creatures) {
     fitnesses.clear();
     t = std::thread(f, creatures, std::ref(this->fitnesses), std::ref(this->finished));
     t.detach();
@@ -13,8 +14,8 @@ bool MultiThread::isFinished() const {
     return finished;
 }
 
-void MultiThread::processCreatures(const std::vector<Body*>& creatures, std::vector<double> & fitnesses, bool & done) {
-    for (Body* body: creatures) {
+void MultiThread::processCreatures(const std::vector<Creature*>& creatures, std::vector<double> & fitnesses, bool & done) {
+    for (Creature* body: creatures) {
         FitnessCollector f;
         body->moveTo = Vec(pmRandf(100, 101) + 0*pmRandf(100, 200), 0*pmRandf(70, 100), 0);
         for (int i = 0; i < SIMULATION_TIME; i++) {
@@ -27,7 +28,7 @@ void MultiThread::processCreatures(const std::vector<Body*>& creatures, std::vec
     done = true;
 }
 
-void MultiThread::spawnChildren(std::vector<MultiThread*>& mt, const std::vector<Body*>& creatures) {
+void MultiThread::spawnChildren(std::vector<MultiThread*>& mt, const std::vector<Creature*>& creatures) {
     if (mt.empty()) return;
     auto begining = creatures.cbegin();
     const int blockSize = creatures.size() / mt.size();
@@ -35,6 +36,6 @@ void MultiThread::spawnChildren(std::vector<MultiThread*>& mt, const std::vector
         auto e1 = begining + i     * blockSize;
         auto e2 = begining + (i+1) * blockSize;
         if (i == mt.size() - 1) e2 = creatures.cend();
-        mt[i]->spawn(processCreatures, std::vector<Body*>(e1, e2));
+        mt[i]->spawn(processCreatures, std::vector<Creature*>(e1, e2));
     }
 }

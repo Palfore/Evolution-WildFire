@@ -1,45 +1,44 @@
-#ifndef CREATURE_H
-#define CREATURE_H
+#ifndef BODY_H
+#define BODY_H
 
-#include "Fitness.h"
 #include "NeuralNetwork.h"
-#include "Phylogeny.h"
-#include "Body.h"
-#include "Trail.h"
 #include "Vec.h"
 
-#include <vector>
-#include <functional>
-#include <iostream>
-
+class Genome;
 class Ball;
 class Piston;
-class Genome;
+class Cube;
 
 class Creature {
     public:
-        //std::string name;
-        //Metrics metrics;
-        Body* body;
-        Phylogeny phylogeny;
-        FitnessCollector fitness;
+        Vec moveTo;
+        Vec com;
+        Vec initCOM;
+        Vec prevCOM;
 
-        Creature(const Genome& g, Body* b);
-        Creature(const std::string& g, Body* b);
+        Creature();
+        Creature(const Genome& genome);
         Creature(const Creature &other);
-        ~Creature();
-        Creature& operator=(Creature& other);
+        virtual ~Creature() {};
 
-        void draw() const;
-        void drawBrain(bool drawAxons) const;
-        void drawTrails(bool drawNodeTrails, bool drawCOMTrails) const;
-        void drawNodeData() const;
+        /* Movers */
+        virtual Vec getCOM() const = 0;
+        virtual void moveCOMTo(Vec to) = 0;
+        virtual void lowerToGround() = 0;
+        void centerCOM();
 
-        void update(int t);
+        /* Getters */
+        virtual double getLowestBodyHeight() const = 0;
+        virtual Vec getTop(const double offset) const = 0; // Centralized (COM) Top of Creature
+        virtual std::string getGenomeString() const;
 
-    private:
-        Trail COMTrail;
-        std::vector<Trail> nodeTrails;
+        /* Drawing */
+        virtual void draw() const = 0;
+        virtual void drawBrain(bool drawAxons) const;
+        virtual void drawDebug(bool doDraw) const;
+
+        /* Physics */
+        virtual void update(int t) = 0;
 };
 
-#endif // CREATURE_H
+#endif // BODY_H

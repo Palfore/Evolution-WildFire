@@ -6,13 +6,13 @@
 #include <vector>
 
 ///< @todo Fill population with sorted, unmutated creatures only.
-class Body;
+class Creature;
 class MultiThread;
 #include "Factory.h"
 
 class Population {
     public:
-        Population(int numMembers, const Factory creatureFactory);
+        Population(int numMembers, const Factory& creatureFactory);
         Population(const Population& other) = delete;
         operator=(const Population& other) = delete;
         virtual ~Population();
@@ -27,7 +27,7 @@ class Population {
         void printHistory();
 
         /// Processing Population
-        std::vector<Body*> getBodies() const;
+        std::vector<Creature*> getBodies() const;
         void getThreadedFitnesses(const std::vector<MultiThread*>& threads);
         void updateFitnesses(const std::vector<double>& fitnesses);
         void sortPop();
@@ -35,7 +35,7 @@ class Population {
         void mutate();
 
     private:
-        const Factory factory;
+        const Factory& factory;
 
 };
 
