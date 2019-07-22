@@ -75,10 +75,10 @@ struct UIchar : public UIElement {
             lastCalledTime = -1;
         }
     }
-    explicit UIchar(char key_t, int repeatability) : key(key_t), specialKey(-1), heldDown(false), repeatMS(repeatability), lastCalledTime(-1) {}
-    explicit UIchar(char key_t) : UIchar(key_t, 0) {}
-    explicit UIchar(int key_t, int repeatability) : key('\0'), specialKey(key_t), heldDown(false), repeatMS(repeatability), lastCalledTime(-1) {}
-    explicit UIchar(int key_t) : UIchar(key_t, 0) {}
+    explicit UIchar(char key_m, int repeatability) : key(key_m), specialKey(-1), heldDown(false), repeatMS(repeatability), lastCalledTime(-1) {}
+    explicit UIchar(char key_m) : UIchar(key_m, 0) {}
+    explicit UIchar(int key_m, int repeatability) : key('\0'), specialKey(key_m), heldDown(false), repeatMS(repeatability), lastCalledTime(-1) {}
+    explicit UIchar(int key_m) : UIchar(key_m, 0) {}
     virtual ~UIchar(){}
 
     private:

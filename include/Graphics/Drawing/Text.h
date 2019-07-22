@@ -47,7 +47,7 @@ struct DrawString : DrawItem<A> {
         double h = GLOBAL->windowSize.y;
         draw(s, x, h-y, centerX, centerY);
     }
-    private: draw(std::string s, float x, float y, bool centerX=true, bool centerY=true) {
+    private: double draw(std::string s, double x, double y, bool centerX=true, bool centerY=true) {
         int width = 0;
         const int fontHeight = 18;
         if (centerX) {

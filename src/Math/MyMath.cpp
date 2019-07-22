@@ -7,7 +7,16 @@
 #include "Vec.h"
 #include "Vec2.h"
 
+double der(std::function<double(Vec)> f, Vec a, int i) { // f(x + h, y, z) - f(x - h, y, z) / h
+    double h = 0.0001;
+    Vec lp = Vec(a.x + (i==0)*h, a.y + (i==1)*h, a.z + (i==2)*h); // add/sub h to proper component
+    Vec lm = Vec(a.x - (i==0)*h, a.y - (i==1)*h, a.z - (i==2)*h);
+    return (f(lp) - f(lm)) / (2*h);
+}
 
+Vec normal(std::function<double(Vec)> surface, Vec r) {
+    return Vec(-der(surface, Vec(r.x, r.y, r.z), 0), -der(surface, Vec(r.x, r.y, r.z), 1), 1).getUnit();
+}
 
 double randf(const double lower, const double upper) { // thread safe
     std::hash<std::thread::id> hasher;

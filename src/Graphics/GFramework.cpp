@@ -69,8 +69,8 @@ void GFramework::initializeGlut() {
     glEnable(GL_COLOR_MATERIAL);
 
     /* Texturing */
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     /* Blending */
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -88,6 +88,8 @@ void GFramework::initializeGlut() {
     glutKeyboardUpFunc(glutCB::keyUp);    // Tell GLUT to use the method "keyUp" for key up events
     glutSpecialFunc(glutCB::pressSpecialKey);     // process special key pressed
     glutSpecialUpFunc(glutCB::releaseSpecialKey); // process special key release
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 void GFramework::showScene() {
@@ -102,6 +104,7 @@ void GFramework::readyDrawing() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     auto c = GFramework::get->camera;
+
     gluLookAt(               c->pos.x,                  c->pos.y,                  c->pos.z,
              c->pos.x + c->dir.x,  c->pos.y + c->dir.y,  c->pos.z + c->dir.z,
                                      0.0,                          0.0,                          1.0);
@@ -110,4 +113,70 @@ void GFramework::readyDrawing() {
 }
 
 
+Camera::Camera() : translationSpeed(0), rotationSpeed(0), pos(0,0,0), mov(0,0,0), dir(0,0,0), ang(0,0,0), del(0,0,0) {
+    reset();
+}
 
+void Camera::reset() {
+    translationSpeed = DEFAULT_T_SPEED;
+    rotationSpeed    = DEFAULT_R_SPEED;
+    pos = Vec(0, -40, DEFAULT_HEIGHT);
+    mov = Vec(0, 0, 0);
+    dir = Vec(0, 1, 0);
+    ang = Vec(0,0,0);
+    del = Vec(0,0,0);
+}
+
+void Camera::cinematicCamera(const Vec& lookat, const double distance) {
+        static int step = 0;
+
+        double SPEED = 10.0;
+        double speed = SPEED * 1 / 2000.0;
+        static double arr[3] = {0.5, 1.0, 1.5};
+
+        static double theta = 0.0; // 0 - 2pi
+        static double phi = 0.0;
+        static double r = distance;
+
+        static double thetaDot = 1.0 / 1000.0;
+        static double phiDot = 1.0 / 1000.0;
+        static double rDot = 1.0 / 1000.0;
+
+        /* Change Speeds Randomly */
+        if (randf(100) < (0.1)) {
+            int shift = rand() % 3;
+            arr[0] = arr[(shift + 0) % 3];
+            arr[1] = arr[(shift + 1) % 3];
+            arr[2] = arr[(shift + 2) % 3];
+        }
+
+        theta += 3*thetaDot * arr[0];
+        phi += 3*phiDot * arr[1];
+        r += 3*rDot * arr[2];
+
+        if (phi > 3.14159/2.0) {
+            phiDot = -fabs(phiDot);
+            phi = 3.14159/2.0 - 0.001;
+        } else if (phi < 0.1745) {
+            phiDot = fabs(phiDot);
+            phi = 0.1745 + 0.0001;
+        }
+        if (theta > 2*3.14159) {
+            thetaDot = -fabs(thetaDot);
+            theta = 2*3.14159 - 0.001;
+        } else if (theta < 0) {
+            thetaDot = fabs(thetaDot);
+            theta = 0.001;
+        }
+
+        /* Move and Look at New Position */
+        this->pos.x = lookat.x + r*cos(theta)*sin(phi);
+        this->pos.y = lookat.y + r*sin(theta)*sin(phi);
+        this->pos.z = lookat.z + r*cos(phi) + 50;
+
+        this->dir.x = lookat.x - this->pos.x + 50 * sinf(step * speed);
+        this->dir.y = lookat.y - this->pos.y + 50 * sinf(step * speed);
+        this->dir.z = lookat.z - this->pos.z + 50 * sinf(step * speed) + 20;
+
+        step = (step + 1) % 1'000'000;
+}

@@ -154,7 +154,7 @@ class Checkbox : public Button<A> { /// @todo Maybe this should have a reference
             }
         }
 
-        operator=(const Checkbox&) = delete;
+        Checkbox& operator=(const Checkbox&) = delete;
         Checkbox(std::string s, bool *const  active, double x_t, double y_t, double X_t, double Y_t, by_position p, int ID=-1) : Button<A>(s, x_t, y_t, X_t, Y_t, p, ID), state(active) {
             if (*state) { // if checkbox starts off "on", trigger an action on initilization.
                 Button<A>::callFunction = CALL_TYPE::ACTION;

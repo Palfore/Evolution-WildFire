@@ -11,19 +11,14 @@
 #include "StickBall.h"
 
 #include "Factory.h"
+#include "Terrain.h"
+static const Terrain terrain = Terrain(0);
 static const Factory creatureFactory("StickBall");
+static const SenarioFactory senarioFactory("SenarioA", terrain, 5000);
 static Population pop(200, creatureFactory);
-static Viewer viewer(pop.population, creatureFactory);
+static Viewer viewer(pop.population, creatureFactory, senarioFactory);
 
 static void draw() {
-    const int r = 50;
-    int bounds = 1000;
-    for (int x = -bounds; x < bounds; x+=r) {
-        for (int y = -bounds; y < bounds;y += r) {
-           DrawPlane<Appearance::GRASS>(Vec(x, y, 0), r/2);
-        }
-    }
-
     DrawCylinder<Appearance::BARK>(Vec(-50, 50, 0), Vec(-50, 50, 50), 8);
     DrawSphere<Appearance::TREE_TOP>(Vec(-50, 50, 50), 25);
     DrawSkybox(500);
@@ -36,7 +31,7 @@ static void draw() {
 }
 
 void Simulation::mainMenuMode() {
-    viewer.nextStep();
+    viewer.update();
     draw();
     GFramework::get->camera->cinematicCamera();
 }

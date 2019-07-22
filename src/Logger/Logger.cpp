@@ -16,6 +16,11 @@ Logger::~Logger() {
     }
 }
 
+Logger& Logger::get() {
+    static Logger instance;
+    return instance;
+}
+
 void Logger::log(int line, std::string file, std::string func, std::string msg, LogDegree d, LogType t) {
     std::string logDetails = toString(d) + " " + toString(t);
     std::string relativeFilePath = ""; // Alternatively, you could split at "Evolution Project\\" but no need to show src or include since .h or .cpp shows that.

@@ -3,12 +3,19 @@
 
 #include <cmath>
 #include <limits>
+#include <functional>
 
 constexpr double PI = 3.1415926535897932384626;
 constexpr double MACHINE_EPSILON = std::numeric_limits<double>::epsilon();
 
 class Vec;
 class Vec2;
+
+
+double der(std::function<double(Vec)> f, Vec a, int i);
+
+Vec normal(std::function<double(Vec)> surface, Vec r);
+
 
 /** @brief Returns a thread-safe double in the range [lower, upper).
  * @param lower The lower-bound of numbers generated.

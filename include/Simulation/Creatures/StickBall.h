@@ -4,6 +4,7 @@
 #include "Creature.h"
 #include <vector>
 
+class Senario;
 class Genome;
 class StickBall : public Creature {
 	public:
@@ -11,21 +12,22 @@ class StickBall : public Creature {
 
 	    StickBall(const Genome& g);
 	    StickBall(const StickBall &other);
-	    operator=(const StickBall &other) = delete;
+	    StickBall& operator=(const StickBall &other) = delete;
 	    virtual ~StickBall();
 
+		virtual Vec calculateCOM() const override;
 	    void moveCOMTo(Vec to) override;
-		Vec getCOM() const override;
 		void lowerToGround() override;
         double getLowestBodyHeight() const override;
         virtual Vec getTop(const double offset) const override;
 
 
-	    virtual void draw() const override;
+	    virtual void draw(const Senario* senario) const override;
         virtual void drawBrain(const bool drawAxons) const override;
 
-        virtual void update(const int t) override;
         std::string getGenomeString() const override;
+
+        virtual void update(Senario* senario, const int t) override;
 
 	protected:
 		Vec* head;
@@ -33,6 +35,7 @@ class StickBall : public Creature {
 	    std::vector<Piston*> muscles;
 	    std::vector<Piston*> bones;
 	    NeuralNetwork NN;
+
 };
 
 #endif // STICKBALL_H

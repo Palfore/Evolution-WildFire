@@ -54,20 +54,20 @@ void Drawing::enable2D() {
     if (GFramework::get->drawingState == Dimension::TWO) return;
     GFramework::get->drawingState = Dimension::TWO;
 
-    glMatrixMode(GL_MODELVIEW);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0, GFramework::get->windowSize.x, GFramework::get->windowSize.y, 0);
-    glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
-    glMatrixMode(GL_MODELVIEW);
+   glMatrixMode(GL_MODELVIEW);
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   gluOrtho2D(0, GFramework::get->windowSize.x, GFramework::get->windowSize.y, 0);
+   glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
+   glMatrixMode(GL_MODELVIEW);
 
-    glPushMatrix();
-    glLoadIdentity();
+   glPushMatrix();
+   glLoadIdentity();
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_LIGHTING);
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glEnable(GL_BLEND);
+   glDisable(GL_DEPTH_TEST);
+   glDisable(GL_LIGHTING);
 }
 
 void Drawing::enable3D(bool force) {
@@ -75,16 +75,16 @@ void Drawing::enable3D(bool force) {
     if (GFramework::get->drawingState == Dimension::THREE) return;
     GFramework::get->drawingState = Dimension::THREE;
 
-    glPopMatrix(); //From 2D
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, (double) GFramework::get->windowSize.x / (double) GFramework::get->windowSize.y, 0.1f, GFramework::RENDERING_DISTANCE);
-    glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
-    glMatrixMode(GL_MODELVIEW);
+   glPopMatrix(); //From 2D
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   gluPerspective(45.0, (double) GFramework::get->windowSize.x / (double) GFramework::get->windowSize.y, 0.1f, GFramework::RENDERING_DISTANCE);
+   glViewport(0, 0, GFramework::get->windowSize.x, GFramework::get->windowSize.y);
+   glMatrixMode(GL_MODELVIEW);
 
-    glEnable(GL_DEPTH_TEST);
-    glDisable(GL_BLEND);
-    glEnable(GL_LIGHTING);
+   glEnable(GL_DEPTH_TEST);
+   glDisable(GL_BLEND);
+   glEnable(GL_LIGHTING);
 }
 
 void Drawing::enableND(Dimension d) {

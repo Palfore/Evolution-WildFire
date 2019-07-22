@@ -5,44 +5,29 @@
 class Genome;
 class Creature;
 #include "Factory.h"
+#include "Senario.h"
 #include "Phylogeny.h"
 #include "Fitness.h"
 #include "Trail.h"
 
-class CreatureViewer {
+class Viewer {
     public:
-        Creature* body;
         Phylogeny phylogeny;
-        FitnessCollector fitness;
+        double fitness;
 
-        CreatureViewer(const Genome& g, Creature* b);
-        CreatureViewer(const std::string& g, Creature* b);
-        CreatureViewer(const CreatureViewer &other);
-        ~CreatureViewer();
-        CreatureViewer& operator=(CreatureViewer& other);
+        Viewer(std::vector<Genome*> population, const Factory& factory, const SenarioFactory& senarioFactory);
+        Viewer(const Viewer& other) = delete;
+        ~Viewer();
+        Viewer& operator=(const Viewer& other) = delete;
 
+        /// Displayed Creature Methods
         void draw() const;
         void drawBrain(bool drawAxons) const;
         void drawTrails(bool drawCOMTrails) const;
         void drawDebug(bool doDraw) const;
 
-        void update(int t);
-
-    private:
-        Trail COMTrail;
-};
-
-class Viewer {
-    public:
-        Viewer(std::vector<Genome*> population, const Factory& factory);
-        Viewer(const Viewer& other) = delete;
-        ~Viewer();
-        operator=(const Viewer& other) = delete;
-
-        /// Displayed Creature Methods
-        void draw() const;
-        void nextStep();
-        int getSimStep() const;
+        void moveTo(const Vec& v);
+        void update();
         void printCurrentGenome() const;
         void printGenome(int index) const;
 
@@ -56,15 +41,20 @@ class Viewer {
         void updateViewingGenomes(std::vector<Genome*> population);
 
         /// Getters
+        const Creature& getCurrent() const;
+        const Senario& getSenario() const;
+        int getSimStep() const;
         int getMemberIndex() const;
-        const CreatureViewer& getActiveCreature() const;
 
     private:
         const Factory& factory;
-    	CreatureViewer* displayingCreature;
+        const SenarioFactory& senarioFactory;
+        Senario* senario;
         std::vector<Genome> viewingGenomes;
         int activeCreatureIndex;
         int simStep;
+
+        Trail COMTrail;
 };
 
 #endif // VIEWER_H

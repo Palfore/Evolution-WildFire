@@ -8,68 +8,45 @@
 
 
 
-CreatureViewer::CreatureViewer(const std::string& g, Creature* b) : CreatureViewer(Genome(g), b) {}
-CreatureViewer::CreatureViewer(const Genome& genome, Creature* b) : body(b), phylogeny(genome), fitness(), COMTrail() {
-    body->moveTo = Vec(pmRandf(100, 200), 0*pmRandf(70, 100), 0);
+Viewer::Viewer(std::vector<Genome*> population, const Factory& factory_t, const SenarioFactory& senFact):
+         senario(nullptr), phylogeny(*population[0]), fitness(0.0), factory(factory_t), senarioFactory(senFact),
+         viewingGenomes({}), activeCreatureIndex(0), simStep(0), COMTrail({}) {
+    this->updateViewingGenomes(population);
+}
+Viewer::~Viewer() {
+    delete this->senario;
 }
 
-CreatureViewer::CreatureViewer(const CreatureViewer &other) :
-    body(other.body), phylogeny(other.phylogeny), fitness(other.fitness), COMTrail(other.COMTrail) {
+void Viewer::drawBrain(bool drawLines) const {
+    this->senario->creature->drawBrain(drawLines);
 }
 
-CreatureViewer::~CreatureViewer() {
-    delete body;
+void Viewer::drawDebug(bool doDraw) const {
+    this->senario->creature->drawDebug(doDraw);
 }
 
-CreatureViewer& CreatureViewer::operator=(CreatureViewer& other) {
-    std::swap(COMTrail, other.COMTrail);
-    std::swap(fitness, fitness);
-    std::swap(body, other.body);
-    return *this;
-}
-
-void CreatureViewer::draw() const {
-    body->draw();
-    DrawRing<Appearance::WHITE>(Vec(body->com.x, body->com.y, 0), 10, 0.5);
-}
-
-void CreatureViewer::drawBrain(bool drawLines) const {
-    body->drawBrain(drawLines);
-}
-
-void CreatureViewer::drawDebug(bool doDraw) const {
-    body->drawDebug(doDraw);
-}
-
-void CreatureViewer::drawTrails(bool drawCOMTrails) const {
+void Viewer::drawTrails(bool drawCOMTrails) const {
     if (drawCOMTrails) {
         COMTrail.draw();
     }
 }
 
-void CreatureViewer::update(int t) { // returns fitness update
-    if (t % Trail::SAMPLING_FREQUENCY == 0) {
-       COMTrail.addPoint(body->com);
-    }
-    body->update(t);
-    fitness.postUpdate(FitnessCollector::MOVE_TO, *body);
-}
-
-
-Viewer::Viewer(std::vector<Genome*> population, const Factory& factory_t): factory(factory_t), displayingCreature(nullptr), viewingGenomes({}), activeCreatureIndex(0), simStep(0) {
-	this->updateViewingGenomes(population);
-}
-
-Viewer::~Viewer() {
-    delete this->displayingCreature;
-}
-
 void Viewer::draw() const {
-    displayingCreature->draw();
+    this->senario->draw();
 }
 
-void Viewer::nextStep() {
-    displayingCreature->update(simStep++);
+void Viewer::moveTo(const Vec& v) {
+    this->senario->creature->moveTo = v;
+}
+
+void Viewer::update() {
+    if (simStep % COMTrail.samplingFrequency == 0) {
+       COMTrail.addPoint(this->senario->creature->getCOM());
+    }
+
+    senario->update(simStep);
+    fitness += senario->getCurrentFitness();
+    simStep++;
     if (simStep > 1'000'000'000) simStep = 0; // Prevent Overflow
 }
 
@@ -96,11 +73,11 @@ void Viewer::prevCreature() {
 }
 
 void Viewer::showCreature(int index) {
+    COMTrail.clear();
     activeCreatureIndex = index;
-    delete displayingCreature;
+    delete senario;
     try {
-    	displayingCreature = new CreatureViewer(
-            viewingGenomes[activeCreatureIndex],
+        senario = this->senarioFactory.createSenario(
             this->factory.createCreature(viewingGenomes[activeCreatureIndex])
         );
 	} catch (const std::exception& e) {
@@ -121,11 +98,14 @@ void Viewer::updateViewingGenomes(std::vector<Genome*> population) {
     showCreature(0);
 }
 
-const CreatureViewer& Viewer::getActiveCreature() const {
-    return *displayingCreature;
-}
-
 int Viewer::getMemberIndex() const {
     return activeCreatureIndex;
 }
 
+const Creature& Viewer::getCurrent() const {
+    return *(senario->creature);
+}
+
+const Senario& Viewer::getSenario() const {
+    return *senario;
+}

@@ -140,8 +140,8 @@
 #   include <OpenGL/gl.h>
 #   include <OpenGL/glu.h>
 #else
-#   include <GL/gl.h>
-#   include <GL/glu.h>
+#   include "Graphics/GLUT/Glut/gl.h"
+#   include "Graphics/GLUT/Glut/glu.h"
 #endif
 
 /*

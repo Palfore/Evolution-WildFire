@@ -2,13 +2,13 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Evolution Project" />
+		<Option title="Evolution-Project" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Evolution Project" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../Evolution Project" />
+				<Option output="bin/Debug/Evolution-Project" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../Evolution-Project" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -50,8 +50,8 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Evolution Project" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../Evolution Project" />
+				<Option output="bin/Release/Evolution-Project" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../Evolution-Project" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -123,6 +123,7 @@
 		<Unit filename="include/Simulation/Creatures/Cuboid.h" />
 		<Unit filename="include/Simulation/Creatures/Factory.h" />
 		<Unit filename="include/Simulation/Creatures/Phylogeny.h" />
+		<Unit filename="include/Simulation/Creatures/Senario.h" />
 		<Unit filename="include/Simulation/Creatures/StickBall.h" />
 		<Unit filename="include/Simulation/Creatures/Trail.h" />
 		<Unit filename="include/Simulation/Genetics/GeneMapping.h" />
@@ -134,12 +135,12 @@
 		<Unit filename="include/Simulation/Genetics/Genes/NodeGene.h" />
 		<Unit filename="include/Simulation/Genetics/Genome.h" />
 		<Unit filename="include/Simulation/Physics/Ball.h" />
-		<Unit filename="include/Simulation/Physics/Body.h" />
 		<Unit filename="include/Simulation/Physics/Component.h" />
 		<Unit filename="include/Simulation/Physics/Cube.h" />
 		<Unit filename="include/Simulation/Physics/Fitness.h" />
 		<Unit filename="include/Simulation/Physics/NeuralNetwork.h" />
 		<Unit filename="include/Simulation/Physics/Piston.h" />
+		<Unit filename="include/Simulation/Physics/Terrain.h" />
 		<Unit filename="include/Simulation/Population/History.h" />
 		<Unit filename="include/Simulation/Population/MultiThread.h" />
 		<Unit filename="include/Simulation/Population/Population.h" />
@@ -172,6 +173,7 @@
 		<Unit filename="src/Simulation/Creatures/Creature.cpp" />
 		<Unit filename="src/Simulation/Creatures/Cuboid.cpp" />
 		<Unit filename="src/Simulation/Creatures/Phylogeny.cpp" />
+		<Unit filename="src/Simulation/Creatures/Senario.cpp" />
 		<Unit filename="src/Simulation/Creatures/StickBall.cpp" />
 		<Unit filename="src/Simulation/Creatures/Trail.cpp" />
 		<Unit filename="src/Simulation/Genetics/GeneMapping.cpp" />
@@ -183,12 +185,12 @@
 		<Unit filename="src/Simulation/Genetics/Genes/NodeGene.cpp" />
 		<Unit filename="src/Simulation/Genetics/Genome.cpp" />
 		<Unit filename="src/Simulation/Physics/Ball.cpp" />
-		<Unit filename="src/Simulation/Physics/Body.cpp" />
 		<Unit filename="src/Simulation/Physics/Component.cpp" />
 		<Unit filename="src/Simulation/Physics/Cube.cpp" />
 		<Unit filename="src/Simulation/Physics/Fitness.cpp" />
 		<Unit filename="src/Simulation/Physics/NeuralNetwork.cpp" />
 		<Unit filename="src/Simulation/Physics/Piston.cpp" />
+		<Unit filename="src/Simulation/Physics/Terrain.cpp" />
 		<Unit filename="src/Simulation/Population/History.cpp" />
 		<Unit filename="src/Simulation/Population/MultiThread.cpp" />
 		<Unit filename="src/Simulation/Population/Population.cpp" />

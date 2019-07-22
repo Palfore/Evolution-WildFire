@@ -13,6 +13,7 @@
 
 #include <limits>
 
+
 static Vec* get_head_location(const std::vector<Ball*>& nodes) {
     Vec* head = &nodes[0]->position;
     double minZ = -std::numeric_limits<double>::max();
@@ -66,7 +67,7 @@ StickBall::StickBall(const Genome& genome) : Creature(genome), head(nullptr), no
     this->head = get_head_location(this->nodes);
     lowerToGround();
     centerCOM();
-    com = prevCOM = initCOM = getCOM();
+    initCOM = getCOM();
 }
 
 
@@ -98,9 +99,10 @@ StickBall::StickBall(const StickBall &other) : Creature(other), head(nullptr), n
     this->head = get_head_location(this->nodes);
 }
 
-void StickBall::draw() const {
+
+void StickBall::draw(const Senario*) const {
     DrawSphere<Appearance::FACE>(*head + Vec(0,0,4), 5,
-        180.0/3.1415926*atan2(moveTo.y - com.y, moveTo.x - com.x) + 90
+        180.0/3.1415926*atan2(moveTo.y - getCOM().y, moveTo.x - getCOM().x) + 90
     );
     DrawSphere<Appearance::BLUE>(getCOM(), 0.5);
     for (auto const& node : this->nodes) {
@@ -119,7 +121,7 @@ void StickBall::drawBrain(const bool drawLines) const {
 }
 
 
-Vec StickBall::getCOM() const {
+Vec StickBall::calculateCOM() const {
     Vec COM = Vec(0,0,0);
     double mass = 0.0;
     for (auto const& node : this->nodes) {
@@ -170,9 +172,9 @@ Vec StickBall::getTop(const double offset=0) const {
     return Vec(comX / mass, comY / mass, highestNode + offset);
 }
 
-void StickBall::update(int t) {
+void StickBall::update(Senario*, int t) {
     const double dt = 1.0;
-    this->prevCOM = this->com;
+    // this->prevCOM = this->com;
 
     for (auto const& node: this->nodes) {
         node->acceleration = Vec(0, 0, -0.0066);
@@ -197,8 +199,8 @@ void StickBall::update(int t) {
 
 //    const double a = acosh(10) / (this->moveTo.x + 0.3); // This scaling is probably wrong, because of (moveTo.x = 0)
 //    const double b = acosh(10) / (this->moveTo.y + 0.3); // find out why +0.1 works, but +2 doesnt.
-    const double distanceFactorX = tanh(0.01*(com.x - this->moveTo.x)); //should be +/-(something) depending on direction => tanh
-    const double distanceFactorY = tanh(0.01*(com.y - this->moveTo.y));
+    const double distanceFactorX = tanh(0.01*(getCOM().x - this->moveTo.x)); //should be +/-(something) depending on direction => tanh
+    const double distanceFactorY = tanh(0.01*(getCOM().y - this->moveTo.y));
     inputs.push_back(distanceFactorX);
     inputs.push_back(distanceFactorY);
 
@@ -261,7 +263,7 @@ void StickBall::update(int t) {
     }
 
     // this->moveCOMTo(Vec(com.x, 0, com.z)); // Keep it two-d (confined to the x-z plane).
-    this->com = getCOM();
+    // this->com = getCOM();
     if (t > 0) return;
 }
 

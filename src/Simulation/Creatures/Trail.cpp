@@ -2,7 +2,8 @@
 
 #include "Shapes.h"
 
-Trail::Trail() : trail({}) {
+Trail::Trail(unsigned int max_size, unsigned int sampling_frequency):
+    trail({}), maxSize(max_size), samplingFrequency(sampling_frequency) {
     //ctor
 }
 
@@ -10,9 +11,25 @@ Trail::~Trail() {
     //dtor
 }
 
+Vec Trail::operator[](int i) const {
+    return trail[i];
+}
+
+Vec Trail::operator[](int i) {
+    return trail[i];
+}
+
+void Trail::clear() {
+    trail.clear();
+}
+
+bool Trail::isFull() const {
+    return trail.size() == maxSize;
+}
+
 void Trail::addPoint(Vec point) {
     const unsigned int len = trail.size();
-    if (len > MAX_TRAIL_SIZE) {
+    if (len > maxSize - 1) {
         switch (deleteType) {
             default: [[fallthrough]]
             case DeletionType::CIRCULAR:
@@ -30,17 +47,21 @@ void Trail::addPoint(Vec point) {
     trail.push_back(point);
 }
 
+const std::deque<Vec>& Trail::getPoints() const {
+    return trail;
+}
+
 void Trail::draw() const {
     GLUquadricObj *quadric = gluNewQuadric();
     gluQuadricTexture(quadric,GL_FALSE);
     gluQuadricNormals(quadric, GLU_SMOOTH);
     Drawing::enableND(Drawing::Dimension::THREE);
     glDisable(GL_TEXTURE_2D);
-    for (unsigned int i = 0; i < trail.size() - 1; i++) {
-        Vec start = trail[i];
-        Vec ending = trail[i+1];
+    for (unsigned int i = 1; i < trail.size(); i++) {
+        Vec start = trail[i-1];
+        Vec ending = trail[i];
 
-        double x = 1 - i / static_cast<double>(trail.size());
+        double x = 1 - (i - 1) / static_cast<double>(trail.size());
         glColor3f(x,x,x);
 
         Vec v = (ending-start) * 1.25;
@@ -68,4 +89,8 @@ void Trail::draw() const {
 
     }
     gluDeleteQuadric(quadric);
+}
+
+long long int Trail::size() const {
+    return trail.size();
 }

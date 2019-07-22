@@ -14,7 +14,7 @@ class Population {
     public:
         Population(int numMembers, const Factory& creatureFactory);
         Population(const Population& other) = delete;
-        operator=(const Population& other) = delete;
+        Population& operator=(const Population& other) = delete;
         virtual ~Population();
 
         std::vector<Genome*> population;     ///< The set of genomes currently evolving.

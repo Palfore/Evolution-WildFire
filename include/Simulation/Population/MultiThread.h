@@ -5,33 +5,44 @@
 #include <thread>
 #include <vector>
 
-
 class Creature;
+class SenarioFactory;
+
+using Processor = std::function<void(const std::vector<Creature*>&, const SenarioFactory& factory, std::vector<double> &, bool &)>;
+
 class MultiThread {
-    public:
-        static constexpr int SIMULATION_TIME = 15'000/2; ///< @todo Move this a better place.
+ public:
+        static constexpr int SIMULATION_TIME = 15'000/2;  ///< @todo Move this a better place.
 
         std::vector<double> fitnesses;
         MultiThread() : fitnesses({}), t(), finished(false) {}
 
         bool isFinished() const;
-        static void spawnChildren(std::vector<MultiThread*>& mt, const std::vector<Creature*>& creatures);
+        static void spawnChildren(
+            std::vector<MultiThread*>& mt,
+            const std::vector<Creature*>& creatures,
+            const SenarioFactory& factory);
 
-    private:
+ private:
         std::thread t;
         bool finished;
-        static void processCreatures(const std::vector<Creature*>& bodies, std::vector<double> & fitnesses, bool & done);
-        void spawn(std::function<void(const std::vector<Creature*>&, std::vector<double> &, bool &)> f, const std::vector<Creature*>& creatures);
 
+        static void processCreatures(
+            const std::vector<Creature*>& bodies,
+            const SenarioFactory& factory,
+            std::vector<double>& fitnesses,
+            bool& done);
+
+        void spawn(Processor f, const SenarioFactory& factory, const std::vector<Creature*>& creatures);
 };
 
 #include "Logger.h"
 #include <iostream>
 class Threader {
-public:
-    std::vector<MultiThread*> mt; // Dynamic since on exit, statically allocated references get deleted.
+ public:
+    std::vector<MultiThread*> mt;
 
-    Threader(int num, const std::vector<Creature*>& bodies) : mt({}), isDone(true) {
+    Threader(int num, const SenarioFactory& factory, const std::vector<Creature*>& bodies) : mt({}), isDone(true), factory(factory) {
         updateThreadCount(num);
         for (int i = 0; i < num; i++) {
             try {
@@ -43,7 +54,7 @@ public:
         }
     }
     ~Threader() {
-        for (auto &p: mt) {
+        for (auto &p : mt) {
             delete p;
         }
     }
@@ -53,7 +64,7 @@ public:
         updateThreadCount(num);
     }
 
-    std::vector<double> getFitnesses(int popSize=0) {
+    std::vector<double> getFitnesses(int popSize = 0) {
         std::vector<double> fitnesses;
         fitnesses.reserve(popSize);
         for (unsigned int i = 0; i < mt.size(); i++) {
@@ -65,7 +76,7 @@ public:
         return fitnesses;
     }
 
-    long long unsigned int size() {
+    long long unsigned size() {
         return mt.size();
     }
 
@@ -79,21 +90,25 @@ public:
     }
 
     void spawnThreads(const std::vector<Creature*>& bodies) {
-        MultiThread::spawnChildren(mt, bodies);
+        MultiThread::spawnChildren(mt, bodies, factory);
         isDone = false;
     }
-private:
+
+ private:
     bool isDone;
+    const SenarioFactory& factory;
 
     bool checkIsFinished() {
-        isDone = mt.empty() ? true : all_of(mt.cbegin(), mt.cend(), [](const MultiThread* m){return m->isFinished();});
+        isDone = mt.empty() ? true : all_of(mt.cbegin(), mt.cend(), [](const MultiThread* m){
+            return m->isFinished();
+        });
         return isDone;
     }
 
     void updateThreadCount(unsigned int num) {
         if (isDone) {
             if (mt.size() != num) {
-                for (auto &p: mt) {
+                for (auto &p : mt) {
                     delete p;
                 }
                 mt.clear();
@@ -106,4 +121,4 @@ private:
 };
 
 
-#endif // MULTITHREAD_H
+#endif  // MULTITHREAD_H

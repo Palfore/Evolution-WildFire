@@ -9,35 +9,33 @@
 #include <iostream>
 #include "version.h"
 
-Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE), cinematic(false) {
+Simulation::Simulation() : gameMode(INITIAL_GAME_MODE), inputType(INITIAL_INPUT_TYPE), cinematic(false), gameSpeed(DEFAULT_GAME_SPEED), frame(0) {
     std::cout << "Compiled With GCC: " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' << __GNUC_PATCHLEVEL__ << " (" << __VERSION__ << ')' << '\n';
     std::cout << "Running Version: " << AutoVersion::FULLVERSION_STRING << '\n';
     LOG("Initialized Simulation.");
 }
 Simulation::~Simulation() {}
 
-#include "Creature.h"
-#include <ctime>
-#include <iostream>
-
-#include "Genome.h"
-
-
-#include "Population.h"
-#include "NodeGene.h"
-#include "Shapes.h"
-
 void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps) {
-    GFramework::get->readyDrawing();
+    bool shouldDraw = this->frame == 0;
+    GFramework::get->drawingState = Drawing::Dimension::NONE;
+    Drawing::enable3D();
+    if (shouldDraw) {
+        GFramework::get->readyDrawing();
+    }
 
     if (userFunctions != nullptr) {}
     if (inputType == InputType::DEFAULT) { // should pass userFunctions to methods
-        switch (this->gameMode) {
-            case GameMode::MAIN_MENU: Simulation::mainMenuMode(); break;
-            case GameMode::EVOLVE: Simulation::evolveMode(fps); break;
-            default:
-                LOG("Unknown GameMode.", LogDegree::FATAL, LogType::GENERAL);
-                break;
+        try {
+            switch (this->gameMode) {
+                case GameMode::MAIN_MENU: Simulation::mainMenuMode(); break;
+                case GameMode::EVOLVE: Simulation::evolveMode(fps); break;
+                default:
+                    LOG("Unknown GameMode.", LogDegree::FATAL, LogType::GENERAL);
+                    break;
+            }
+        } catch (const std::exception& e) {
+            LOG(e.what(), LogDegree::FATAL, LogType::GENERAL);
         }
     }
 
@@ -50,10 +48,14 @@ void Simulation::run(std::vector<UserFunction> * userFunctions, const double fps
         DrawString<Appearance::BLACK>("A warning has been logged. Press ENTER to continue.", 0.5, 0.5, by_percentage());
     }
 
-    if (!this->cinematic) {
+    if (shouldDraw && !this->cinematic) {
         GFramework::get->userInput.draw();
     }
-    GFramework::get->showScene();
+
+    if (shouldDraw) {
+        GFramework::get->showScene();
+    }
+    this->frame = (this->frame - 1) % 3;//this->gameSpeed;
 }
 
 void Simulation::init() {

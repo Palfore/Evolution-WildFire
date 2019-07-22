@@ -14,6 +14,7 @@ class Camera;
 #include <vec2.h>
 #include <vec.h>
 #include <map>
+#include <string.h>
 
 #define GLOBAL GFramework::get
 
@@ -22,7 +23,7 @@ class Camera;
     It is not fully implemented.
  */
 struct Mouse {
-    int x;          ///< x coordinate of mouse (from left to right)
+    int x;        ///< x coordinate of mouse (from left to right)
     int y;          ///< y coordinate of mouse (from top to bottom)
     bool clicked;   ///< Is the mouse clicked?
     bool heldDown;  ///< Is the mouse button held down?
@@ -80,7 +81,7 @@ class GFramework {
         static std::unique_ptr<GFramework> const get;   ///< Singleton instance. Unique_ptr insures destruction.
         ~GFramework();                                  ///< Destructor deletes singleton instance
         GFramework(GFramework const&)      = delete;    ///< Copy constructor is deleted in singleton.
-        void operator=(GFramework const&)  = delete;    ///< Assignment operator is deleted in singleton.
+        GFramework& operator=(GFramework const&)  = delete;    ///< Assignment operator is deleted in singleton.
 
     private:
         static char constexpr const * WINDOW_TITLE = "Evolution WildFire";  ///< Name of the window / game.
@@ -104,7 +105,7 @@ class GFramework {
 struct Camera {
     static double constexpr DEFAULT_T_SPEED = 110.0 / GFramework::FPS;  ///< The default translation speed.
     static double constexpr DEFAULT_R_SPEED = 2.00 / GFramework::FPS; ///< The default rotation speed.
-    static double constexpr DEFAULT_HEIGHT = 1.8;   ///< The default height of the camera (wrt z=0)
+    static double constexpr DEFAULT_HEIGHT = 10;   ///< The default height of the camera (wrt z=0)
 
     double translationSpeed;  ///< How fast the camera moves forward
     double rotationSpeed;     ///< How fast the camera rotates
@@ -114,76 +115,9 @@ struct Camera {
     Vec ang;  ///< The angle around the z axis, starting at +x. (I think)
     Vec del;  ///< The next frame rotation of the camera.
 
-    Camera() : translationSpeed(0), rotationSpeed(0), pos(0,0,0), mov(0,0,0), dir(0,0,0), ang(0,0,0), del(0,0,0) {
-        reset();
-    };
-    ~Camera() {}
-    void reset() {
-        translationSpeed = DEFAULT_T_SPEED;
-        rotationSpeed    = DEFAULT_R_SPEED;
-        pos = Vec(0, -40, DEFAULT_HEIGHT);
-        mov = Vec(0, 0, 0);
-        dir = Vec(0, 1, 0);
-        ang = Vec(0,0,0);
-        del = Vec(0,0,0);
-    }
-    void cinematicCamera() {
-        cinematicCamera(Vec(0,0,0));
-    }
-    void cinematicCamera(const Vec& lookat, const double distance=400) {
-        static int step = 0;
-
-        double SPEED = 10.0;
-        double speed = SPEED * 1 / 2000.0;
-        static double arr[3] = {0.5, 1.0, 1.5};
-
-        static double theta = 0.0; // 0 - 2pi
-        static double phi = 0.0;
-        static double r = distance;
-
-        static double thetaDot = 1.0 / 1000.0;
-        static double phiDot = 1.0 / 1000.0;
-        static double rDot = 1.0 / 1000.0;
-
-        /* Change Speeds Randomly */
-        if (randf(100) < (0.1)) {
-            int shift = rand() % 3;
-            arr[0] = arr[(shift + 0) % 3];
-            arr[1] = arr[(shift + 1) % 3];
-            arr[2] = arr[(shift + 2) % 3];
-        }
-
-        theta += 3*thetaDot * arr[0];
-        phi += 3*phiDot * arr[1];
-        r += 3*rDot * arr[2];
-
-        if (phi > 3.14159/2.0) {
-            phiDot = -fabs(phiDot);
-            phi = 3.14159/2.0 - 0.001;
-        } else if (phi < 0.1745) {
-            phiDot = fabs(phiDot);
-            phi = 0.1745 + 0.0001;
-        }
-        if (theta > 2*3.14159) {
-            thetaDot = -fabs(thetaDot);
-            theta = 2*3.14159 - 0.001;
-        } else if (theta < 0) {
-            thetaDot = fabs(thetaDot);
-            theta = 0.001;
-        }
-
-        /* Move and Look at New Position */
-        this->pos.x = lookat.x + r*cos(theta)*sin(phi);
-        this->pos.y = lookat.y + r*sin(theta)*sin(phi);
-        this->pos.z = lookat.z + r*cos(phi);
-
-        this->dir.x = lookat.x - this->pos.x + 50 * sinf(step * speed);
-        this->dir.y = lookat.y - this->pos.y + 50 * sinf(step * speed);
-        this->dir.z = lookat.z - this->pos.z + 50 * sinf(step * speed) + 20;
-
-        step = (step + 1) % 1'000'000;
-    }
-
+    Camera();
+    void reset();
+    void cinematicCamera(const Vec& lookat=Vec(0,0,0), const double distance=300);
 };
 
 #endif // GFramework_H

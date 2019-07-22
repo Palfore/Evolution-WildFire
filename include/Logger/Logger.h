@@ -66,10 +66,7 @@ class Logger {
          * @return Logger& Reference to the Logger singleton instance.
          *
          */
-        static Logger& get() {
-            static Logger instance;
-            return instance;
-        }
+        static Logger& get();
 
         /** @brief Logs a descriptive message to the appropriate stream.
          * @details The logged string is in the format [msg] [line] [file] [function] [date] [time]
@@ -117,7 +114,7 @@ class Logger {
           */
          ~Logger();
         Logger(Logger const&)          = delete;  ///< Deleted for singleton pattern.
-        void operator=(Logger const&)  = delete;  ///< Deleted for singleton pattern.
+        Logger& operator=(Logger const&)  = delete;  ///< Deleted for singleton pattern.
 
     private:
         static constexpr const char * LOG_FILE_TITLE = "assets/logger.log";

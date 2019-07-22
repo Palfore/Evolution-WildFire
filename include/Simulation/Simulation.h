@@ -10,6 +10,7 @@ class Simulation {
         GameMode gameMode;
         InputType inputType;
         bool cinematic;
+        int gameSpeed;
 
         Simulation();
         ~Simulation();
@@ -20,10 +21,13 @@ class Simulation {
         void setInputType(InputType t);
 
     private:
+        static constexpr int DEFAULT_GAME_SPEED  = 6;
         static constexpr GameMode INITIAL_GAME_MODE = GameMode::MAIN_MENU;
         static constexpr InputType INITIAL_INPUT_TYPE = InputType::DEFAULT;
         static constexpr const char * UNKNOWN_INPUT_TYPE_MESSAGE = "UNKNOWN INPUT TYPE KEYBOARD SELECTED.";
         static constexpr const char * UNKNOWN_GAME_MODE_MESSAGE  = "UNKNOWN GAMEMODE SELECTED.";
+
+        int frame;
 
         void setInputTypeKeyboard();
         void loadGameModeKeyboard();

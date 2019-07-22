@@ -27,6 +27,7 @@ class OneCreatureFitness : public FitnessTop {
         }
         OneCreatureFitness(oneCreatureFunc func) : post(func) {}
 };
+#include <iostream>
 
 class FitnessCollector {
 public:
@@ -40,24 +41,31 @@ public:
     std::unordered_map<FitnessType, FitnessTop*> fitbit = {
         {TOTAL_DISTANCE      , new OneCreatureFitness([](double* f, Creature& body) {
                                             body.moveTo = Vec(10000, 10000, 0);
-                                            *f = euc2D(body.com, body.initCOM);
+                                            *f = euc2D(body.getCOM(), body.initCOM);
                                        })},
         {MOVE_TO              , new OneCreatureFitness([](double* f, Creature& body) {
-                                            Vec p = body.moveTo - body.com;
-                                            p.z = 0;
-                                            Vec r_hat = p / p.length();
-                                            Vec deltaX = body.com - body.prevCOM;
-                                            deltaX.z = 0;
-                                            double deltaXinRHat = deltaX.dot(r_hat);
-                                            *f += deltaXinRHat / p.length();
-                                            if (p.length() < 10) {
-                                                body.moveTo += Vec(pmRandf(30, 80), pmRandf(30, 80), 0);
-                                                // body.moveTo *= -1;//+= Vec(pmRandf(100, 200), 0, 0);
-                                            }
-                                        })},
+            Vec p = body.moveTo - body.getCOM();
+            p.z = 0;
+            if (p.length() < 5) {
+                body.moveTo += Vec(pmRandf(30, 80), pmRandf(30, 80), 0);
+                // body.moveTo.z = terrain.getHeight(body.moveTo);
+                // body.moveTo *= -1;//+= Vec(pmRandf(100, 200), 0, 0);
+                if (p.length() < 1) {
+                    return;
+                }
+            }
+
+
+            double dist = p.length();
+            Vec r_hat = p / p.length();
+            Vec deltaX = body.getCOM() - body.getCOM(-1);
+            deltaX.z = 0;
+            double deltaXinRHat = deltaX.dot(r_hat);
+            *f += deltaXinRHat / p.length();
+        })},
         {STRAIGHT_LINE        , new OneCreatureFitness([](double*f, Creature& body) {
                                             body.moveTo = Vec(10000, 10000, 0);
-                                            *f = body.com.x - body.initCOM.x - 0.00001*(body.com.y * body.com.y);
+                                            *f = body.getCOM().x - body.initCOM.x - 0.00001*(body.getCOM().y * body.getCOM().y);
                                         })},
     };
 
