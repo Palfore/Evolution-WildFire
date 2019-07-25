@@ -4,15 +4,17 @@
 #include "utility.h"
 
 constexpr char AxonGene::symbol;
-AxonGene::AxonGene(int a_t, int b_t, int layer_t, double weight_t) : a(a_t), b(b_t), layer(layer_t), weight(weight_t) {}
-AxonGene::AxonGene(std::string representation) : AxonGene(0, 0, 0, 0) {
+AxonGene::AxonGene(int a_t, int b_t, int layer_t, int network_t, double weight_t) : a(a_t), b(b_t), layer(layer_t), network(network_t), weight(weight_t) {}
+AxonGene::AxonGene(std::string representation) : AxonGene(0, 0, 0, 0, 0.0) {
     std::vector<std::string> values = utility::split<std::vector>(representation, ",");
-    a = utility::strToNum<double>(values[0]);
-    b = utility::strToNum<double>(values[1]);
-    layer = utility::strToNum<double>(values[2]);
-    weight = utility::strToNum<double>(values[3]);
+    a = utility::strToNum<int>(values[0]);
+    b = utility::strToNum<int>(values[1]);
+    layer = utility::strToNum<int>(values[2]);
+    network = utility::strToNum<int>(values[3]);
+    weight = utility::strToNum<double>(values[4]);
 }
-AxonGene::AxonGene(const AxonGene& other) : Gene(other), a(other.a), b(other.b), layer(other.layer), weight(other.weight) {}
+AxonGene::AxonGene(const AxonGene& other) :
+    Gene(other), a(other.a), b(other.b), layer(other.layer), network(other.network), weight(other.weight) {}
 AxonGene::~AxonGene() {}
 
 Gene* AxonGene::clone() const {
@@ -25,11 +27,13 @@ std::string AxonGene::toString() const {
         utility::numToStr<int>(a),
         utility::numToStr<int>(b),
         utility::numToStr<int>(layer),
+        utility::numToStr<int>(network),
         utility::numToStr<double>(weight)
     }));
 }
 
 void AxonGene::mutate(Genome& genome) {
+    if (network == 0) return;
     if (randf(100) < 1) {
         weight = pmRandf(1);
     }

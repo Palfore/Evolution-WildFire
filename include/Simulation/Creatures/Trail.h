@@ -7,7 +7,7 @@
 class Trail {
 private:
     enum class DeletionType {CIRCULAR, HALVING, BLOCKING};
-    static unsigned int constexpr DEFAULT_MAX_SIZE = 500;
+    static unsigned int constexpr DEFAULT_MAX_SIZE = 1000;
     static unsigned int constexpr DEFAULT_SAMPLING_FREQUENCY = 15;
     static constexpr DeletionType deleteType = DeletionType::CIRCULAR;
     static constexpr int SUB_DIVISIONS = 5;

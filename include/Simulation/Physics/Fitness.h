@@ -55,8 +55,6 @@ public:
                 }
             }
 
-
-            double dist = p.length();
             Vec r_hat = p / p.length();
             Vec deltaX = body.getCOM() - body.getCOM(-1);
             deltaX.z = 0;

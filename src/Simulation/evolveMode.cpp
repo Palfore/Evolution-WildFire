@@ -18,13 +18,13 @@
 #include "Viewer.h"
 
 
-#include "Cuboid.h"
+#include "OmniWalker.h"
 #include "StickBall.h"
 #include "Vec2.h"
 #include "Factory.h"
 #include "Terrain.h"
 
-static constexpr int populationSize = 0.5*256;
+static constexpr int populationSize = 1*256;
 
 static bool drawGraph = false;
 static bool drawCOMTrails = true;
@@ -43,7 +43,7 @@ static const     int DEFAULT_THREADS = (MAX_THREADS - BACKGROUND_THREADS_REQUIRE
 static int numThreads = DEFAULT_THREADS;
 
 static const Terrain terrain = Terrain();
-static const Factory creatureFactory("Cuboid");
+static const Factory creatureFactory("EyeWalker");
 static const SenarioFactory senarioFactory("SenarioA", terrain, 15'000/2);
 static Population pop(populationSize, creatureFactory);
 static Viewer viewer(pop.population, creatureFactory, senarioFactory);
@@ -76,6 +76,14 @@ static void drawing(double fps, bool cinematic, int gameSpeed) {
     viewer.drawTrails(drawCOMTrails);
 
     /////////////////////////////////////////// 2D Drawing /////////////////////////////////////////
+    /* Overlays */
+    if (drawGraph) {
+        pop.history.graph();
+    }
+    if (drawBrain) {
+        c.drawBrain(drawLines);
+    }
+
     if (cinematic) return;
     DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<double>(viewer.fitness), c.getTop(10));
     DrawString<Appearance::BLACK>("Generation " + utility::numToStr<int>(pop.gen),
@@ -107,13 +115,7 @@ static void drawing(double fps, bool cinematic, int gameSpeed) {
 
     c.drawDebug(drawDebug);
 
-    /* Overlays */
-    if (drawGraph) {
-        pop.history.graph();
-    }
-    if (drawBrain) {
-        c.drawBrain(drawLines);
-    }
+
 }
 
 void Simulation::evolveMode(double fps) {
@@ -223,6 +225,7 @@ void Simulation::loadEvolve() {
         );
 
         Vec s = u0 + (u1 - u0)*k;
+        std::cout<<s<<'\n';
         viewer.moveTo(s);
     }));
     userFunctions->push_back(UserFunction(new UIchar('o'), [](){

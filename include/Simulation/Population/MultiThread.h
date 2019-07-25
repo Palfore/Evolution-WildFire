@@ -8,7 +8,7 @@
 class Creature;
 class SenarioFactory;
 
-using Processor = std::function<void(const std::vector<Creature*>&, const SenarioFactory& factory, std::vector<double> &, bool &)>;
+using Processor = std::function<void(const std::vector<Creature*>&, const SenarioFactory&, std::vector<double> &, bool &)>;
 
 class MultiThread {
  public:
@@ -42,7 +42,8 @@ class Threader {
  public:
     std::vector<MultiThread*> mt;
 
-    Threader(int num, const SenarioFactory& factory, const std::vector<Creature*>& bodies) : mt({}), isDone(true), factory(factory) {
+    Threader(int num, const SenarioFactory& factory_t, const std::vector<Creature*>& bodies):
+            mt({}), isDone(true), factory(factory_t) {
         updateThreadCount(num);
         for (int i = 0; i < num; i++) {
             try {

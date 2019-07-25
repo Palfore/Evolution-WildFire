@@ -21,7 +21,8 @@
 #include "Genome.h"
 #include "Creature.h"
 #include "StickBall.h"
-#include "Cuboid.h"
+#include "OmniWalker.h"
+#include "EyeWalker.h"
 
 #include <string>
 #include <unordered_map>
@@ -34,7 +35,8 @@
 using functions = std::pair<std::function<Genome*()>, std::function<Creature*(Genome g)>>;
 static std::unordered_map<std::string, functions> function_map = {
 	PAIR(StickBall),
-	PAIR(Cuboid),
+	PAIR(OmniWalker),
+	PAIR(EyeWalker),
 };
 
 class Creature;

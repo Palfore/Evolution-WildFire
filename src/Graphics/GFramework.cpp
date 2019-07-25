@@ -5,7 +5,7 @@
 #include "Simulation/Simulation.h" // init
 #include "GlutCallBacks.h"
 #include "Drawing/Draw.h"
-#include "Config.h"
+#include "Config/MyConfig.h"
 #include "Audio.h"
 
 GFramework::GFramework() : windowSize(INIT_WINDOW_WIDTH, INIT_WINDOW_HEIGHT), drawingState(Drawing::Dimension::NONE),

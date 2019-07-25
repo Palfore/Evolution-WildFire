@@ -13,7 +13,7 @@
 #include "Factory.h"
 #include "Terrain.h"
 static const Terrain terrain = Terrain(0);
-static const Factory creatureFactory("StickBall");
+static const Factory creatureFactory("OmniWalker");
 static const SenarioFactory senarioFactory("SenarioA", terrain, 5000);
 static Population pop(200, creatureFactory);
 static Viewer viewer(pop.population, creatureFactory, senarioFactory);

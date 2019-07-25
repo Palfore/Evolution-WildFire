@@ -26,8 +26,6 @@
  * @return int Exit code, 0 for normal termination, non-zero value otherwise.
  *
  */
-
-//#include "tiny-dnn-master/tiny_dnn/tiny_dnn.h"
 int main() {
     GFramework::get->startup();
 }

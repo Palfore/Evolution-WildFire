@@ -45,7 +45,7 @@ Genome* StickBall::createGenome(int n, int m, int b, std::vector<unsigned int> s
     for (unsigned int layer = 0; layer < sizes.size() - 1; layer++) {
         for (unsigned int i = 0; i < sizes[layer]; i++) {
             for (unsigned int j = 0; j < sizes[layer+1]; j++) {
-                g->addGene(new AxonGene(i, j, layer, pmRandf(1)));
+                g->addGene(new AxonGene(i, j, layer, 0, pmRandf(1)));
             }
         }
     }
@@ -53,7 +53,7 @@ Genome* StickBall::createGenome(int n, int m, int b, std::vector<unsigned int> s
 }
 
 
-StickBall::StickBall(const Genome& genome) : Creature(genome), head(nullptr), nodes({}), muscles({}), bones({}), NN(genome.getGenes<AxonGene>()) {
+StickBall::StickBall(const Genome& genome) : Creature(genome), head(nullptr), nodes({}), muscles({}), bones({}), NN(0, genome.getGenes<AxonGene>()) {
     for (auto const& gene: genome.getGenes<NodeGene>()) {
         this->nodes.push_back(new Ball(*gene));
     }
@@ -173,6 +173,7 @@ Vec StickBall::getTop(const double offset=0) const {
 }
 
 void StickBall::update(Senario*, int t) {
+    return;
     const double dt = 1.0;
     // this->prevCOM = this->com;
 

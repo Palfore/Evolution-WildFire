@@ -13,7 +13,7 @@ WINDRES = windres.exe
 
 INC = -Iinclude\\Graphics -Iinclude\\Math -Iinclude\\Simulation -Iinclude\\Logger -Iinclude -Iinclude\\Graphics\\Drawing -Iinclude\\Graphics\\UserInput -Iinclude\\Graphics\\Audio -Iinclude\\Config -Iinclude\\Simulation\\Genetics -Iinclude\\Simulation\\Physics -Iinclude\\Simulation\\Creatures -Iinclude\\Simulation\\Population -Iinclude\\Graphics\\GUI -Iinclude\\Graphics\\GLUT -Iinclude\\Simulation\\Genetics\\Genes
 CFLAGS = -m64 -Iinclude -isysteminclude\Graphics\GLUT\freeglut -std=c++2a
-RESINC = 
+RESINC =
 LIBDIR = -Llibraries\\SOIL -Llibraries\\freeglut
 LIB = libraries\\SOIL\\SOIL.a -lopengl32 -lglu32 -lwinmm -lgdi32 -lfreeglut
 LDFLAGS = -m64 -lopengl32
@@ -26,7 +26,7 @@ LIBDIR_DEBUG = $(LIBDIR)
 LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG = $(LDFLAGS) -O3 -s
 OBJDIR_DEBUG = obj\\Debug
-DEP_DEBUG = 
+DEP_DEBUG =
 OUT_DEBUG = bin\\Debug\\Evolution-Project.exe
 
 INC_RELEASE = $(INC) -Iinclude\Simulation\Creatures -Iinclude\Tests -Iinclude\Math -Iinclude\Simulation\Physics -Iinclude\Simulation\Population
@@ -37,21 +37,28 @@ LIBDIR_RELEASE = $(LIBDIR)
 LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE = $(LDFLAGS)
 OBJDIR_RELEASE = obj\\Release
-DEP_RELEASE = 
+DEP_RELEASE =
 OUT_RELEASE = bin\\Release\\Evolution-Project.exe
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\StickBall.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Senario.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Phylogeny.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Cuboid.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Creature.o $(OBJDIR_DEBUG)\\src\\Math\\Vec2.o $(OBJDIR_DEBUG)\\src\\Math\\Vec.o $(OBJDIR_DEBUG)\\src\\Math\\MyMath.o $(OBJDIR_DEBUG)\\src\\Math\\Matrix2.o $(OBJDIR_DEBUG)\\src\\Math\\Matrix.o $(OBJDIR_DEBUG)\\src\\Math\\Connection.o $(OBJDIR_DEBUG)\\src\\Logger\\Logger.o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserInput.o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserFunction.o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadTextures.o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadColors.o $(OBJDIR_DEBUG)\\src\\Graphics\\GUI\\Button.o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\MyGlut.o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\GlutCallBacks.o $(OBJDIR_DEBUG)\\src\\Graphics\\GFramework.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Text.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Shapes.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Objects.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Draw.o $(OBJDIR_DEBUG)\\src\\Graphics\\Audio\\Audio.o $(OBJDIR_DEBUG)\\src\\utility.o $(OBJDIR_DEBUG)\\src\\main.o $(OBJDIR_DEBUG)\\src\\Tests\\TestSuite.o $(OBJDIR_DEBUG)\\src\\Simulation\\mainMenuMode.o $(OBJDIR_DEBUG)\\src\\Simulation\\evolveMode.o $(OBJDIR_DEBUG)\\src\\Simulation\\Simulation.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\Viewer.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\Population.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\MultiThread.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\History.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Terrain.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Piston.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\NeuralNetwork.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Fitness.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Cube.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Component.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Ball.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genome.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\Gene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\GeneMapping.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Trail.o $(OBJDIR_DEBUG)\\src\\Config\\Config.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genome.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\Gene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\GeneMapping.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Trail.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\StickBall.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Senario.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Phylogeny.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\OmniWalker.o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Creature.o $(OBJDIR_DEBUG)\\src\\Math\\Vec2.o $(OBJDIR_DEBUG)\\src\\Math\\Vec.o $(OBJDIR_DEBUG)\\src\\Math\\MyMath.o $(OBJDIR_DEBUG)\\src\\Math\\Matrix2.o $(OBJDIR_DEBUG)\\src\\utility.o $(OBJDIR_DEBUG)\\src\\main.o $(OBJDIR_DEBUG)\\src\\Tests\\TestSuite.o $(OBJDIR_DEBUG)\\src\\Simulation\\mainMenuMode.o $(OBJDIR_DEBUG)\\src\\Simulation\\evolveMode.o $(OBJDIR_DEBUG)\\src\\Simulation\\Simulation.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\Viewer.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\Population.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\MultiThread.o $(OBJDIR_DEBUG)\\src\\Simulation\\Population\\History.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Terrain.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Piston.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\NeuralNetwork.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Fitness.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Eye.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Cube.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Component.o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Ball.o $(OBJDIR_DEBUG)\\src\\Math\\Matrix.o $(OBJDIR_DEBUG)\\src\\Math\\Connection.o $(OBJDIR_DEBUG)\\src\\Math\\Bisection.o $(OBJDIR_DEBUG)\\src\\Logger\\Logger.o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserInput.o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserFunction.o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadTextures.o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadColors.o $(OBJDIR_DEBUG)\\src\\Graphics\\GUI\\Button.o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\MyGlut.o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\GlutCallBacks.o $(OBJDIR_DEBUG)\\src\\Graphics\\GFramework.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Text.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Shapes.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Objects.o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Draw.o $(OBJDIR_DEBUG)\\src\\Graphics\\Audio\\Audio.o $(OBJDIR_DEBUG)\\src\\Config\\Config.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\StickBall.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Senario.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Phylogeny.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Cuboid.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Creature.o $(OBJDIR_RELEASE)\\src\\Math\\Vec2.o $(OBJDIR_RELEASE)\\src\\Math\\Vec.o $(OBJDIR_RELEASE)\\src\\Math\\MyMath.o $(OBJDIR_RELEASE)\\src\\Math\\Matrix2.o $(OBJDIR_RELEASE)\\src\\Math\\Matrix.o $(OBJDIR_RELEASE)\\src\\Math\\Connection.o $(OBJDIR_RELEASE)\\src\\Logger\\Logger.o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserInput.o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserFunction.o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadTextures.o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadColors.o $(OBJDIR_RELEASE)\\src\\Graphics\\GUI\\Button.o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\MyGlut.o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\GlutCallBacks.o $(OBJDIR_RELEASE)\\src\\Graphics\\GFramework.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Text.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Shapes.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Objects.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Draw.o $(OBJDIR_RELEASE)\\src\\Graphics\\Audio\\Audio.o $(OBJDIR_RELEASE)\\src\\utility.o $(OBJDIR_RELEASE)\\src\\main.o $(OBJDIR_RELEASE)\\src\\Tests\\TestSuite.o $(OBJDIR_RELEASE)\\src\\Simulation\\mainMenuMode.o $(OBJDIR_RELEASE)\\src\\Simulation\\evolveMode.o $(OBJDIR_RELEASE)\\src\\Simulation\\Simulation.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\Viewer.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\Population.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\MultiThread.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\History.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Terrain.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Piston.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\NeuralNetwork.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Fitness.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Cube.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Component.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Ball.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genome.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\Gene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\GeneMapping.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Trail.o $(OBJDIR_RELEASE)\\src\\Config\\Config.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genome.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\Gene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\GeneMapping.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Trail.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\StickBall.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Senario.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Phylogeny.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\OmniWalker.o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Creature.o $(OBJDIR_RELEASE)\\src\\Math\\Vec2.o $(OBJDIR_RELEASE)\\src\\Math\\Vec.o $(OBJDIR_RELEASE)\\src\\Math\\MyMath.o $(OBJDIR_RELEASE)\\src\\Math\\Matrix2.o $(OBJDIR_RELEASE)\\src\\utility.o $(OBJDIR_RELEASE)\\src\\main.o $(OBJDIR_RELEASE)\\src\\Tests\\TestSuite.o $(OBJDIR_RELEASE)\\src\\Simulation\\mainMenuMode.o $(OBJDIR_RELEASE)\\src\\Simulation\\evolveMode.o $(OBJDIR_RELEASE)\\src\\Simulation\\Simulation.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\Viewer.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\Population.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\MultiThread.o $(OBJDIR_RELEASE)\\src\\Simulation\\Population\\History.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Terrain.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Piston.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\NeuralNetwork.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Fitness.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Eye.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Cube.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Component.o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Ball.o $(OBJDIR_RELEASE)\\src\\Math\\Matrix.o $(OBJDIR_RELEASE)\\src\\Math\\Connection.o $(OBJDIR_RELEASE)\\src\\Math\\Bisection.o $(OBJDIR_RELEASE)\\src\\Logger\\Logger.o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserInput.o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserFunction.o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadTextures.o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadColors.o $(OBJDIR_RELEASE)\\src\\Graphics\\GUI\\Button.o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\MyGlut.o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\GlutCallBacks.o $(OBJDIR_RELEASE)\\src\\Graphics\\GFramework.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Text.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Shapes.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Objects.o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Draw.o $(OBJDIR_RELEASE)\\src\\Graphics\\Audio\\Audio.o $(OBJDIR_RELEASE)\\src\\Config\\Config.o
 
 all: debug release
 
 clean: clean_debug clean_release
 
-before_debug: 
+before_debug:
 	cmd /c if not exist bin\\Debug md bin\\Debug
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics md $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes md $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures md $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Math md $(OBJDIR_DEBUG)\\src\\Math
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src md $(OBJDIR_DEBUG)\\src
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Tests md $(OBJDIR_DEBUG)\\src\\Tests
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation md $(OBJDIR_DEBUG)\\src\\Simulation
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Population md $(OBJDIR_DEBUG)\\src\\Simulation\\Population
+	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Physics md $(OBJDIR_DEBUG)\\src\\Simulation\\Physics
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Logger md $(OBJDIR_DEBUG)\\src\\Logger
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput md $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources md $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources
@@ -60,21 +67,41 @@ before_debug:
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Graphics md $(OBJDIR_DEBUG)\\src\\Graphics
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing md $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Graphics\\Audio md $(OBJDIR_DEBUG)\\src\\Graphics\\Audio
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src md $(OBJDIR_DEBUG)\\src
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Tests md $(OBJDIR_DEBUG)\\src\\Tests
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation md $(OBJDIR_DEBUG)\\src\\Simulation
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Population md $(OBJDIR_DEBUG)\\src\\Simulation\\Population
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Physics md $(OBJDIR_DEBUG)\\src\\Simulation\\Physics
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics md $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics
-	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes md $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes
 	cmd /c if not exist $(OBJDIR_DEBUG)\\src\\Config md $(OBJDIR_DEBUG)\\src\\Config
 
-after_debug: 
+after_debug:
 
 debug: before_debug out_debug after_debug
 
 out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genome.o: src\\Simulation\\Genetics\\Genome.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genome.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genome.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o: src\\Simulation\\Genetics\\Genes\\NodeGene.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\NodeGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o: src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\Gene.o: src\\Simulation\\Genetics\\Genes\\Gene.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\Gene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\Gene.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o: src\\Simulation\\Genetics\\Genes\\CubeGene.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\CubeGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o: src\\Simulation\\Genetics\\Genes\\BoneGene.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\BoneGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o: src\\Simulation\\Genetics\\Genes\\AxonGene.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\AxonGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\GeneMapping.o: src\\Simulation\\Genetics\\GeneMapping.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\GeneMapping.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\GeneMapping.o
+
+$(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Trail.o: src\\Simulation\\Creatures\\Trail.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\Trail.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Trail.o
 
 $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\StickBall.o: src\\Simulation\\Creatures\\StickBall.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\StickBall.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\StickBall.o
@@ -85,8 +112,8 @@ $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Senario.o: src\\Simulation\\Creatur
 $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Phylogeny.o: src\\Simulation\\Creatures\\Phylogeny.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\Phylogeny.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Phylogeny.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Cuboid.o: src\\Simulation\\Creatures\\Cuboid.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\Cuboid.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Cuboid.o
+$(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\OmniWalker.o: src\\Simulation\\Creatures\\OmniWalker.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\OmniWalker.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\OmniWalker.o
 
 $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Creature.o: src\\Simulation\\Creatures\\Creature.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\Creature.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Creature.o
@@ -102,54 +129,6 @@ $(OBJDIR_DEBUG)\\src\\Math\\MyMath.o: src\\Math\\MyMath.cpp
 
 $(OBJDIR_DEBUG)\\src\\Math\\Matrix2.o: src\\Math\\Matrix2.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Math\\Matrix2.cpp -o $(OBJDIR_DEBUG)\\src\\Math\\Matrix2.o
-
-$(OBJDIR_DEBUG)\\src\\Math\\Matrix.o: src\\Math\\Matrix.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Math\\Matrix.cpp -o $(OBJDIR_DEBUG)\\src\\Math\\Matrix.o
-
-$(OBJDIR_DEBUG)\\src\\Math\\Connection.o: src\\Math\\Connection.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Math\\Connection.cpp -o $(OBJDIR_DEBUG)\\src\\Math\\Connection.o
-
-$(OBJDIR_DEBUG)\\src\\Logger\\Logger.o: src\\Logger\\Logger.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Logger\\Logger.cpp -o $(OBJDIR_DEBUG)\\src\\Logger\\Logger.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserInput.o: src\\Graphics\\UserInput\\UserInput.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\UserInput\\UserInput.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserInput.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserFunction.o: src\\Graphics\\UserInput\\UserFunction.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\UserInput\\UserFunction.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserFunction.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadTextures.o: src\\Graphics\\LoadingResources\\LoadTextures.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\LoadingResources\\LoadTextures.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadTextures.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadColors.o: src\\Graphics\\LoadingResources\\LoadColors.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\LoadingResources\\LoadColors.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadColors.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\GUI\\Button.o: src\\Graphics\\GUI\\Button.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GUI\\Button.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GUI\\Button.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\MyGlut.o: src\\Graphics\\GLUT\\MyGlut.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GLUT\\MyGlut.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\MyGlut.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\GlutCallBacks.o: src\\Graphics\\GLUT\\GlutCallBacks.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GLUT\\GlutCallBacks.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\GlutCallBacks.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\GFramework.o: src\\Graphics\\GFramework.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GFramework.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GFramework.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Text.o: src\\Graphics\\Drawing\\Text.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Text.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Text.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Shapes.o: src\\Graphics\\Drawing\\Shapes.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Shapes.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Shapes.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Objects.o: src\\Graphics\\Drawing\\Objects.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Objects.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Objects.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Draw.o: src\\Graphics\\Drawing\\Draw.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Draw.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Draw.o
-
-$(OBJDIR_DEBUG)\\src\\Graphics\\Audio\\Audio.o: src\\Graphics\\Audio\\Audio.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Audio\\Audio.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Audio\\Audio.o
 
 $(OBJDIR_DEBUG)\\src\\utility.o: src\\utility.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\utility.cpp -o $(OBJDIR_DEBUG)\\src\\utility.o
@@ -193,6 +172,9 @@ $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\NeuralNetwork.o: src\\Simulation\\Phy
 $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Fitness.o: src\\Simulation\\Physics\\Fitness.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Physics\\Fitness.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Fitness.o
 
+$(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Eye.o: src\\Simulation\\Physics\\Eye.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Physics\\Eye.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Eye.o
+
 $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Cube.o: src\\Simulation\\Physics\\Cube.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Physics\\Cube.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Cube.o
 
@@ -202,41 +184,72 @@ $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Component.o: src\\Simulation\\Physics
 $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Ball.o: src\\Simulation\\Physics\\Ball.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Physics\\Ball.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Physics\\Ball.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genome.o: src\\Simulation\\Genetics\\Genome.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genome.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genome.o
+$(OBJDIR_DEBUG)\\src\\Math\\Matrix.o: src\\Math\\Matrix.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Math\\Matrix.cpp -o $(OBJDIR_DEBUG)\\src\\Math\\Matrix.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o: src\\Simulation\\Genetics\\Genes\\NodeGene.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\NodeGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o
+$(OBJDIR_DEBUG)\\src\\Math\\Connection.o: src\\Math\\Connection.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Math\\Connection.cpp -o $(OBJDIR_DEBUG)\\src\\Math\\Connection.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o: src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o
+$(OBJDIR_DEBUG)\\src\\Math\\Bisection.o: src\\Math\\Bisection.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Math\\Bisection.cpp -o $(OBJDIR_DEBUG)\\src\\Math\\Bisection.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\Gene.o: src\\Simulation\\Genetics\\Genes\\Gene.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\Gene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\Gene.o
+$(OBJDIR_DEBUG)\\src\\Logger\\Logger.o: src\\Logger\\Logger.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Logger\\Logger.cpp -o $(OBJDIR_DEBUG)\\src\\Logger\\Logger.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o: src\\Simulation\\Genetics\\Genes\\CubeGene.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\CubeGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o
+$(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserInput.o: src\\Graphics\\UserInput\\UserInput.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\UserInput\\UserInput.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserInput.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o: src\\Simulation\\Genetics\\Genes\\BoneGene.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\BoneGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o
+$(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserFunction.o: src\\Graphics\\UserInput\\UserFunction.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\UserInput\\UserFunction.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput\\UserFunction.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o: src\\Simulation\\Genetics\\Genes\\AxonGene.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\Genes\\AxonGene.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o
+$(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadTextures.o: src\\Graphics\\LoadingResources\\LoadTextures.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\LoadingResources\\LoadTextures.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadTextures.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\GeneMapping.o: src\\Simulation\\Genetics\\GeneMapping.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Genetics\\GeneMapping.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\GeneMapping.o
+$(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadColors.o: src\\Graphics\\LoadingResources\\LoadColors.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\LoadingResources\\LoadColors.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources\\LoadColors.o
 
-$(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Trail.o: src\\Simulation\\Creatures\\Trail.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Simulation\\Creatures\\Trail.cpp -o $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures\\Trail.o
+$(OBJDIR_DEBUG)\\src\\Graphics\\GUI\\Button.o: src\\Graphics\\GUI\\Button.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GUI\\Button.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GUI\\Button.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\MyGlut.o: src\\Graphics\\GLUT\\MyGlut.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GLUT\\MyGlut.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\MyGlut.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\GlutCallBacks.o: src\\Graphics\\GLUT\\GlutCallBacks.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GLUT\\GlutCallBacks.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GLUT\\GlutCallBacks.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\GFramework.o: src\\Graphics\\GFramework.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\GFramework.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\GFramework.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Text.o: src\\Graphics\\Drawing\\Text.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Text.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Text.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Shapes.o: src\\Graphics\\Drawing\\Shapes.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Shapes.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Shapes.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Objects.o: src\\Graphics\\Drawing\\Objects.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Objects.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Objects.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Draw.o: src\\Graphics\\Drawing\\Draw.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Drawing\\Draw.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing\\Draw.o
+
+$(OBJDIR_DEBUG)\\src\\Graphics\\Audio\\Audio.o: src\\Graphics\\Audio\\Audio.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Graphics\\Audio\\Audio.cpp -o $(OBJDIR_DEBUG)\\src\\Graphics\\Audio\\Audio.o
 
 $(OBJDIR_DEBUG)\\src\\Config\\Config.o: src\\Config\\Config.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src\\Config\\Config.cpp -o $(OBJDIR_DEBUG)\\src\\Config\\Config.o
 
-clean_debug: 
+clean_debug:
 	cmd /c del /f $(OBJ_DEBUG) $(OUT_DEBUG)
 	cmd /c rd bin\\Debug
+	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics
+	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Creatures
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Math
+	cmd /c rd $(OBJDIR_DEBUG)\\src
+	cmd /c rd $(OBJDIR_DEBUG)\\src\\Tests
+	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation
+	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Population
+	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Physics
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Logger
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Graphics\\UserInput
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Graphics\\LoadingResources
@@ -245,19 +258,19 @@ clean_debug:
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Graphics
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Graphics\\Drawing
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Graphics\\Audio
-	cmd /c rd $(OBJDIR_DEBUG)\\src
-	cmd /c rd $(OBJDIR_DEBUG)\\src\\Tests
-	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation
-	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Population
-	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Physics
-	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics
-	cmd /c rd $(OBJDIR_DEBUG)\\src\\Simulation\\Genetics\\Genes
 	cmd /c rd $(OBJDIR_DEBUG)\\src\\Config
 
-before_release: 
+before_release:
 	cmd /c if not exist bin\\Release md bin\\Release
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics md $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes md $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures md $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Math md $(OBJDIR_RELEASE)\\src\\Math
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src md $(OBJDIR_RELEASE)\\src
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Tests md $(OBJDIR_RELEASE)\\src\\Tests
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation md $(OBJDIR_RELEASE)\\src\\Simulation
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Population md $(OBJDIR_RELEASE)\\src\\Simulation\\Population
+	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Physics md $(OBJDIR_RELEASE)\\src\\Simulation\\Physics
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Logger md $(OBJDIR_RELEASE)\\src\\Logger
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput md $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources md $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources
@@ -266,21 +279,41 @@ before_release:
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Graphics md $(OBJDIR_RELEASE)\\src\\Graphics
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing md $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Graphics\\Audio md $(OBJDIR_RELEASE)\\src\\Graphics\\Audio
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src md $(OBJDIR_RELEASE)\\src
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Tests md $(OBJDIR_RELEASE)\\src\\Tests
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation md $(OBJDIR_RELEASE)\\src\\Simulation
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Population md $(OBJDIR_RELEASE)\\src\\Simulation\\Population
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Physics md $(OBJDIR_RELEASE)\\src\\Simulation\\Physics
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics md $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics
-	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes md $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes
 	cmd /c if not exist $(OBJDIR_RELEASE)\\src\\Config md $(OBJDIR_RELEASE)\\src\\Config
 
-after_release: 
+after_release:
 
 release: before_release out_release after_release
 
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genome.o: src\\Simulation\\Genetics\\Genome.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genome.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genome.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o: src\\Simulation\\Genetics\\Genes\\NodeGene.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\NodeGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o: src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\Gene.o: src\\Simulation\\Genetics\\Genes\\Gene.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\Gene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\Gene.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o: src\\Simulation\\Genetics\\Genes\\CubeGene.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\CubeGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o: src\\Simulation\\Genetics\\Genes\\BoneGene.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\BoneGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o: src\\Simulation\\Genetics\\Genes\\AxonGene.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\AxonGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\GeneMapping.o: src\\Simulation\\Genetics\\GeneMapping.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\GeneMapping.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\GeneMapping.o
+
+$(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Trail.o: src\\Simulation\\Creatures\\Trail.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\Trail.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Trail.o
 
 $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\StickBall.o: src\\Simulation\\Creatures\\StickBall.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\StickBall.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\StickBall.o
@@ -291,8 +324,8 @@ $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Senario.o: src\\Simulation\\Creat
 $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Phylogeny.o: src\\Simulation\\Creatures\\Phylogeny.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\Phylogeny.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Phylogeny.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Cuboid.o: src\\Simulation\\Creatures\\Cuboid.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\Cuboid.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Cuboid.o
+$(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\OmniWalker.o: src\\Simulation\\Creatures\\OmniWalker.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\OmniWalker.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\OmniWalker.o
 
 $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Creature.o: src\\Simulation\\Creatures\\Creature.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\Creature.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Creature.o
@@ -308,54 +341,6 @@ $(OBJDIR_RELEASE)\\src\\Math\\MyMath.o: src\\Math\\MyMath.cpp
 
 $(OBJDIR_RELEASE)\\src\\Math\\Matrix2.o: src\\Math\\Matrix2.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Math\\Matrix2.cpp -o $(OBJDIR_RELEASE)\\src\\Math\\Matrix2.o
-
-$(OBJDIR_RELEASE)\\src\\Math\\Matrix.o: src\\Math\\Matrix.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Math\\Matrix.cpp -o $(OBJDIR_RELEASE)\\src\\Math\\Matrix.o
-
-$(OBJDIR_RELEASE)\\src\\Math\\Connection.o: src\\Math\\Connection.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Math\\Connection.cpp -o $(OBJDIR_RELEASE)\\src\\Math\\Connection.o
-
-$(OBJDIR_RELEASE)\\src\\Logger\\Logger.o: src\\Logger\\Logger.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Logger\\Logger.cpp -o $(OBJDIR_RELEASE)\\src\\Logger\\Logger.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserInput.o: src\\Graphics\\UserInput\\UserInput.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\UserInput\\UserInput.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserInput.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserFunction.o: src\\Graphics\\UserInput\\UserFunction.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\UserInput\\UserFunction.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserFunction.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadTextures.o: src\\Graphics\\LoadingResources\\LoadTextures.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\LoadingResources\\LoadTextures.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadTextures.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadColors.o: src\\Graphics\\LoadingResources\\LoadColors.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\LoadingResources\\LoadColors.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadColors.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\GUI\\Button.o: src\\Graphics\\GUI\\Button.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GUI\\Button.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GUI\\Button.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\MyGlut.o: src\\Graphics\\GLUT\\MyGlut.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GLUT\\MyGlut.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\MyGlut.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\GlutCallBacks.o: src\\Graphics\\GLUT\\GlutCallBacks.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GLUT\\GlutCallBacks.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\GlutCallBacks.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\GFramework.o: src\\Graphics\\GFramework.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GFramework.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GFramework.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Text.o: src\\Graphics\\Drawing\\Text.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Text.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Text.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Shapes.o: src\\Graphics\\Drawing\\Shapes.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Shapes.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Shapes.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Objects.o: src\\Graphics\\Drawing\\Objects.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Objects.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Objects.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Draw.o: src\\Graphics\\Drawing\\Draw.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Draw.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Draw.o
-
-$(OBJDIR_RELEASE)\\src\\Graphics\\Audio\\Audio.o: src\\Graphics\\Audio\\Audio.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Audio\\Audio.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Audio\\Audio.o
 
 $(OBJDIR_RELEASE)\\src\\utility.o: src\\utility.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\utility.cpp -o $(OBJDIR_RELEASE)\\src\\utility.o
@@ -399,6 +384,9 @@ $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\NeuralNetwork.o: src\\Simulation\\P
 $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Fitness.o: src\\Simulation\\Physics\\Fitness.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Physics\\Fitness.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Fitness.o
 
+$(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Eye.o: src\\Simulation\\Physics\\Eye.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Physics\\Eye.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Eye.o
+
 $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Cube.o: src\\Simulation\\Physics\\Cube.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Physics\\Cube.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Cube.o
 
@@ -408,41 +396,72 @@ $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Component.o: src\\Simulation\\Physi
 $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Ball.o: src\\Simulation\\Physics\\Ball.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Physics\\Ball.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Physics\\Ball.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genome.o: src\\Simulation\\Genetics\\Genome.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genome.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genome.o
+$(OBJDIR_RELEASE)\\src\\Math\\Matrix.o: src\\Math\\Matrix.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Math\\Matrix.cpp -o $(OBJDIR_RELEASE)\\src\\Math\\Matrix.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o: src\\Simulation\\Genetics\\Genes\\NodeGene.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\NodeGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\NodeGene.o
+$(OBJDIR_RELEASE)\\src\\Math\\Connection.o: src\\Math\\Connection.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Math\\Connection.cpp -o $(OBJDIR_RELEASE)\\src\\Math\\Connection.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o: src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\MuscleGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\MuscleGene.o
+$(OBJDIR_RELEASE)\\src\\Math\\Bisection.o: src\\Math\\Bisection.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Math\\Bisection.cpp -o $(OBJDIR_RELEASE)\\src\\Math\\Bisection.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\Gene.o: src\\Simulation\\Genetics\\Genes\\Gene.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\Gene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\Gene.o
+$(OBJDIR_RELEASE)\\src\\Logger\\Logger.o: src\\Logger\\Logger.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Logger\\Logger.cpp -o $(OBJDIR_RELEASE)\\src\\Logger\\Logger.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o: src\\Simulation\\Genetics\\Genes\\CubeGene.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\CubeGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\CubeGene.o
+$(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserInput.o: src\\Graphics\\UserInput\\UserInput.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\UserInput\\UserInput.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserInput.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o: src\\Simulation\\Genetics\\Genes\\BoneGene.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\BoneGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\BoneGene.o
+$(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserFunction.o: src\\Graphics\\UserInput\\UserFunction.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\UserInput\\UserFunction.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput\\UserFunction.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o: src\\Simulation\\Genetics\\Genes\\AxonGene.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\Genes\\AxonGene.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes\\AxonGene.o
+$(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadTextures.o: src\\Graphics\\LoadingResources\\LoadTextures.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\LoadingResources\\LoadTextures.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadTextures.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\GeneMapping.o: src\\Simulation\\Genetics\\GeneMapping.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Genetics\\GeneMapping.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\GeneMapping.o
+$(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadColors.o: src\\Graphics\\LoadingResources\\LoadColors.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\LoadingResources\\LoadColors.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources\\LoadColors.o
 
-$(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Trail.o: src\\Simulation\\Creatures\\Trail.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Simulation\\Creatures\\Trail.cpp -o $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures\\Trail.o
+$(OBJDIR_RELEASE)\\src\\Graphics\\GUI\\Button.o: src\\Graphics\\GUI\\Button.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GUI\\Button.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GUI\\Button.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\MyGlut.o: src\\Graphics\\GLUT\\MyGlut.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GLUT\\MyGlut.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\MyGlut.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\GlutCallBacks.o: src\\Graphics\\GLUT\\GlutCallBacks.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GLUT\\GlutCallBacks.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GLUT\\GlutCallBacks.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\GFramework.o: src\\Graphics\\GFramework.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\GFramework.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\GFramework.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Text.o: src\\Graphics\\Drawing\\Text.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Text.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Text.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Shapes.o: src\\Graphics\\Drawing\\Shapes.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Shapes.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Shapes.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Objects.o: src\\Graphics\\Drawing\\Objects.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Objects.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Objects.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Draw.o: src\\Graphics\\Drawing\\Draw.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Drawing\\Draw.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing\\Draw.o
+
+$(OBJDIR_RELEASE)\\src\\Graphics\\Audio\\Audio.o: src\\Graphics\\Audio\\Audio.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Graphics\\Audio\\Audio.cpp -o $(OBJDIR_RELEASE)\\src\\Graphics\\Audio\\Audio.o
 
 $(OBJDIR_RELEASE)\\src\\Config\\Config.o: src\\Config\\Config.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src\\Config\\Config.cpp -o $(OBJDIR_RELEASE)\\src\\Config\\Config.o
 
-clean_release: 
+clean_release:
 	cmd /c del /f $(OBJ_RELEASE) $(OUT_RELEASE)
 	cmd /c rd bin\\Release
+	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics
+	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Creatures
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Math
+	cmd /c rd $(OBJDIR_RELEASE)\\src
+	cmd /c rd $(OBJDIR_RELEASE)\\src\\Tests
+	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation
+	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Population
+	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Physics
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Logger
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Graphics\\UserInput
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Graphics\\LoadingResources
@@ -451,13 +470,6 @@ clean_release:
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Graphics
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Graphics\\Drawing
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Graphics\\Audio
-	cmd /c rd $(OBJDIR_RELEASE)\\src
-	cmd /c rd $(OBJDIR_RELEASE)\\src\\Tests
-	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation
-	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Population
-	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Physics
-	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics
-	cmd /c rd $(OBJDIR_RELEASE)\\src\\Simulation\\Genetics\\Genes
 	cmd /c rd $(OBJDIR_RELEASE)\\src\\Config
 
 .PHONY: before_debug after_debug clean_debug before_release after_release clean_release

@@ -9,8 +9,8 @@
 
 
 Viewer::Viewer(std::vector<Genome*> population, const Factory& factory_t, const SenarioFactory& senFact):
-         senario(nullptr), phylogeny(*population[0]), fitness(0.0), factory(factory_t), senarioFactory(senFact),
-         viewingGenomes({}), activeCreatureIndex(0), simStep(0), COMTrail({}) {
+         phylogeny(*population[0]), fitness(0.0), factory(factory_t), senarioFactory(senFact),
+         senario(nullptr), viewingGenomes({}), activeCreatureIndex(0), simStep(0), COMTrail() {
     this->updateViewingGenomes(population);
 }
 Viewer::~Viewer() {

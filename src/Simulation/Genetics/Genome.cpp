@@ -7,7 +7,7 @@
 #include <deque>
 
 Genome::Genome() : fitness(0), genes({}) {
-    for (auto const& [geneSymbol, _] : GENE_MAP) {
+    for (auto const& [geneSymbol, _] : getGeneMap()) {
         this->genes.insert({geneSymbol, {}});
     }
 }
@@ -27,17 +27,23 @@ Genome& Genome::operator=(Genome other) {
 }
 
 Genome::Genome(const std::string genomeString) : Genome() {
+    // puts("okay");
     std::deque<std::string> geneStrings = utility::split<std::deque>(genomeString, GENE_DELIMITER);
     std::string metaData = geneStrings[0];
     geneStrings.pop_front();
-
+    // puts("1");
     for (auto const& gene : geneStrings) {
+        // puts("2");
         std::vector<std::string> headAndValues = utility::split<std::vector>(gene, VALUE_DELIMITER, 1);
+        // puts("3");
         char head = headAndValues[0][0];
-
-        auto geneGenerator = GENE_MAP.find(head)->second;
-        this->genes[head].push_back( geneGenerator(headAndValues[1]));
+        // puts("4");
+        // std::cout << head<<','<<getGeneMap().size()<<'\n';
+        auto geneGenerator = getGeneMap().find(head)->second;
+        // puts("5");
+        this->genes[head].push_back( geneGenerator(headAndValues[1]) );
     }
+    // puts("done");
 }
 
 Genome::~Genome() {

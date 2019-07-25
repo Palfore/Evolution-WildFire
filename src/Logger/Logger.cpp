@@ -2,7 +2,7 @@
 #include "Drawing/Shapes.h" // drawing error message
 #include "GFramework.h"       // affecing game state
 #include "utility.h"
-#include "Config.h"
+#include "Config/MyConfig.h"
 #include "Simulation.h"
 
 #include <iostream> // cout

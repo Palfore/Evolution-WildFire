@@ -19,7 +19,7 @@ void MultiThread::processCreatures(const std::vector<Creature*>& creatures, cons
     for (Creature* body: creatures) {
         Senario* senario = factory.createSenario(body);
         double fitness = 0;
-        for (int i = 0; i < senario->evaluationTime; i++) {
+        for (unsigned int i = 0; i < senario->maxEvaluationTime; i++) {
             senario->update(i);
             fitness += senario->getCurrentFitness();
         }
