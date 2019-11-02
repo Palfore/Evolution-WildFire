@@ -1,5 +1,4 @@
 #include "Trail.h"
-
 #include "Shapes.h"
 
 Trail::Trail(unsigned int max_size, unsigned int sampling_frequency):

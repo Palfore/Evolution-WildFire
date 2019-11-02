@@ -46,8 +46,13 @@ void History::addPoint(std::vector<Genome*> genomes, int gen) {
     data.push_back(HistoryPoint(genomes, gen));
 }
 
-void History::writeToFile() const{
-    LOG("Writing history to file is not yet supported.", LogDegree::WARNING);
+void History::writeToFile(const std::string& filename) const{
+    std::ofstream myfile;
+    myfile.open(filename, std::ios::app);
+    for (const HistoryPoint h: data) {
+        myfile << h.toString() << '\n';
+    }
+    myfile.close();
 }
 
 void History::writeToConsole() const {

@@ -3,26 +3,24 @@
 #include "Creature.h"
 #include "Logger.h"
 #include "Shapes.h"
-
 #include "Factory.h"
+#include "ScenarioFactory.h"
 
-
-
-Viewer::Viewer(std::vector<Genome*> population, const Factory& factory_t, const SenarioFactory& senFact):
-         phylogeny(*population[0]), fitness(0.0), factory(factory_t), senarioFactory(senFact),
-         senario(nullptr), viewingGenomes({}), activeCreatureIndex(0), simStep(0), COMTrail() {
+Viewer::Viewer(std::vector<Genome*> population, const Factory& factory_t, const ScenarioFactory& senFact):
+         phylogeny(*population[0]), fitness(0.0), factory(factory_t), scenarioFactory(senFact),
+         scenario(nullptr), viewingGenomes({}), activeCreatureIndex(0), simStep(0), COMTrail() {
     this->updateViewingGenomes(population);
 }
 Viewer::~Viewer() {
-    delete this->senario;
+    delete this->scenario;
 }
 
 void Viewer::drawBrain(bool drawLines) const {
-    this->senario->creature->drawBrain(drawLines);
+    this->scenario->creature->drawBrain(drawLines);
 }
 
 void Viewer::drawDebug(bool doDraw) const {
-    this->senario->creature->drawDebug(doDraw);
+    this->scenario->creature->drawDebug(doDraw);
 }
 
 void Viewer::drawTrails(bool drawCOMTrails) const {
@@ -32,20 +30,20 @@ void Viewer::drawTrails(bool drawCOMTrails) const {
 }
 
 void Viewer::draw() const {
-    this->senario->draw();
+    this->scenario->draw();
 }
 
 void Viewer::moveTo(const Vec& v) {
-    this->senario->creature->moveTo = v;
+    this->scenario->creature->moveTo = v;
 }
 
 void Viewer::update() {
     if (simStep % COMTrail.samplingFrequency == 0) {
-       COMTrail.addPoint(this->senario->creature->getCOM());
+       COMTrail.addPoint(this->scenario->creature->getCOM());
     }
 
-    senario->update(simStep);
-    fitness += senario->getCurrentFitness();
+    scenario->update(simStep);
+    fitness += scenario->getCurrentFitness();
     simStep++;
     if (simStep > 1'000'000'000) simStep = 0; // Prevent Overflow
 }
@@ -75,9 +73,9 @@ void Viewer::prevCreature() {
 void Viewer::showCreature(int index) {
     COMTrail.clear();
     activeCreatureIndex = index;
-    delete senario;
+    delete scenario;
     try {
-        senario = this->senarioFactory.createSenario(
+        scenario = this->scenarioFactory.createScenario(
             this->factory.createCreature(viewingGenomes[activeCreatureIndex])
         );
 	} catch (const std::exception& e) {
@@ -103,9 +101,9 @@ int Viewer::getMemberIndex() const {
 }
 
 const Creature& Viewer::getCurrent() const {
-    return *(senario->creature);
+    return *(scenario->creature);
 }
 
-const Senario& Viewer::getSenario() const {
-    return *senario;
+const Scenario& Viewer::getScenario() const {
+    return *scenario;
 }

@@ -84,7 +84,7 @@ static double perlin2d(double x, double y, double freq, int depth) {
 }
 
 double Terrain::getHeight(Vec r) const {
-    // return 0;
+    return 0;
     // return 0.5*r.x;
     // return 30*sin(0.03*r.x);
     // return 30*sin(0.0001*r.x*r.y);

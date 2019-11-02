@@ -25,18 +25,19 @@ class NeuralNetwork {
 
 class RecurrentNeuralNetwork {
     public:
-        RecurrentNeuralNetwork(); // @TODO: remove me after testing
         RecurrentNeuralNetwork(int networkID, std::vector<AxonGene*> axons);
         RecurrentNeuralNetwork(const RecurrentNeuralNetwork& other);
         virtual ~RecurrentNeuralNetwork();
 
         void draw(bool drawAxons) const;
-        std::vector<double> propagate(const std::vector<double>& inputs);
+        std::vector<double> propagate(const std::deque<std::vector<double>>& inputs);
 
         network<sequential> net;
         std::vector<unsigned int> sizes;
     private:
-        std::array<std::vector<double>, 2> potentials; // In and Out only since hidden are hard to access from api
+        std::deque<std::vector<double>> potentialIn;
+        std::vector<double> potentialOut;
+        // std::array<std::vector<double>, 2> potentials; // In and Out only since hidden are hard to access from api
 };
 
 

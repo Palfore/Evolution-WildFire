@@ -20,9 +20,6 @@
 
 #include "Genome.h"
 #include "Creature.h"
-#include "StickBall.h"
-#include "OmniWalker.h"
-#include "EyeWalker.h"
 
 #include <string>
 #include <unordered_map>
@@ -30,13 +27,19 @@
 
 #define CREATE_BODY(type) [](Genome g){return new type(g);}
 #define CREATE_GENOME(type) [](){return type::createGenome();}
-#define PAIR(name) std::pair(#name, std::pair(CREATE_GENOME(name), CREATE_BODY(name)))
-
+#define CREATURE_PAIR(name) std::pair(#name, std::pair(CREATE_GENOME(name), CREATE_BODY(name)))
 using functions = std::pair<std::function<Genome*()>, std::function<Creature*(Genome g)>>;
+
+/* Register Creatures Here */
+#include "StickBall.h"
+#include "OmniWalker.h"
+#include "EyeWalker.h"
+#include "RecurEyeWalker.h"
 static std::unordered_map<std::string, functions> function_map = {
-	PAIR(StickBall),
-	PAIR(OmniWalker),
-	PAIR(EyeWalker),
+	CREATURE_PAIR(StickBall),
+	CREATURE_PAIR(OmniWalker),
+	CREATURE_PAIR(EyeWalker),
+	CREATURE_PAIR(RecurEyeWalker),
 };
 
 class Creature;

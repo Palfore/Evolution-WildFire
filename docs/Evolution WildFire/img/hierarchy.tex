@@ -1,0 +1,28 @@
+\documentclass[]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+
+\begin{document}
+
+	\begin{tikzpicture}[every tree node/.style=draw,edge from parent/.style={draw,-latex}]
+		\tikzset{level distance=50pt}
+		\Tree [
+				[.{Viewer}
+					{User}
+				]
+				[.{Population}
+					[.{Scenario}
+						[.{Creature}
+							[.{Genome}
+								{Genes}
+							]
+							[.{Body} ]
+						]
+						{Fitness}
+						{Environment}
+					]
+				]
+		]
+	\end{tikzpicture}
+
+\end{document}

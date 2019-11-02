@@ -1,9 +1,10 @@
 #ifndef TRAIL_H
 #define TRAIL_H
 
-#include <deque>
 #include "Vec.h"
+#include <deque>
 #include <iterator>
+
 class Trail {
 private:
     enum class DeletionType {CIRCULAR, HALVING, BLOCKING};

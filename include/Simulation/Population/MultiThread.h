@@ -6,9 +6,9 @@
 #include <vector>
 
 class Creature;
-class SenarioFactory;
+class ScenarioFactory;
 
-using Processor = std::function<void(const std::vector<Creature*>&, const SenarioFactory&, std::vector<double> &, bool &)>;
+using Processor = std::function<void(const std::vector<Creature*>&, const ScenarioFactory&, std::vector<double> &, bool &)>;
 
 class MultiThread {
  public:
@@ -21,7 +21,7 @@ class MultiThread {
         static void spawnChildren(
             std::vector<MultiThread*>& mt,
             const std::vector<Creature*>& creatures,
-            const SenarioFactory& factory);
+            const ScenarioFactory& factory);
 
  private:
         std::thread t;
@@ -29,11 +29,11 @@ class MultiThread {
 
         static void processCreatures(
             const std::vector<Creature*>& bodies,
-            const SenarioFactory& factory,
+            const ScenarioFactory& factory,
             std::vector<double>& fitnesses,
             bool& done);
 
-        void spawn(Processor f, const SenarioFactory& factory, const std::vector<Creature*>& creatures);
+        void spawn(Processor f, const ScenarioFactory& factory, const std::vector<Creature*>& creatures);
 };
 
 #include "Logger.h"
@@ -42,7 +42,7 @@ class Threader {
  public:
     std::vector<MultiThread*> mt;
 
-    Threader(int num, const SenarioFactory& factory_t, const std::vector<Creature*>& bodies):
+    Threader(int num, const ScenarioFactory& factory_t, const std::vector<Creature*>& bodies):
             mt({}), isDone(true), factory(factory_t) {
         updateThreadCount(num);
         for (int i = 0; i < num; i++) {
@@ -97,7 +97,7 @@ class Threader {
 
  private:
     bool isDone;
-    const SenarioFactory& factory;
+    const ScenarioFactory& factory;
 
     bool checkIsFinished() {
         isDone = mt.empty() ? true : all_of(mt.cbegin(), mt.cend(), [](const MultiThread* m){

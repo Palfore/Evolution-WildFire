@@ -1,0 +1,144 @@
+\ProvidesPackage{mystyle}
+
+
+%%% Hyperreferences %%%
+\usepackage{hyperref}  % Used to be bookmarks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    linktoc=all,
+}
+
+
+%%% Basic Packages %%%
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}  % Math Symbols
+\usepackage{subfiles} % Subfiles
+\usepackage{dirtree}  % Graphical File Hierarchy
+\usepackage{listings} % Code listings
+\usepackage{graphicx} % Includegraphics
+\usepackage{float}    % Graphics Formatting
+\usepackage[automake, acronym, nopostdot]{glossaries}  % Glossary
+\usepackage[nodayofweek]{datetime} % Dateformating
+\usepackage[font=smaller,labelfont=bf, margin=1cm]{caption} % Captions
+\usepackage{textcomp} % Allows for 'upquote' in code listings
+\usepackage{tocloft}  % For defining TOC-like lists
+\usepackage[toc, page, title]{appendix}  % Appendix
+\usepackage{tabularx} % Better Table Environment
+\usepackage{booktabs} % Table row seperators
+\usepackage{fontawesome} % For icons
+
+\newdateformat{mydate}{\monthname[\THEMONTH] \ordinal{DAY}, \THEYEAR}
+\newdateformat{myshortdate}{\shortmonthname[\THEMONTH] \ordinal{DAY}, \THEYEAR}
+\mydate
+
+%%% Define List of Software %%%
+\newcommand{\listsoftwarename}{List of Software}
+\newlistof{software}{soft}{\listsoftwarename}
+\newcommand{\software}[2]{%
+  \refstepcounter{software}
+  \par\noindent{\underline{\textbf{#1 -} #2 }} % \thesoftware is the index
+  \addcontentsline{soft}{software}
+  {\protect\numberline{\thechapter.\thesoftware}#1}\par
+
+}
+
+\newcommand{\fakesubsection}[1]{%
+  \par\refstepcounter{subsection}% Increase subsection counter
+  \subsectionmark{#1}% Add subsection mark (header)
+  \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}% Add subsection to ToC
+  % Add more content here, if needed.
+}
+
+
+%%% Colors %%%
+\usepackage[dvipsnames]{xcolor}
+	\definecolor{level-1}{RGB}{53, 130, 255}
+	\definecolor{level-2}{RGB}{229, 64, 64}
+	\definecolor{level-3}{RGB}{67, 173, 69}
+
+	\definecolor{nice-green}{rgb}{0.01, 0.75, 0.24}
+
+	\definecolor{mygreen}{rgb}{0,0.6,0}
+	\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+	\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+
+%%% Code Listing Settings %%%
+\lstset{
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  commentstyle=\color{mygreen},    % comment style
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  numbers=left,                    % where to put the line-numbers; (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\small\color{mygray}, % the style that is used for the line-numbers
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  upquote=true
+}
+
+
+%%% GLOSSARY COMMAND %%%
+\newcommand{\newacrynoymglossaryentry}[4]{
+	% entryname, accroynum (capital), expansion, description.
+	\newglossaryentry{#1}{
+	    name={#2},
+	    description={
+	    	- \textit{#3}\\#4
+	    },
+	    first={ {#3} (#2) },
+		long={#3. #4}
+	}
+}
+
+
+%%% GLOSSARY ENTRIES %%%
+\newglossaryentry{lazy loading}{
+  name=Lazy Loading,
+  description={
+  	A design pattern commonly used in computer programming to defer initialization of an object until the point at which it is needed. \href{https://en.wikipedia.org/wiki/Lazy_loading}{More Info}
+  },
+}
+\newglossaryentry{copper}{
+  name=Copper,
+  description={
+  	A supercomputer in which our group has priority. \href{https://www.sharcnet.ca/help/index.php/Copper}{More Info}
+  },
+}
+
+\newglossaryentry{dataaug}{
+  name=Data Augmentation,
+  description={
+    The process in which a dataset is transformed with the purpose of generating new training samples for a machine learning network, while preserving desired properties. Reflecting an imaging is a good example. \href{https://medium.com/nanonets/how-to-use-deep-learning-when-you-have-limited-data-part-2-data-augmentation-c26971dc8ced}{More Info}
+  },
+}
+
+\newacrynoymglossaryentry{sharcnet}{SHARCNET}{Shared Hierarchical Academic Research Computing Network}{
+	They provide infrastructure and services supporting computational research, including technical support for \gls{copper}. \href{https://www.sharcnet.ca/my}{More Info}
+}
+
+\newacrynoymglossaryentry{tbd}{TBD}{To Be Determined}{
+  The date is not yet known.
+}
+
+\newacrynoymglossaryentry{wip}{WIP}{Work In Progress}{
+  The task has not yet been completed.
+}
+
+\newacrynoymglossaryentry{qmc}{QMC}{Quantum Monte Carlo}{
+  Encompasses a large family of computational methods whose common aim is the study of complex quantum systems. \href{https://en.wikipedia.org/wiki/Quantum_Monte_Carlo}{More Info}
+}
+
+\newacrynoymglossaryentry{tdl}{TDL}{Thermodynamic Limit}{
+  Is the limit of a system in statistical mechanics for a large number N of particles (e.g., atoms or molecules) where the volume is taken to grow in proportion with the number of particles. \href{https://en.wikipedia.org/wiki/Thermodynamic_limit}{More Info}
+}

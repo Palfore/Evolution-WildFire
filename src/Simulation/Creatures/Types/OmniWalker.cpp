@@ -8,7 +8,7 @@
 #include "Shapes.h"
 #include <limits>
 
-#include "Senario.h"
+#include "Scenario.h"
 #include <numeric>
 
 Genome* OmniWalker::createGenome(Vec p, double l, std::vector<unsigned int> sizes, std::vector<unsigned int> sizes2) {
@@ -56,7 +56,7 @@ OmniWalker::OmniWalker(const OmniWalker &other):
     this->head = &this->body->position;
 }
 
-void OmniWalker::draw(const Senario* senario) const {
+void OmniWalker::draw(const Scenario* scenario) const {
     DrawCylinder<Appearance::BLUE>(
 		Vec(body->position.x, body->position.y, this->getLowestBodyHeight()),
 		body->position + Vec(0, 0, body->length/2),
@@ -71,11 +71,11 @@ void OmniWalker::draw(const Senario* senario) const {
     DrawSphere<Appearance::FACE>(*head + Vec(0,0,8), 5,
         180.0/3.1415926*atan2(averageV.y, averageV.x) - 90
     );
-    eye.draw();
+    eye.draw(averageP, scenario->food.getFrom(averageP.x, averageP.y, 2));
 
-    senario->terrain.draw();
+    scenario->terrain.draw();
 
-    double distanceFromGround = this->getLowestBodyHeight() - senario->terrain.getHeight(this->getCOM());
+    double distanceFromGround = this->getLowestBodyHeight() - scenario->terrain.getHeight(this->getCOM());
     constexpr double error = 1;
 
     //     DrawRing<Appearance::WHITE>(Vec(
@@ -197,7 +197,7 @@ Vec OmniWalker::getTop(const double offset=0) const {
     return Vec(comX / mass, comY / mass, highestNode + offset);
 }
 
-void OmniWalker::update(Senario* senario, int t) {
+void OmniWalker::update(Scenario* scenario, int t) {
     constexpr double dt = 0.05;
 
     if (t == 0) {
@@ -209,7 +209,7 @@ void OmniWalker::update(Senario* senario, int t) {
         this->positions.clear();
         this->initCOM = this->calculateCOM();
     }
-    this->Creature::update(senario, t);
+    this->Creature::update(scenario, t);
 
     /* Brain Processing */
     Vec averageP = Vec(0, 0, 0);
@@ -244,10 +244,10 @@ void OmniWalker::update(Senario* senario, int t) {
     body->acceleration += drag;
 
     /* Ground Contact Forces */
-    double distanceFromGround = this->getLowestBodyHeight() - senario->terrain.getHeight(this->getCOM());
+    double distanceFromGround = this->getLowestBodyHeight() - scenario->terrain.getHeight(this->getCOM());
     constexpr double error = 1;
 
-    this->eye.look(this->body->position, averageV, *senario);
+    this->eye.look(this->body->position, averageV, scenario->food.getFrom(this->body->position.x, this->body->position.y, 2));
 
     // std::vector<double> visualInputs = {1};
     // for (const auto& ray: this->eye.rays) {
@@ -258,7 +258,7 @@ void OmniWalker::update(Senario* senario, int t) {
     // green = green.getUnit();
     // double x = 200*fabs(dmoveTo[1])*(green.x * cos(angle) - green.y * sin(angle));
     // double y = 200*fabs(dmoveTo[1])*(green.x * sin(angle) + green.y * cos(angle));
-    // this->moveTo = Vec(x + averageP.x, y + averageP.y, senario->terrain.getHeight(x + averageP.x, y + averageP.y));
+    // this->moveTo = Vec(x + averageP.x, y + averageP.y, scenario->terrain.getHeight(x + averageP.x, y + averageP.y));
 
     if (distanceFromGround < error) {
         const double strength = 0.6;
@@ -271,9 +271,9 @@ void OmniWalker::update(Senario* senario, int t) {
             double C = 0.2;
             Vec v1 = body->velocity;
             Vec v2 = Vec(0, 0, 0);
-            Vec N = senario->terrain.getNormal(this->getCOM());
+            Vec N = scenario->terrain.getNormal(this->getCOM());
             body->velocity += -2 * C * (v1 - v2).dot(N) * N;
-            body->position.z = senario->terrain.getHeight(this->body->position) +
+            body->position.z = scenario->terrain.getHeight(this->body->position) +
                                     (this->body->position.z - this->getLowestBodyHeight()) + 1e-4;
 
             /* Friction */

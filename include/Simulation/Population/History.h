@@ -36,7 +36,7 @@ class HistoryPoint {
                 virtual ~Value() {}
 
                 std::string toString() const {
-                    return utility::numToStr<double>(x) + "+/-" + utility::numToStr<double>(y);
+                    return utility::numToStr<double>(x) + " +/- " + utility::numToStr<double>(y);
                 }
         };
 
@@ -90,9 +90,8 @@ class History {
         /** @brief Writes the history data to a file.
          *
          * @return
-         * @warning This is not yet implemented.
          */
-        void writeToFile() const;
+        void writeToFile(const std::string& filename) const;
 
         /** @brief Writes the history data to std::cout.
          *

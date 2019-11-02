@@ -100,7 +100,7 @@ StickBall::StickBall(const StickBall &other) : Creature(other), head(nullptr), n
 }
 
 
-void StickBall::draw(const Senario*) const {
+void StickBall::draw(const Scenario*) const {
     DrawSphere<Appearance::FACE>(*head + Vec(0,0,4), 5,
         180.0/3.1415926*atan2(moveTo.y - getCOM().y, moveTo.x - getCOM().x) + 90
     );
@@ -172,7 +172,7 @@ Vec StickBall::getTop(const double offset=0) const {
     return Vec(comX / mass, comY / mass, highestNode + offset);
 }
 
-void StickBall::update(Senario*, int t) {
+void StickBall::update(Scenario*, int t) {
     return;
     const double dt = 1.0;
     // this->prevCOM = this->com;

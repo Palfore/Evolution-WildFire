@@ -1,21 +1,23 @@
 #ifndef VIEWER_H
 #define VIEWER_H
 
-#include <vector>
-class Genome;
-class Creature;
-#include "Factory.h"
-#include "Senario.h"
 #include "Phylogeny.h"
 #include "Fitness.h"
 #include "Trail.h"
 
+#include <vector>
+
+class Genome;
+class Creature;
+class Scenario;
+class ScenarioFactory;
+class Factory;
 class Viewer {
     public:
         Phylogeny phylogeny;
         double fitness;
 
-        Viewer(std::vector<Genome*> population, const Factory& factory, const SenarioFactory& senarioFactory);
+        Viewer(std::vector<Genome*> population, const Factory& factory, const ScenarioFactory& scenarioFactory);
         Viewer(const Viewer& other) = delete;
         ~Viewer();
         Viewer& operator=(const Viewer& other) = delete;
@@ -42,14 +44,14 @@ class Viewer {
 
         /// Getters
         const Creature& getCurrent() const;
-        const Senario& getSenario() const;
+        const Scenario& getScenario() const;
         int getSimStep() const;
         int getMemberIndex() const;
 
     private:
         const Factory& factory;
-        const SenarioFactory& senarioFactory;
-        Senario* senario;
+        const ScenarioFactory& scenarioFactory;
+        Scenario* scenario;
         std::vector<Genome> viewingGenomes;
         int activeCreatureIndex;
         int simStep;

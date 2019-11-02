@@ -1,0 +1,58 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage{mystyle}
+
+\makeglossaries
+\renewcommand*{\lstlistlistingname}{List of Source Code Listings}
+\begin{document}
+
+\subfile{tex/title}
+
+\tableofcontents
+
+% \phantomsection is used to resolve tocloft conflict:
+%	 https://latex.org/forum/viewtopic.php?t=22355
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Source Code Listings}
+\lstlistoflistings
+
+%\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+% %\newpage
+% \phantomsection
+% \addcontentsline{toc}{chapter}{List of Software}
+% \listofsoftware
+
+\part{Project Organization and Workflow}
+	\chapter{Overview}\label{ch:overview}
+		\subfile{tex/Project/overview}
+	\chapter{Milestones and Events}\label{ch:events}
+		\subfile{tex/Project/milestones}
+	\chapter{Dependencies}
+
+
+\part{Machinery}
+	\chapter{Overview}\label{chp:genetics}
+		\subfile{tex/Machinery/overview}
+
+\part{Physics}
+	\chapter{Diffusion}
+	\chapter{Vision}
+\part{Discoveries}
+
+
+
+
+
+
+
+% \begin{appendices}
+% 	\chapter{Resources}
+% 		\subfile{tex/Appendicies/resources}
+% \end{appendices}
+
+\printglossary[nonumberlist]
+\end{document}

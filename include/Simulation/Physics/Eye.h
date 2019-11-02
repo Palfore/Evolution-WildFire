@@ -3,64 +3,21 @@
 
 #include "Shapes.h"
 #include <Math.h>
+#include <optional>
 #include "Vec.h"
 #include "Matrix.h"
 #include "Bisection.h"
 #include "Terrain.h"
-#include "Senario.h"
+#include "Scenario.h"
+#include "Chunks.h"
 class Ray {
  public:
-	Ray(Vec u0_t, Vec u1_t): u0(u0_t), u1(u1_t), v0(), v1(), u((u1_t - u0_t).getUnit()), k(1) {}
+	Ray(Vec u0_t, Vec u1_t): v0(), v1(), u0(u0_t), u1(u1_t), u((u1_t - u0_t).getUnit()), seeing(std::nullopt), k(1) {}
 	~Ray() {}
-
-	void update(const Vec& v0_t, const Vec& v1_t, const Senario& senario) {
-		v0 = v0_t;
-		v1 = v1_t;
-		k = intersection(senario);
-	}
-
-	double intersection(const Senario& senario) const {
-		// double terrainRoot = findRoot(
-		// 	[this, &senario](double r) {
-		// 		const Vec p = u0 + r*(u1 - u0);
-		// 		return p.z - senario.terrain.getHeight(p.x, p.y);
-		// 	}, 0, 1, 0.1
-		// );
-
-		// double closestFood = 1;
-		// for (const auto& food: senario.food) {
-		// 	if ((food - u0).length() < (u1 - u0).length()) {
-		// 		closestFood = std::min(closestFood, findRoot(
-		// 			[this, &food](double r) {
-		// 				const Vec p = u0 + r*(u1 - u0);
-		// 				return (p - food).length() - 10;
-		// 			}, 0, 1, 0.1
-		// 		));
-		// 	}
-		// }
-		// return closestFood;
-		// if (terrainRoot > closestFood) {
-		// 	return closestFood;
-		// } else {
-		// 	return -terrainRoot;
-		// }
-		return 1;
-	}
 
 	void draw() const {
 		Vec s = v0 + (v1 - v0)*fabs(k);
-		if (fabs(k) <= 0.9)	{
-			DrawCylinder<Appearance::RED>(v0, s, 1);
-		} else {
-			DrawCylinder<Appearance::WHITE>(v0, s, 0.1);
-		}
-		// if (k < 0) {
-		// 	if (fabs(k) <= 0.9) DrawSphere<Appearance::WHITE>(s, 5);
-		//     DrawCylinder<Appearance::RED>(u0, s, 0.2);
-		// } else {
-		// 	if (fabs(k) <= 0.9) DrawSphere<Appearance::WHITE>(s, 5);
-		//     DrawCylinder<Appearance::BLUE>(u0, s, 0.2);
-		// }
+		DrawCylinder<Appearance::WHITE>(v0, v1, 0.5);
 	}
 	Vec v0;
 	Vec v1;
@@ -68,7 +25,8 @@ class Ray {
 	const Vec u0;
 	const Vec u1;
 	const Vec u;
-	double k;
+	std::optional<Vec> seeing;
+	double k; // has to be calculated outside, maybe update should do it based on the Scenario.
 };
 
 
@@ -84,6 +42,7 @@ static double getD(Vec a, Vec b, Vec c, Vec x) {
 }
 
 static bool isInside(Vec u0, Vec tl, Vec br, Vec tr, Vec bl, Vec target) {
+	/* Determines if the target is within a square base pyramid with u0 as the apex. */
 	const int sign = sgn(getD(bl, tl, u0, target));
     if (sgn(getD(tl, tr, u0, target)) != sign) return false;
     if (sgn(getD(tr, br, u0, target)) != sign) return false;
@@ -101,23 +60,21 @@ class Eye {
     	for (int i = 0; i < numH; i++) {
     		for (int j = 0; j < numV; j++) {
 		    	const double O = -(j*PI/(double) numV) / 2;
-				const double angle = (2.0*i/static_cast<double>(numH) - 1.0) * PI/2.0 - PI/2.0;
+				const double angle = (2.0*i/static_cast<double>(numH) - 1.0) * PI - PI/2.0;
     			rays.insert({{i, j}, Ray(Vec(0, 0, 0), Vec(sin(angle)*cos(O), cos(angle)*cos(O), sin(O)))});
     		}
     	}
     }
     virtual ~Eye() {}
 
-
-	void look(Vec pos, Vec vel, Senario& senario) {
+	void look(const Vec pos, const Vec vel, const std::vector<Vec> viewable_objects) {
     	const double angle = atan2(vel.y, vel.x);
-		std::vector<Vec> foodToCheck = senario.food.getFrom(pos.x, pos.y, 1);
 
 		/* Rotate original vectors to point towards velocity */
 		for (auto& [key, ray]: this->rays) {
     			const auto& u1 = ray.u1;
     			ray.v0 = ray.u0 + pos;
-    			ray.v1 = pos + 200*Vec(
+    			ray.v1 = pos + 400*Vec(
     				u1.x*cos(angle) - u1.y*sin(angle),
     				u1.x*sin(angle) + u1.y*cos(angle),
     				u1.z
@@ -126,28 +83,74 @@ class Eye {
 
     	/* Determine the k's that each ray sees */
     	for (auto& [key, ray]: this->rays) {
+			// This creates a square based pyramid for each set of four rays.
+			// With the creature's position as the apex.
 			const auto [i, j] = key;
-			if (i + 1 >= numHori) continue;
-			if (j + 1 >= numVert) continue;
-			const Vec tl = this->rays.at({i+1, j+1}).v1;
-		    const Vec br = this->rays.at({i  , j  }).v1;
-		    const Vec tr = this->rays.at({i  , j+1}).v1;
-		    const Vec bl = this->rays.at({i+1, j  }).v1;
+			const int right  = i;
+			const int left   = (i + 1 >= numHori) ? 0 : i + 1;
+			const int bottom = j;
+			const int top    = (j + 1 >= numVert) ? 0 : j + 1;
+
+			const Vec tl = this->rays.at({left, top}).v1;
+		    const Vec br = this->rays.at({right, bottom}).v1;
+		    const Vec tr = this->rays.at({right, top}).v1;
+		    const Vec bl = this->rays.at({left, bottom  }).v1;
 
 		    double k = 1;
-			for (const auto& food: foodToCheck) {
+		    ray.seeing = std::nullopt;
+			for (const auto& food: viewable_objects) {
 			    if (isInside(pos, tl, br, tr, bl, food)) {
-			    	k = std::min(k, (food - pos).length() / (bl - pos).length());
+			    	const double foodk = (food - pos).length() / (bl - pos).length();
+			    	if (foodk < k) {
+				    	ray.seeing = food;
+				    }
+			    	k = std::min(k, foodk);
 			    }
 			}
 			ray.k = k;
 		}
 	}
 
-    void draw() const {
+    void draw(const Vec& pos, const std::vector<Vec> viewable_objects) const {
 	    for (const auto& [key, ray]: this->rays) {
+	    	const auto [i, j] = key;
+			const int right  = i;
+			const int left   = (i + 1 >= numHori) ? 0 : i + 1;
+			const int bottom = j;
+			const int top    = (j + 1 >= numVert) ? 0 : j + 1;
+
+			const Vec tl = this->rays.at({left, top}).v1;
+		    const Vec br = this->rays.at({right, bottom}).v1;
+		    const Vec tr = this->rays.at({right, top}).v1;
+		    const Vec bl = this->rays.at({left, bottom  }).v1;
+
+		    // double color = i % 2;
+		    double color = static_cast<double>(i) / static_cast<double>(numHori);
+		    Drawing::changeCustomColor(Vec(color, color, color));
+		    DrawCylinder<Appearance::WHITE>(pos, tl, .2);
+		    DrawCylinder<Appearance::WHITE>(pos, br, .2);
+		    DrawCylinder<Appearance::WHITE>(pos, tr, .2);
+		    DrawCylinder<Appearance::WHITE>(pos, bl, .2);
+
+		    DrawCylinder<Appearance::CUSTOM>(tl, tr, 1);
+		    DrawCylinder<Appearance::CUSTOM>(tr, br, 1);
+		    DrawCylinder<Appearance::CUSTOM>(br, bl, 1);
+		    DrawCylinder<Appearance::CUSTOM>(bl, tl, 1);
+		    // DrawRing<Appearance::WHITE>(pos, 400, 2);
+
+		    if (ray.seeing) {
+		    	DrawCylinder<Appearance::CUSTOM>(ray.v0, *ray.seeing, 4*(1 - ray.k));
+		    }
+			for (const auto& food: viewable_objects) {
+			    if (isInside(pos, tl, br, tr, bl, food)) {
+			    	DrawCylinder<Appearance::CUSTOM>(pos, food, 0.5);
+			    }
+			}
 		    // if (fabs(ray.k) <= 0.9) {
-			    ray.draw();
+		    // ray.draw();
+		    // if (ray.seeing) {
+		    // 	DrawCylinder<Appearance::RED>(ray.v0, *ray.seeing, 2.5*(1-fabs(ray.k)));
+		    // }
     		// }
 		}
     }

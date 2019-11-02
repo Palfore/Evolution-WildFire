@@ -11,12 +11,13 @@
 #include "StickBall.h"
 
 #include "Factory.h"
+#include "ScenarioFactory.h"
 #include "Terrain.h"
 static const Terrain terrain = Terrain(0);
 static const Factory creatureFactory("OmniWalker");
-static const SenarioFactory senarioFactory("SenarioA", terrain, 5000);
+static const ScenarioFactory scenarioFactory("ScenarioA", terrain, 5000);
 static Population pop(200, creatureFactory);
-static Viewer viewer(pop.population, creatureFactory, senarioFactory);
+static Viewer viewer(pop.population, creatureFactory, scenarioFactory);
 
 static void draw() {
     DrawCylinder<Appearance::BARK>(Vec(-50, 50, 0), Vec(-50, 50, 50), 8);

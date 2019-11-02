@@ -38,7 +38,7 @@ std::string Creature::getGenomeString() const {
     return "<MetaData>";
 }
 
-void Creature::update(Senario*, int t) {
+void Creature::update(Scenario*, int t) {
 	if (this->positions.size() <= 2) {
 		while (this->positions.size() <= 2) {
 	        this->positions.addPoint(this->calculateCOM());

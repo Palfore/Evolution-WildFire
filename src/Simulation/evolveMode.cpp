@@ -12,7 +12,6 @@
 #include "UserInput.h"
 #include "Genome.h"
 #include "Button.h"
-#include "MultiThread.h"
 #include "MyMath.h"
 #include "Creature.h"
 #include "Viewer.h"
@@ -23,6 +22,9 @@
 #include "Vec2.h"
 #include "Factory.h"
 #include "Terrain.h"
+#include "ScenarioFactory.h"
+
+#include "MultiThread.h"
 
 static constexpr int populationSize = 1*256;
 
@@ -39,15 +41,15 @@ static constexpr int MIN_THREADS = 0;  // No processing threads
 static const     int MAX_THREADS = std::thread::hardware_concurrency();
 static const     int DEFAULT_THREADS = (MAX_THREADS - BACKGROUND_THREADS_REQUIRED) > 0 ?
                                              MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
-// static int numThreads = 0;
-static int numThreads = DEFAULT_THREADS;
+static int numThreads = 7;
+// static int numThreads = DEFAULT_THREADS;
 
 static const Terrain terrain = Terrain();
 static const Factory creatureFactory("EyeWalker");
-static const SenarioFactory senarioFactory("SenarioA", terrain, 15'000/2);
+static const ScenarioFactory scenarioFactory("ScenarioA", terrain, 15'000/2);
 static Population pop(populationSize, creatureFactory);
-static Viewer viewer(pop.population, creatureFactory, senarioFactory);
-static Threader threader(0, senarioFactory, pop.getBodies());
+static Viewer viewer(pop.population, creatureFactory, scenarioFactory);
+static Threader threader(0, scenarioFactory, pop.getBodies());
 
 
 static void drawing(double fps, bool cinematic, int gameSpeed) {
@@ -139,7 +141,13 @@ void Simulation::evolveMode(double fps) {
         case 6:  break;
         case 5:  pop.mutate(); pop.gen++; break;
         case 4:  break;
-        case 3:  break;
+        case 3:
+            if (pop.gen == 40) {
+                pop.history.writeToFile("data.out");
+                std::cout << "Finished!\n";
+                exit(0);
+            }
+            break;
         case 2:  break;
         case 1:
             threader.spawnThreads(pop.getBodies());

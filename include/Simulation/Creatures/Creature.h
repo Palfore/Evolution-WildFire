@@ -9,7 +9,7 @@ class Genome;
 class Ball;
 class Piston;
 class Cube;
-class Senario;
+class Scenario;
 
 class Creature {
  public:
@@ -37,12 +37,12 @@ class Creature {
     virtual std::string getGenomeString() const;
 
     /* Drawing */
-    virtual void draw(const Senario* senario) const = 0;
+    virtual void draw(const Scenario* scenario) const = 0;
     virtual void drawBrain(bool drawAxons) const;
     virtual void drawDebug(bool doDraw) const;
 
     /* Physics */
-    virtual void update(Senario* senario, int t);
+    virtual void update(Scenario* scenario, int t);
 
  protected:
 };

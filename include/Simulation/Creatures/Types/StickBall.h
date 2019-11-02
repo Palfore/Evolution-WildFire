@@ -4,7 +4,7 @@
 #include "Creature.h"
 #include <vector>
 
-class Senario;
+class Scenario;
 class Genome;
 class StickBall : public Creature {
 	public:
@@ -22,12 +22,12 @@ class StickBall : public Creature {
         virtual Vec getTop(const double offset) const override;
 
 
-	    virtual void draw(const Senario* senario) const override;
+	    virtual void draw(const Scenario* scenario) const override;
         virtual void drawBrain(const bool drawAxons) const override;
 
         std::string getGenomeString() const override;
 
-        virtual void update(Senario* senario, const int t) override;
+        virtual void update(Scenario* scenario, const int t) override;
 
 	protected:
 		Vec* head;
