@@ -157,7 +157,12 @@ RecurrentNeuralNetwork::RecurrentNeuralNetwork(int networkID, std::vector<AxonGe
         // std::cout<<'a'<<axonGene->weight<<'\n';
     }
     this->sizes = sizesCount;
-    this->sizes[1] = 2;
+    // for (const auto& i: this->sizes) {
+    //     std::cout <<i<<'\n';
+    // }
+    // exit(1);
+
+    // this->sizes[1] = 2; // What does this mean?
 
     // std::cout << this->sizes[0] <<'\n';
     // std::cout << this->sizes[1] <<'\n';
@@ -165,17 +170,19 @@ RecurrentNeuralNetwork::RecurrentNeuralNetwork(int networkID, std::vector<AxonGe
 
     int sequence_size = 1;     // How many objects does the creature see? Default is 1, predictions changes this
     const int num_inputs = this->sizes[0];  // How much information is passed for one object?
-    const int num_outputs = this->sizes[1]; // How much information are you getting out of the network?
-    const int hidden_size = this->sizes[2]; // How big is the (single layer) network?
-    // std::cout << this->sizes[0] <<','<< this->sizes[1]<<','<<this->sizes[2]<<'\n';
+    const int recurrent_output_size = this->sizes[1]; // What should the recurrent network output?
+    const int ff_hidden_size = this->sizes[2]; // How big is the (single layer) network?
+    const int num_outputs = this->sizes[3]; // How much information are you getting out of the network?
+    // std::cout << "sizes"<<this->sizes.size()<<'|'<<this->sizes[0] <<','<< this->sizes[1]<<','<<this->sizes[2]<<','<<this->sizes[3]<<'\n';
+    assert(recurrent_output_size == ff_hidden_size); // Recurrent layer feeds into hidden layer.
     this->net
-         << recurrent_layer(rnn(num_inputs, hidden_size), sequence_size)
+         << recurrent_layer(rnn(num_inputs, recurrent_output_size), sequence_size)
          << tanh_layer()
-         << fully_connected_layer(hidden_size, num_outputs)
+         << fully_connected_layer(ff_hidden_size, num_outputs)
          << tanh_layer();
 
-    this->net.weight_init(weight_init::constant(0));
-    this->net.bias_init(weight_init::constant(0));
+    this->net.weight_init(weight_init::constant(1));
+    this->net.bias_init(weight_init::constant(1));
 
 
     for (const AxonGene* axonGene: axons) {
@@ -293,6 +300,10 @@ std::vector<double> RecurrentNeuralNetwork::propagate(const std::deque<std::vect
     }
     // std::vector<double> output = this->net.predict(inputs[inputs.size() - 1]);
     auto output = net.predict(inputs[inputs.size() - 1]);
+    // for (const auto o: output) {
+    //     std::cout << o<<'\n';
+    // }
+    // puts("okay");
 
     // // for (unsigned int i = 0; i < inputs.size(); i++) {
     // //    outputs = net.predict(inputs[i]);
@@ -316,7 +327,8 @@ std::vector<double> RecurrentNeuralNetwork::propagate(const std::deque<std::vect
         std::make_move_iterator(output.begin()),
         std::make_move_iterator(output.end())
     );
-    assert(output.size() == 2);
+    // std::cout<<"size"<<output.size()<<'\n';
+    assert(output.size() == 2); // Expect two outputs
     return this->potentialOut;
     // auto output = net.predict(inputs[inputs.size() - 1]);
     // std::cout << output[0] << ','<<output[1]<<'\n';

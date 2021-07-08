@@ -71,7 +71,7 @@ namespace utility {
         std::string months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
         time_t t = time(nullptr);   // get time now
         struct tm * now = localtime( & t );
-        return months[now->tm_mon + 1] + '/' + numToStr(now->tm_mday) + '/' + numToStr(now->tm_year + 1900);
+        return months[now->tm_mon % 12] + '/' + numToStr(now->tm_mday) + '/' + numToStr(now->tm_year + 1900);
     }
 
     std::string getCurrentTime() {

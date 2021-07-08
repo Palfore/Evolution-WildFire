@@ -107,7 +107,7 @@ Vec Terrain::getNormal(double x, double y) const {
 
 
 void Terrain::draw() const {
-    double range = 300; // 50
+    double range = 500; // 50
     int divisions = 10; // precision. Higher means smaller building blocks.
     double s = 150; // resolution. Lower means image is repeated in smaller units. Higher means grass is bigger
     double d = 1.0 / (double) divisions;

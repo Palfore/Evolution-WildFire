@@ -41,8 +41,8 @@ static constexpr int MIN_THREADS = 0;  // No processing threads
 static const     int MAX_THREADS = std::thread::hardware_concurrency();
 static const     int DEFAULT_THREADS = (MAX_THREADS - BACKGROUND_THREADS_REQUIRED) > 0 ?
                                              MAX_THREADS - BACKGROUND_THREADS_REQUIRED : 1;
-static int numThreads = 7;
-// static int numThreads = DEFAULT_THREADS;
+// static int numThreads = 0;
+static int numThreads = DEFAULT_THREADS;
 
 static const Terrain terrain = Terrain();
 static const Factory creatureFactory("EyeWalker");
@@ -87,7 +87,7 @@ static void drawing(double fps, bool cinematic, int gameSpeed) {
     }
 
     if (cinematic) return;
-    DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<double>(viewer.fitness), c.getTop(10));
+    DrawString<Appearance::WHITE>("Frank F"+ utility::numToStr<double>(viewer.fitness), c.getTop(20));
     DrawString<Appearance::BLACK>("Generation " + utility::numToStr<int>(pop.gen),
                                  0.01, 0.03, by_percentage(), false, false);
     DrawString<Appearance::BLACK>("Creature: " + utility::numToStr<int>(viewer.getMemberIndex()) +
@@ -143,9 +143,10 @@ void Simulation::evolveMode(double fps) {
         case 4:  break;
         case 3:
             if (pop.gen == 40) {
-                pop.history.writeToFile("data.out");
-                std::cout << "Finished!\n";
-                exit(0);
+                numThreads = 0;
+                // pop.history.writeToFile("data.out");
+                // std::cout << "Finished!\n";
+                // exit(0);
             }
             break;
         case 2:  break;

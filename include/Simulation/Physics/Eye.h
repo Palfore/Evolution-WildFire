@@ -72,13 +72,13 @@ class Eye {
 
 		/* Rotate original vectors to point towards velocity */
 		for (auto& [key, ray]: this->rays) {
-    			const auto& u1 = ray.u1;
-    			ray.v0 = ray.u0 + pos;
-    			ray.v1 = pos + 400*Vec(
-    				u1.x*cos(angle) - u1.y*sin(angle),
-    				u1.x*sin(angle) + u1.y*cos(angle),
-    				u1.z
-    			);
+			const auto& u1 = ray.u1;
+			ray.v0 = ray.u0 + pos;
+			ray.v1 = pos + 400*Vec(
+				u1.x*cos(angle) - u1.y*sin(angle),
+				u1.x*sin(angle) + u1.y*cos(angle),
+				u1.z
+			);
     	}
 
     	/* Determine the k's that each ray sees */

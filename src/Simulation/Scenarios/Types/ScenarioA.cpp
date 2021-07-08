@@ -42,7 +42,7 @@ double ScenarioA::getCurrentFitness() {
             food.remove(creature->getCOM().x, creature->getCOM().y, foods[i]);
             Vec f = Vec(pmRandf(2000), pmRandf(2000), 0);
             f.z = terrain.getHeight(f);
-            food.insertAt(f.x, f.y, f);
+            // food.insertAt(f.x, f.y, f);
             return 1;
         }
     }

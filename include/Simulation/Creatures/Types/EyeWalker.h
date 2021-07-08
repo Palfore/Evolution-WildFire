@@ -17,7 +17,7 @@ class EyeWalker : public Creature {
 			Vec p = Vec(0, 0, 0),
 			double l = 10,
 			std::vector<unsigned int> sizes = {8, 8, 8, 8},
-			std::vector<unsigned int> sizes2 = {16}
+			std::vector<unsigned int> sizes2 = {8}
 		);
 
 	    EyeWalker(const Genome& g);

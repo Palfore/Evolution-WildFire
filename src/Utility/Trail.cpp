@@ -61,7 +61,7 @@ void Trail::draw() const {
         Vec ending = trail[i];
 
         double x = 1 - (i - 1) / static_cast<double>(trail.size());
-        glColor3f(x,x,x);
+        glColor3f(1,x,x);
 
         Vec v = (ending-start) * 1.25;
         if (fabs(v.z) < 0.0001) v.z = 0.0001;

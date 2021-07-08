@@ -13,6 +13,7 @@
 class Genome;
 class RecurEyeWalker : public Creature {
 	public:
+		static constexpr int MAX_PROCESS = 6;
 		static Genome* createGenome(
 			Vec p = Vec(0, 0, 0),
 			double l = 10,

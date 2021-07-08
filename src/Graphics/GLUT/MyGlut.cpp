@@ -15,14 +15,14 @@ Tex glLoadTexture(std::string fileName) {
 }
 
 void saveScreenShot() {
-    std::string directory = "screenshots/";
+    std::string directory = "assets/screenshots/";
     std::string file = "screenshot - " +
                         utility::replaceCharSet(utility::getCurrentDate(), "/,:", "_") +
                         " - " +
                         utility::replaceCharSet(utility::getCurrentTime(), "/,:", "_") +
                         ".png";
     if (SOIL_save_screenshot(
-            (directory + file).c_str(),
+            (file).c_str(),
             SOIL_SAVE_TYPE_BMP,
             0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT))) {
         LOG("Saved screenshot", LogDegree::DEBUG, LogType::GRAPHICS);
