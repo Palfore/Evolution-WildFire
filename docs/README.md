@@ -1,5 +1,7 @@
 # Evolution WildFire
 
+**It has been a long time since I worked on this, but I wanted to make it open source! So some of this information may be out of date! You can contact me if you have questions** :)
+
 Evolution WildFire is an real-time interactive 3D evolution simulator. Mechanical, animal-like creatures evolve to be the best. The strong survive, and the weak... well let's not worry about them. The creatures are evolved one by one as they modify their morphologies and their brains to learn how to control their bodies well enough to make it to the next generation.
 
 ![3D Terrain with creature in center shot](https://github.com/Palfore/Evolution-Project/blob/master/docs/3D%20Terrain%20w%20Creature.jpg "Evolution WildFire")
