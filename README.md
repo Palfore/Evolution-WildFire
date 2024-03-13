@@ -8,6 +8,7 @@ More specifically, a creature is made up of muscles (pistons), bones (rods), and
 
 This project has gone through several stages of development. With it's 2D incarnation written in C, this 3D simulator was developed to explore more complex behavior. First, the creatures learned how to move in 2D, then they they were trained to jump up in the air, or to walk up or down hills. Their muscles started as sinusoidal pistons with a speed and off-set parameter. But for more complex behavior neural networks were required. The locomotion in 3D proves very difficult, and a new morphology was implemented to avoid this. The latest form of creature, the Eye Walker, has two neural networks that control it's motion: one for its eye, and one for its brain. With the advent of eyesight, creatures could chase food but their complex piston-powered bodies were replaced with a simple car-like motion. Now, creature compete to collect food.
 
+Check out the [YouTube Series](https://www.youtube.com/watch?v=UguM_AU9--I&list=PLm3INE_scU5tVkYe7ErZmO-Wz6WngHr0C&ab_channel=Palfore).
 
 ### Running
 
