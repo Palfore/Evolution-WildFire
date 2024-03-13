@@ -1,40 +1,41 @@
 # Evolution WildFire
 
-**It has been a long time since I worked on this, but I wanted to make it open source! So some of this information may be out of date! You can contact me if you have questions** :)
-
-Evolution WildFire is an real-time interactive 3D evolution simulator. Mechanical, animal-like creatures evolve to be the best. The strong survive, and the weak... well let's not worry about them. The creatures are evolved one by one as they modify their morphologies and their brains to learn how to control their bodies well enough to make it to the next generation.
+Evolution WildFire is a 3D robotics simulator that uses reinforcement learning to train mechanical creatures controlled by neural-networks. It is written in C++/OpenGL and uses multi-threading to evolve the creatures in the background as you explore the real-time environment with your pets! The strong survive, and the weak... well let's not worry about them. The creatures are evolved one by one as they modify their morphologies and their brains to learn how to control their bodies well enough to make it to the next generation.
 
 ![3D Terrain with creature in center shot](https://github.com/Palfore/Evolution-Project/blob/master/docs/3D%20Terrain%20w%20Creature.jpg "Evolution WildFire")
 
-More specifically, a creature is made up of muscles, bones, and contact nodes that all contribute to the creature's structure and function. However for complex motion they need a sophisticated control mechanism that can evolve along with their bodies. Introduce the Neural Network. This handy structure evolves, using the Genetic Algorithm, along with the body and acts as its brain, actuating their muscles to acomplish their goal.
+More specifically, a creature is made up of muscles (pistons), bones (rods), and contact nodes that all contribute to the creature's structure and function. However for complex motion they need a sophisticated control mechanism that can evolve along with their bodies. Introduce the Neural Network. Their ability to interact with the world is shaped according to the Genetic Algorithm driving improvements in fitness, as creatures compete to  accomplish their goal.
 
-Now evolving random structures to walk around and chase after things sounds awesome (and it is) but it's also quite a difficult task. Neural Networks are a massive field and figuring out the right way to implement one, and the right way to train the creatures is actually a pretty difficult task. Thankfully, this walking problem has been solved in two dimensions fairly easily, but in three dimensions not so much. Walking in 3D isn't that bad but the idea of goal seeking, being able to turn around and move to different targets, well that is still in the works.
+This project has gone through several stages of development. With it's 2D incarnation written in C, this 3D simulator was developed to explore more complex behavior. First, the creatures learned how to move in 2D, then they they were trained to jump up in the air, or to walk up or down hills. Their muscles started as sinusoidal pistons with a speed and off-set parameter. But for more complex behavior neural networks were required. The locomotion in 3D proves very difficult, and a new morphology was implemented to avoid this. The latest form of creature, the Eye Walker, has two neural networks that control it's motion: one for its eye, and one for its brain. With the advent of eyesight, creatures could chase food but their complex piston-powered bodies were replaced with a simple car-like motion. Now, creature compete to collect food.
 
-The real-time aspect of this simulator makes use of multi-threading. You will play around in one instance which lets you explore all the different creatures, while all the evolution takes place in the background.
+
+### Running
+
+Run `bin/Debug/Evolution-Project.exe` from the top-level directory. On windows, you can simply run `launch.bat`.
 
 ### Installing
 
-A semi-major priority in this project is to keep dependencies managed. As in, you should be able to simply copy the project onto a local drive and run it right away.
-
 To run:
-	Windows is already compiled. Mac you will have to compile it yourself.
-	It has to be run from the directory with bin, assets, src, etc in it (rather than just click on the exe).
-	Open up the command prompt and cd into the "Evolution Project" directory and type bin\Debug\"Evolution Project.exe"
+
+- Windows is already compiled. Mac you will have to compile it yourself.
+- It has to be run from the directory with bin, assets, src, etc in it (rather than just click on the exe).
+- Open up the command prompt and cd into the "Evolution Project" directory and type bin\Debug\"Evolution Project.exe"
 
 To develop/compile:
-	From https://solarianprogrammer.com/2017/11/22/install-codeblocks-gcc-windows/
-	1) Go to http://www.codeblocks.org/downloads/26 and download codeblocks-17.12-setup.exe
-	2) Go to https://nuwen.net/mingw.html and download mingw-16.1.exe to C:\ (not downloads)
-	Then you can just load up the Evolution Project.cbp and hit run (or rebuild then run).
+
+- From https://solarianprogrammer.com/2017/11/22/install-codeblocks-gcc-windows/
+	- Go to http://www.codeblocks.org/downloads/26 and download codeblocks-17.12-setup.exe
+	- Go to https://nuwen.net/mingw.html and download mingw-16.1.exe to C:\ (not downloads)
+- Then you can just load up the Evolution Project.cbp and hit run (or rebuild then run).
 
 ### Working with the Code
 
-evolveMode.cpp is the main driving file.
-The Population constructor defines the default creature generation.
-Creature::update and MultiThread::processCreatures define how the creatures are evolved (The ones the user sees and the ones in the background).
-The FitnessCollector fitbit map defines the possible evolution types (Work could be done here to figure out the best way reward system to evolve goal seeking)
-NodeGene has a setting for twoD creatures.
-NeuralNetwork.cpp (somewhat obviously) defines the (basic) neural network. A library should probably be used for more sophisticated networks.
+- evolveMode.cpp is the main driving file.
+- The Population constructor defines the default creature generation.
+- Creature::update and MultiThread::processCreatures define how the creatures are evolved (The ones the user sees and the ones in the background).
+- The FitnessCollector fitbit map defines the possible evolution types (Work could be done here to figure out the best way reward system to evolve goal seeking)
+- NodeGene has a setting for twoD creatures.
+- NeuralNetwork.cpp (somewhat obviously) defines the (basic) neural network. A library should probably be used for more sophisticated networks.
 
 
 ## Built With
